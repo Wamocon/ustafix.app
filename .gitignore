@@ -51,3 +51,6 @@ scripts/xray/results-rolenkonzept.json
 
 # secrets
 xray-token.txt
+
+# workspace files
+*.code-workspace
