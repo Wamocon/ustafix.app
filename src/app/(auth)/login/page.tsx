@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { HardHat, Loader2, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { claimPendingInvitations } from "@/lib/actions/invitations";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,6 +31,8 @@ export default function LoginPage() {
       setLoading(false);
       return;
     }
+
+    claimPendingInvitations().catch(() => {});
 
     router.push("/dashboard");
     router.refresh();
@@ -127,15 +130,25 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-muted-foreground">
-          Noch kein Konto?{" "}
-          <Link
-            href="/register"
-            className="font-semibold text-amber-500 hover:text-amber-400 transition-colors"
-          >
-            Registrieren
-          </Link>
-        </p>
+        <div className="space-y-2 text-center text-sm text-muted-foreground">
+          <p>
+            <Link
+              href="/forgot-password"
+              className="font-semibold text-amber-500 hover:text-amber-400 transition-colors"
+            >
+              Passwort vergessen?
+            </Link>
+          </p>
+          <p>
+            Noch kein Konto?{" "}
+            <Link
+              href="/register"
+              className="font-semibold text-amber-500 hover:text-amber-400 transition-colors"
+            >
+              Registrieren
+            </Link>
+          </p>
+        </div>
       </motion.div>
     </div>
   );

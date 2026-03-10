@@ -21,10 +21,66 @@ export function formatFileSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
-export const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB
+export const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+export const MAX_VIDEO_SIZE = 15 * 1024 * 1024; // 15MB
 export const MAX_AUDIO_SIZE = 25 * 1024 * 1024; // 25MB (Groq limit)
-export const MAX_VIDEO_DURATION = 60; // seconds
+export const MAX_VIDEO_DURATION = 30; // seconds
+export const MAX_VIDEO_RESOLUTION = 720; // max height in pixels
+export const IMAGE_COMPRESSION_MAX_PX = 1920;
+export const IMAGE_COMPRESSION_MAX_MB = 2;
 export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 export const ACCEPTED_VIDEO_TYPES = ["video/mp4", "video/quicktime", "video/webm"];
 export const ACCEPTED_AUDIO_TYPES = ["audio/mp4", "audio/webm", "audio/mpeg", "audio/wav"];
+
+export type TransitionRule = {
+  requiresMedia: boolean;
+  requiresNote: boolean;
+  allowedRoles: ("admin" | "manager" | "worker")[];
+  label: string;
+};
+
+export const TRANSITION_RULES: Record<string, TransitionRule> = {
+  "offen->in_arbeit": {
+    requiresMedia: true,
+    requiresNote: true,
+    allowedRoles: ["admin", "manager", "worker"],
+    label: "Arbeit beginnen",
+  },
+  "in_arbeit->erledigt": {
+    requiresMedia: true,
+    requiresNote: true,
+    allowedRoles: ["admin", "manager", "worker"],
+    label: "Als erledigt markieren",
+  },
+  "erledigt->offen": {
+    requiresMedia: false,
+    requiresNote: true,
+    allowedRoles: ["admin", "manager"],
+    label: "Mangel wiedereröffnen",
+  },
+  "in_arbeit->offen": {
+    requiresMedia: false,
+    requiresNote: true,
+    allowedRoles: ["admin", "manager", "worker"],
+    label: "Arbeit stoppen",
+  },
+  "offen->erledigt": {
+    requiresMedia: true,
+    requiresNote: true,
+    allowedRoles: ["admin", "manager"],
+    label: "Direkt als erledigt markieren",
+  },
+  "erledigt->in_arbeit": {
+    requiresMedia: false,
+    requiresNote: true,
+    allowedRoles: ["admin", "manager"],
+    label: "Zurück in Arbeit setzen",
+  },
+};
+
+export function getTransitionRule(
+  from: string,
+  to: string
+): TransitionRule | null {
+  return TRANSITION_RULES[`${from}->${to}`] ?? null;
+}

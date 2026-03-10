@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "Baumängel.app"
+    },
+    {
+      "path": "D:\\LFA Landing Page\\lfa_landing_page",
+      "name": "LFA Landing Page"
+    }
+  ],
+  "settings": {
+    "powershell.cwd": "Baumängel.app"
+  }
+}

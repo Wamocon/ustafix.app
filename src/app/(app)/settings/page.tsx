@@ -1,12 +1,15 @@
 import { createClient } from "@/lib/supabase/server";
 import { Settings, User, Mail, Shield, Smartphone } from "lucide-react";
 import { LogoutButton } from "@/components/logout-button";
+import { NotificationSettings } from "@/components/notification-settings";
+import { getNotificationPreferences } from "@/lib/actions/notifications";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  const notifPrefs = await getNotificationPreferences();
 
   return (
     <div className="mx-auto max-w-lg px-4 pt-6 pb-4">
@@ -71,6 +74,18 @@ export default async function SettingsPage() {
               Ustafix.app — Baustellenmängel einfach erfassen und verwalten.
             </p>
           </div>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-5">
+          <NotificationSettings
+            preferences={
+              notifPrefs ?? {
+                status_changes: true,
+                new_comments: true,
+                new_defects: true,
+              }
+            }
+          />
         </div>
 
         <LogoutButton />

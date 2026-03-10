@@ -35,6 +35,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Serwist
+public/sw*
+public/swe-worker*
+
 # cursor
 .cursor/
 agent-transcripts/
@@ -44,3 +48,6 @@ terminals/
 # Xray scripts (generierte Zuordnung + Testergebnisse, pro Umgebung)
 scripts/xray/created-tests-mapping.json
 scripts/xray/results-rolenkonzept.json
+
+# secrets
+xray-token.txt

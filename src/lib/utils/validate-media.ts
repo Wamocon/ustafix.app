@@ -2,6 +2,7 @@ import {
   MAX_IMAGE_SIZE,
   MAX_VIDEO_SIZE,
   MAX_AUDIO_SIZE,
+  MAX_VIDEO_DURATION,
   ACCEPTED_IMAGE_TYPES,
   ACCEPTED_VIDEO_TYPES,
   ACCEPTED_AUDIO_TYPES,
@@ -63,4 +64,72 @@ export function validateMediaFile(file: File): ValidationResult {
   }
 
   return { valid: false, error: "Dateityp nicht unterstützt." };
+}
+
+export function getVideoDuration(file: File): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement("video");
+    video.preload = "metadata";
+    const url = URL.createObjectURL(file);
+
+    video.onloadedmetadata = () => {
+      URL.revokeObjectURL(url);
+      if (!isFinite(video.duration) || video.duration === 0) {
+        reject(new Error("Video-Dauer konnte nicht ermittelt werden."));
+        return;
+      }
+      resolve(video.duration);
+    };
+
+    video.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Video konnte nicht geladen werden."));
+    };
+
+    video.src = url;
+  });
+}
+
+export function getVideoResolution(
+  file: File
+): Promise<{ width: number; height: number }> {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement("video");
+    video.preload = "metadata";
+    const url = URL.createObjectURL(file);
+
+    video.onloadedmetadata = () => {
+      URL.revokeObjectURL(url);
+      resolve({ width: video.videoWidth, height: video.videoHeight });
+    };
+
+    video.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Video konnte nicht geladen werden."));
+    };
+
+    video.src = url;
+  });
+}
+
+export async function validateVideoConstraints(file: File): Promise<ValidationResult> {
+  const basicCheck = validateMediaFile(file);
+  if (!basicCheck.valid) return basicCheck;
+
+  try {
+    const duration = await getVideoDuration(file);
+    if (duration > MAX_VIDEO_DURATION) {
+      return {
+        valid: false,
+        error: `Video ist zu lang (${Math.ceil(duration)}s). Maximal ${MAX_VIDEO_DURATION} Sekunden erlaubt.`,
+      };
+    }
+  } catch {
+    return {
+      valid: false,
+      error: "Video konnte nicht validiert werden. Bitte versuchen Sie es mit einer anderen Datei.",
+    };
+  }
+
+  return { valid: true };
 }

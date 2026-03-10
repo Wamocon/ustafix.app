@@ -118,7 +118,7 @@ export function MediaViewer({
               {showDelete && (
                 <button
                   onClick={() => handleDelete(item)}
-                  className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-all group-hover:opacity-100 hover:bg-destructive cursor-pointer"
+                  className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white transition-all sm:opacity-0 sm:group-hover:opacity-100 hover:bg-destructive cursor-pointer"
                   aria-label="Datei löschen"
                 >
                   <Trash2 className="h-4 w-4" />

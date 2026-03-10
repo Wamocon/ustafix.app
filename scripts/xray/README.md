@@ -108,6 +108,7 @@ Damit sind die Testergebnisse in Xray dokumentiert.
 |-------|--------------|
 | `test-cases-rolenkonzept.json` | Alle Testfälle (ID, Summary, Stufe, Schritte, Erwartung) – Quelle für Anlage und Ergebnisse. |
 | `sync-tests-to-xray.mjs` | Legt Test-Issues in Jira an; schreibt `created-tests-mapping.json`. |
+| `update-usfx-descriptions.mjs` | Aktualisiert Beschreibungen von USFX-27 bis USFX-41 mit formatiertem Markdown. |
 | `submit-execution-results.mjs` | Erzeugt Vorlage für Ergebnisse und Xray-Import-JSON aus `results-rolenkonzept.json`. |
 | `created-tests-mapping.json` | Wird von sync erzeugt: Test-ID → Jira-Key (z. B. U-R-01 → FR-101). |
 | `execution-results-template.json` | Vorlage für manuelle Ergebnisse (template-Befehl). |

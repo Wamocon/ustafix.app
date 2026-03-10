@@ -1,10 +1,14 @@
 import { getDefect } from "@/lib/actions/defects";
 import { getProject } from "@/lib/actions/projects";
 import { getDefectComments } from "@/lib/actions/comments";
+import { getTransitionHistory } from "@/lib/actions/transitions";
+import { getPhaseUpdates } from "@/lib/actions/phase-updates";
 import { StatusToggle } from "@/components/status-toggle";
 import { MediaViewer } from "@/components/media-viewer";
 import { DefectActions } from "@/components/defect-actions";
 import { DefectComments } from "@/components/defect-comments";
+import { TransitionTimeline } from "@/components/transition-timeline";
+import { PhaseUpdateButton } from "@/components/phase-update-button";
 import { ArrowLeft, MapPin, Clock } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -24,11 +28,14 @@ const PRIORITY_CONFIG = {
 
 export default async function DefectDetailPage({ params }: Props) {
   const { id: projectId, defectId } = await params;
-  const [defect, project, commentsResult] = await Promise.all([
-    getDefect(defectId),
-    getProject(projectId),
-    getDefectComments(defectId),
-  ]);
+  const [defect, project, commentsResult, transitions, phaseUpdates] =
+    await Promise.all([
+      getDefect(defectId),
+      getProject(projectId),
+      getDefectComments(defectId),
+      getTransitionHistory(defectId),
+      getPhaseUpdates(defectId),
+    ]);
 
   if (!defect) notFound();
   if (!project) notFound();
@@ -87,6 +94,8 @@ export default async function DefectDetailPage({ params }: Props) {
           defectId={defect.id}
           projectId={projectId}
           currentStatus={defect.status as "offen" | "in_arbeit" | "erledigt"}
+          userRole={myRole ?? "worker"}
+          userId={user?.id}
         />
       </div>
 
@@ -102,6 +111,23 @@ export default async function DefectDetailPage({ params }: Props) {
           />
         </div>
       )}
+
+      {/* Add Update button */}
+      <div className="mt-4">
+        <PhaseUpdateButton
+          defectId={defectId}
+          projectId={projectId}
+          userRole={myRole ?? "worker"}
+          currentStatus={defect.status as string}
+          userId={user?.id}
+        />
+      </div>
+
+      {/* Unified Timeline */}
+      <TransitionTimeline
+        transitions={transitions as any}
+        phaseUpdates={phaseUpdates as any}
+      />
 
       {/* Descriptions / Translations */}
       <div className="mt-6 space-y-3">

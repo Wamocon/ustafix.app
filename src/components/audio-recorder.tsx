@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Mic, Square, Loader2, ArrowLeft, Sparkles } from "lucide-react";
+import { MAX_AUDIO_SIZE, formatFileSize } from "@/lib/utils";
 import { motion } from "framer-motion";
 
 interface AudioRecorderProps {
@@ -89,6 +90,12 @@ export function AudioRecorder({ onResult, onCancel }: AudioRecorderProps) {
     const blob = await stopRecording();
     if (!blob || blob.size === 0) {
       setError("Aufnahme leer. Bitte versuchen Sie es erneut.");
+      setState("idle");
+      return;
+    }
+
+    if (blob.size > MAX_AUDIO_SIZE) {
+      setError(`Aufnahme zu groß (${formatFileSize(blob.size)}). Maximal ${formatFileSize(MAX_AUDIO_SIZE)} erlaubt.`);
       setState("idle");
       return;
     }

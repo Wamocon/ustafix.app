@@ -1,16 +1,18 @@
 "use client";
 
-import { useTransition, useOptimistic } from "react";
-import { updateDefectStatus } from "@/lib/actions/defects";
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import type { DefectStatus } from "@/lib/db/schema";
+import { useState } from "react";
+import { cn, getTransitionRule } from "@/lib/utils";
+import type { DefectStatus, MemberRole } from "@/lib/db/schema";
 import { motion } from "framer-motion";
+import { StatusTransitionModal } from "./status-transition-modal";
+import { toast } from "sonner";
 
 interface StatusToggleProps {
   defectId: string;
   projectId: string;
   currentStatus: DefectStatus;
+  userRole: MemberRole;
+  userId?: string;
 }
 
 const STATUS_OPTIONS: {
@@ -50,55 +52,81 @@ export function StatusToggle({
   defectId,
   projectId,
   currentStatus,
+  userRole,
+  userId,
 }: StatusToggleProps) {
-  const [isPending, startTransition] = useTransition();
-  const [optimisticStatus, setOptimisticStatus] = useOptimistic(currentStatus);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [targetStatus, setTargetStatus] = useState<DefectStatus | null>(null);
 
-  function handleStatusChange(newStatus: DefectStatus) {
-    if (newStatus === optimisticStatus) return;
+  function handleStatusClick(newStatus: DefectStatus) {
+    if (newStatus === currentStatus) return;
 
-    setOptimisticStatus(newStatus);
+    const rule = getTransitionRule(currentStatus, newStatus);
+    if (!rule) {
+      toast.error("Dieser Statuswechsel ist nicht möglich.");
+      return;
+    }
 
-    startTransition(async () => {
-      try {
-        await updateDefectStatus(defectId, newStatus, projectId);
-        toast.success("Status aktualisiert");
-      } catch {
-        toast.error("Fehler beim Aktualisieren");
-      }
-    });
+    if (!rule.allowedRoles.includes(userRole)) {
+      const roleNames = rule.allowedRoles.map((r) =>
+        r === "admin" ? "Admins" : r === "manager" ? "Manager" : "Arbeiter"
+      );
+      toast.error(
+        `Nur ${roleNames.join(" und ")} können diesen Statuswechsel durchführen.`
+      );
+      return;
+    }
+
+    setTargetStatus(newStatus);
+    setModalOpen(true);
   }
 
   return (
-    <div className="space-y-3">
-      <label className="text-sm font-semibold text-muted-foreground">
-        Status
-      </label>
-      <div className="grid grid-cols-3 gap-2">
-        {STATUS_OPTIONS.map((option) => {
-          const isActive = optimisticStatus === option.value;
-          return (
-            <motion.button
-              key={option.value}
-              onClick={() => handleStatusChange(option.value)}
-              disabled={isPending}
-              whileTap={{ scale: 0.95 }}
-              className={cn(
-                "relative flex flex-col items-center justify-center gap-1.5 rounded-2xl py-4 text-sm font-bold transition-all cursor-pointer",
-                isActive
-                  ? `${option.activeClass} ${option.glowClass}`
-                  : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-foreground/20",
-                isPending && "opacity-70"
-              )}
-              aria-pressed={isActive}
-              aria-label={`Status: ${option.label}`}
-            >
-              <span className="text-lg">{option.emoji}</span>
-              <span>{option.label}</span>
-            </motion.button>
-          );
-        })}
+    <>
+      <div className="space-y-3">
+        <label className="text-sm font-semibold text-muted-foreground">
+          Status
+        </label>
+        <div className="grid grid-cols-3 gap-2">
+          {STATUS_OPTIONS.map((option) => {
+            const isActive = currentStatus === option.value;
+            return (
+              <motion.button
+                key={option.value}
+                onClick={() => handleStatusClick(option.value)}
+                whileTap={{ scale: 0.95 }}
+                className={cn(
+                  "relative flex flex-col items-center justify-center gap-1.5 rounded-2xl py-4 text-sm font-bold transition-all cursor-pointer",
+                  isActive
+                    ? `${option.activeClass} ${option.glowClass}`
+                    : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-foreground/20"
+                )}
+                aria-pressed={isActive}
+                aria-label={`Status: ${option.label}`}
+              >
+                <span className="text-lg">{option.emoji}</span>
+                <span>{option.label}</span>
+              </motion.button>
+            );
+          })}
+        </div>
       </div>
-    </div>
+
+      {targetStatus && (
+        <StatusTransitionModal
+          open={modalOpen}
+          onClose={() => {
+            setModalOpen(false);
+            setTargetStatus(null);
+          }}
+          defectId={defectId}
+          projectId={projectId}
+          fromStatus={currentStatus}
+          toStatus={targetStatus}
+          userRole={userRole}
+          userId={userId}
+        />
+      )}
+    </>
   );
 }

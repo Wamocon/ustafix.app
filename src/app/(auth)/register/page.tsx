@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { HardHat, Loader2, ArrowRight, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { claimPendingInvitations } from "@/lib/actions/invitations";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -49,6 +50,7 @@ export default function RegisterPage() {
     }
 
     setSuccess(true);
+    claimPendingInvitations().catch(() => {});
     setTimeout(() => {
       router.push("/dashboard");
       router.refresh();

@@ -1,0 +1,464 @@
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  LayoutDashboard,
+  Building2,
+  Users,
+  AlertTriangle,
+  CheckCircle2,
+  Clock,
+  FileCheck,
+  Hammer,
+  TrendingUp,
+  UserCheck,
+  Briefcase,
+  Shield,
+} from "lucide-react";
+import { CreateProjectDialog } from "@/components/create-project-dialog";
+import { StatCard } from "./stat-card";
+import { ProjectHealthCard } from "./project-health-card";
+import { ActivityFeed } from "./activity-feed";
+import type { DashboardData } from "@/lib/actions/dashboard";
+
+const ROLE_LABELS: Record<string, string> = {
+  admin: "Administrator",
+  manager: "Bauleiter",
+  worker: "Mitarbeiter",
+};
+
+const ROLE_ICONS: Record<string, typeof Shield> = {
+  admin: Shield,
+  manager: Briefcase,
+  worker: Hammer,
+};
+
+interface DashboardContentProps {
+  stats: DashboardData;
+}
+
+export function DashboardContent({ stats }: DashboardContentProps) {
+  const { highest_role: role, projects } = stats;
+
+  const totals = projects.reduce(
+    (acc, p) => ({
+      defects: acc.defects + p.defect_counts.total,
+      open: acc.open + p.defect_counts.offen,
+      inProgress: acc.inProgress + p.defect_counts.in_arbeit,
+      done: acc.done + p.defect_counts.erledigt,
+      highPriority: acc.highPriority + p.priority_counts.hoch,
+      members: acc.members + p.member_count,
+      protocols: acc.protocols + p.protocol_count,
+      pendingInvites: acc.pendingInvites + p.pending_invitations,
+    }),
+    {
+      defects: 0,
+      open: 0,
+      inProgress: 0,
+      done: 0,
+      highPriority: 0,
+      members: 0,
+      protocols: 0,
+      pendingInvites: 0,
+    }
+  );
+
+  const completionRate =
+    totals.defects > 0
+      ? Math.round((totals.done / totals.defects) * 100)
+      : 0;
+
+  const allTransitions = projects.flatMap((p) =>
+    p.recent_transitions.map((t) => ({
+      ...t,
+      projectId: p.id,
+      projectName: p.name,
+    }))
+  );
+  allTransitions.sort(
+    (a, b) =>
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+
+  const RoleIcon = ROLE_ICONS[role] ?? Hammer;
+  const canCreate = role === "admin" || role === "manager";
+
+  return (
+    <div className="mx-auto max-w-lg px-4 pt-6 pb-4 space-y-6">
+      {/* Header */}
+      <motion.header
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
+              <RoleIcon className="h-3.5 w-3.5" />
+              {ROLE_LABELS[role]}
+            </p>
+            <h1 className="text-2xl font-extrabold tracking-tight mt-0.5">
+              Hallo, {stats.user_name?.split(" ")[0] ?? ""}
+            </h1>
+          </div>
+          <div className="flex items-center gap-2">
+            {canCreate && <CreateProjectDialog />}
+          </div>
+        </div>
+      </motion.header>
+
+      {/* Role-specific content */}
+      {role === "admin" && (
+        <AdminDashboard
+          stats={stats}
+          totals={totals}
+          completionRate={completionRate}
+          allTransitions={allTransitions}
+        />
+      )}
+      {role === "manager" && (
+        <ManagerDashboard
+          stats={stats}
+          totals={totals}
+          completionRate={completionRate}
+          allTransitions={allTransitions}
+        />
+      )}
+      {role === "worker" && (
+        <WorkerDashboard
+          stats={stats}
+          totals={totals}
+          allTransitions={allTransitions}
+        />
+      )}
+    </div>
+  );
+}
+
+/* ─── Admin Dashboard ─── */
+
+interface DashTotals {
+  defects: number;
+  open: number;
+  inProgress: number;
+  done: number;
+  highPriority: number;
+  members: number;
+  protocols: number;
+  pendingInvites: number;
+}
+
+function AdminDashboard({
+  stats,
+  totals,
+  completionRate,
+  allTransitions,
+}: {
+  stats: DashboardData;
+  totals: DashTotals;
+  completionRate: number;
+  allTransitions: TransitionWithProject[];
+}) {
+  return (
+    <>
+      {/* KPI Grid */}
+      <div className="grid grid-cols-2 gap-3">
+        <StatCard
+          label="Projekte"
+          value={stats.projects.length}
+          icon={Building2}
+          color="amber"
+          delay={0}
+        />
+        <StatCard
+          label="Gesamte Mängel"
+          value={totals.defects}
+          icon={LayoutDashboard}
+          color="blue"
+          delay={0.05}
+        />
+        <StatCard
+          label="Offene Mängel"
+          value={totals.open + totals.inProgress}
+          icon={AlertTriangle}
+          color="red"
+          delay={0.1}
+          subtitle={`${totals.highPriority} hohe Priorität`}
+        />
+        <StatCard
+          label="Abschlussrate"
+          value={`${completionRate}%`}
+          icon={TrendingUp}
+          color="green"
+          delay={0.15}
+          subtitle={`${totals.done} von ${totals.defects} erledigt`}
+        />
+        <StatCard
+          label="Teammitglieder"
+          value={totals.members}
+          icon={Users}
+          color="purple"
+          delay={0.2}
+          subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} offene Einladungen` : undefined}
+        />
+        <StatCard
+          label="Protokolle"
+          value={totals.protocols}
+          icon={FileCheck}
+          color="slate"
+          delay={0.25}
+        />
+      </div>
+
+      {/* Project Health */}
+      <Section title="Projektübersicht" icon={Building2}>
+        <div className="space-y-3">
+          {stats.projects.map((p, i) => (
+            <ProjectHealthCard
+              key={p.id}
+              project={p}
+              index={i}
+              showTeamDetails
+            />
+          ))}
+        </div>
+      </Section>
+
+      {/* Activity */}
+      {allTransitions.length > 0 && (
+        <Section title="Letzte Aktivitäten" icon={Clock}>
+          {groupTransitionsByProject(allTransitions).map(
+            ([projectId, projectName, transitions]) => (
+              <ActivityFeed
+                key={projectId}
+                transitions={transitions}
+                projectId={projectId}
+                projectName={projectName}
+              />
+            )
+          )}
+        </Section>
+      )}
+    </>
+  );
+}
+
+/* ─── Manager Dashboard ─── */
+
+function ManagerDashboard({
+  stats,
+  totals,
+  completionRate,
+  allTransitions,
+}: {
+  stats: DashboardData;
+  totals: DashTotals;
+  completionRate: number;
+  allTransitions: TransitionWithProject[];
+}) {
+  return (
+    <>
+      {/* KPI Grid */}
+      <div className="grid grid-cols-2 gap-3">
+        <StatCard
+          label="Meine Projekte"
+          value={stats.projects.length}
+          icon={Building2}
+          color="amber"
+          delay={0}
+        />
+        <StatCard
+          label="Offene Mängel"
+          value={totals.open + totals.inProgress}
+          icon={AlertTriangle}
+          color="red"
+          delay={0.05}
+          subtitle={`${totals.highPriority} hohe Priorität`}
+        />
+        <StatCard
+          label="Abschlussrate"
+          value={`${completionRate}%`}
+          icon={TrendingUp}
+          color="green"
+          delay={0.1}
+          subtitle={`${totals.done} von ${totals.defects} erledigt`}
+        />
+        <StatCard
+          label="Teammitglieder"
+          value={totals.members}
+          icon={Users}
+          color="purple"
+          delay={0.15}
+          subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} Einladungen offen` : undefined}
+        />
+      </div>
+
+      {/* Projects */}
+      <Section title="Projektübersicht" icon={Building2}>
+        <div className="space-y-3">
+          {stats.projects.map((p, i) => (
+            <ProjectHealthCard
+              key={p.id}
+              project={p}
+              index={i}
+              showTeamDetails
+            />
+          ))}
+        </div>
+      </Section>
+
+      {/* Activity */}
+      {allTransitions.length > 0 && (
+        <Section title="Letzte Aktivitäten" icon={Clock}>
+          {groupTransitionsByProject(allTransitions).map(
+            ([projectId, projectName, transitions]) => (
+              <ActivityFeed
+                key={projectId}
+                transitions={transitions}
+                projectId={projectId}
+                projectName={projectName}
+              />
+            )
+          )}
+        </Section>
+      )}
+    </>
+  );
+}
+
+/* ─── Worker Dashboard ─── */
+
+function WorkerDashboard({
+  stats,
+  totals,
+  allTransitions,
+}: {
+  stats: DashboardData;
+  totals: DashTotals;
+  allTransitions: TransitionWithProject[];
+}) {
+  const myOpenDefects = stats.projects.reduce(
+    (acc, p) => acc + p.my_defects_open,
+    0
+  );
+
+  return (
+    <>
+      {/* KPI Grid */}
+      <div className="grid grid-cols-2 gap-3">
+        <StatCard
+          label="Meine Projekte"
+          value={stats.projects.length}
+          icon={Building2}
+          color="amber"
+          delay={0}
+        />
+        <StatCard
+          label="Meine offenen Mängel"
+          value={myOpenDefects}
+          icon={Hammer}
+          color="red"
+          delay={0.05}
+        />
+        <StatCard
+          label="Von mir erfasst"
+          value={stats.total_defects_by_me}
+          icon={UserCheck}
+          color="blue"
+          delay={0.1}
+        />
+        <StatCard
+          label="Erledigte Mängel"
+          value={totals.done}
+          icon={CheckCircle2}
+          color="green"
+          delay={0.15}
+        />
+      </div>
+
+      {/* Projects */}
+      <Section title="Meine Projekte" icon={Building2}>
+        <div className="space-y-3">
+          {stats.projects.map((p, i) => (
+            <ProjectHealthCard key={p.id} project={p} index={i} />
+          ))}
+        </div>
+      </Section>
+
+      {/* Activity */}
+      {allTransitions.length > 0 && (
+        <Section title="Letzte Änderungen" icon={Clock}>
+          {groupTransitionsByProject(allTransitions).map(
+            ([projectId, projectName, transitions]) => (
+              <ActivityFeed
+                key={projectId}
+                transitions={transitions}
+                projectId={projectId}
+                projectName={projectName}
+              />
+            )
+          )}
+        </Section>
+      )}
+    </>
+  );
+}
+
+/* ─── Shared ─── */
+
+function Section({
+  title,
+  icon: Icon,
+  children,
+}: {
+  title: string;
+  icon: typeof Building2;
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, delay: 0.2 }}
+      className="space-y-3"
+    >
+      <h2 className="font-bold text-sm flex items-center gap-2 text-muted-foreground uppercase tracking-wider">
+        <Icon className="h-4 w-4" />
+        {title}
+      </h2>
+      {children}
+    </motion.section>
+  );
+}
+
+type TransitionWithProject = {
+  id: string;
+  defect_id: string;
+  defect_title: string;
+  from_status: string;
+  to_status: string;
+  changed_by_name: string;
+  created_at: string;
+  projectId: string;
+  projectName: string;
+};
+
+function groupTransitionsByProject(
+  transitions: TransitionWithProject[]
+): [string, string, TransitionWithProject[]][] {
+  const map = new Map<string, [string, TransitionWithProject[]]>();
+  for (const t of transitions) {
+    const existing = map.get(t.projectId);
+    if (existing) {
+      existing[1].push(t);
+    } else {
+      map.set(t.projectId, [t.projectName, [t]]);
+    }
+  }
+  return Array.from(map.entries()).map(([id, [name, items]]) => [
+    id,
+    name,
+    items,
+  ]);
+}
+

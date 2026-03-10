@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "sonner";
+import { SerwistProvider } from "./serwist";
 import "./globals.css";
 
 const font = Plus_Jakarta_Sans({
@@ -39,7 +40,9 @@ export default function RootLayout({
   return (
     <html lang="de" suppressHydrationWarning>
       <body className={`${font.className} antialiased`}>
+        <SerwistProvider swUrl="/serwist/sw.js">
         {children}
+        </SerwistProvider>
         <Toaster
           position="top-center"
           toastOptions={{

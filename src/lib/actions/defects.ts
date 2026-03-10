@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import type { DefectStatus, DefectPriority } from "@/lib/db/schema";
+import { notifyProjectMembers } from "@/lib/push/send";
 
 export async function getDefects(projectId: string) {
   const supabase = await createClient();
@@ -61,6 +62,19 @@ export async function createDefect(params: {
   if (error) throw new Error("Fehler beim Erstellen des Mangels");
 
   revalidatePath(`/project/${params.projectId}`);
+
+  notifyProjectMembers({
+    projectId: params.projectId,
+    excludeUserId: user.id,
+    type: "new_defects",
+    payload: {
+      title: "Neuer Mangel",
+      body: `"${params.title}" wurde erfasst`,
+      url: `/project/${params.projectId}/defect/${data.id}`,
+      tag: `new-defect-${data.id}`,
+    },
+  }).catch(() => {});
+
   return data;
 }
 

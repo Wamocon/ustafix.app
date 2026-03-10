@@ -1,10 +1,12 @@
 import { getProject, getProjectMembers } from "@/lib/actions/projects";
 import { getDefects } from "@/lib/actions/defects";
+import { getProtocols } from "@/lib/actions/protocols";
 import { DefectList } from "@/components/defect-list";
 import { CaptureModal } from "@/components/capture-modal";
 import { RealtimeWrapper } from "@/components/realtime-wrapper";
 import { ProjectTeamSection } from "@/components/project-team-section";
 import { AddUnitForm } from "@/components/add-unit-form";
+import { ProtocolSection } from "@/components/protocol-section";
 import { ArrowLeft, MapPin } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -17,10 +19,11 @@ interface Props {
 
 export default async function ProjectPage({ params }: Props) {
   const { id } = await params;
-  const [project, defects, members] = await Promise.all([
+  const [project, defects, members, protocols] = await Promise.all([
     getProject(id),
     getDefects(id),
     getProjectMembers(id),
+    getProtocols(id),
   ]);
 
   if (!project) notFound();
@@ -107,11 +110,28 @@ export default async function ProjectPage({ params }: Props) {
           <section className="mb-6">
             <ProjectTeamSection
               projectId={id}
-              members={members as { id: string; user_id: string; role: string; created_at: string }[]}
+              members={members as { id: string; user_id: string; role: string; email: string | null; full_name: string | null; created_at: string }[]}
               currentUserId={user?.id ?? ""}
             />
           </section>
         </>
+      )}
+
+      {isAdminOrManager && (
+        <section className="mb-6">
+          <ProtocolSection
+            projectId={id}
+            units={(project.units as { id: string; name: string }[]) ?? []}
+            defects={defects.map((d: any) => ({
+              id: d.id,
+              title: d.title,
+              status: d.status,
+              priority: d.priority,
+            }))}
+            protocols={protocols as any}
+            canCreate={isAdminOrManager}
+          />
+        </section>
       )}
 
       <RealtimeWrapper projectId={id} />
@@ -119,6 +139,7 @@ export default async function ProjectPage({ params }: Props) {
       <CaptureModal
         projectId={id}
         units={(project.units as { id: string; name: string }[]) ?? []}
+        userId={user?.id}
       />
     </div>
   );

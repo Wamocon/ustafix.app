@@ -12,6 +12,8 @@ export interface CommentRow {
   defect_id: string;
   user_id: string;
   message: string;
+  email: string | null;
+  full_name: string | null;
   created_at: string;
 }
 
@@ -86,7 +88,7 @@ export function DefectComments({
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-semibold text-muted-foreground mb-1">
-                      {isOwn ? "Du" : "Teammitglied"} · {formatDate(c.created_at)}
+                      {isOwn ? "Du" : (c.full_name || c.email || "Teammitglied")} · {formatDate(c.created_at)}
                     </p>
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">
                       {c.message}

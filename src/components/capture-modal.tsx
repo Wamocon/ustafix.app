@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useTransition, useRef } from "react";
-import { X, Camera, Loader2, Mic, Plus, Sparkles } from "lucide-react";
+import { useState, useTransition, useRef, useEffect } from "react";
+import { X, Camera, Loader2, Mic, Plus, Sparkles, WifiOff } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FAB } from "./fab";
 import { createDefect } from "@/lib/actions/defects";
@@ -11,19 +11,29 @@ import { toast } from "sonner";
 import {
   cn,
   MAX_IMAGE_SIZE,
-  MAX_VIDEO_SIZE,
+  IMAGE_COMPRESSION_MAX_MB,
+  IMAGE_COMPRESSION_MAX_PX,
   formatFileSize,
 } from "@/lib/utils";
 import imageCompression from "browser-image-compression";
+import { validateVideoConstraints } from "@/lib/utils/validate-media";
+import { compressVideo } from "@/lib/utils/compress-video";
+import {
+  saveDefectOffline,
+  saveMediaOffline,
+  saveVoiceOffline,
+} from "@/lib/offline/hooks";
+import { syncEngine } from "@/lib/offline/sync-engine";
 
 interface CaptureModalProps {
   projectId: string;
   units: { id: string; name: string }[];
+  userId?: string;
 }
 
 type Mode = "idle" | "voice" | "media";
 
-export function CaptureModal({ projectId, units }: CaptureModalProps) {
+export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<Mode>("idle");
   const [title, setTitle] = useState("");
@@ -32,6 +42,7 @@ export function CaptureModal({ projectId, units }: CaptureModalProps) {
     "mittel"
   );
   const [files, setFiles] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<Record<number, string>>({});
   const [isPending, startTransition] = useTransition();
   const [transcribedText, setTranscribedText] = useState("");
   const [translations, setTranslations] = useState<{
@@ -40,6 +51,19 @@ export function CaptureModal({ projectId, units }: CaptureModalProps) {
     ru?: string;
   }>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const urls: Record<number, string> = {};
+    files.forEach((f, i) => {
+      if (f.type.startsWith("image/")) {
+        urls[i] = URL.createObjectURL(f);
+      }
+    });
+    setPreviewUrls(urls);
+    return () => {
+      Object.values(urls).forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [files]);
 
   function reset() {
     setMode("idle");
@@ -58,32 +82,43 @@ export function CaptureModal({ projectId, units }: CaptureModalProps) {
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = Array.from(e.target.files || []);
+    if (e.target) e.target.value = "";
     const processed: File[] = [];
 
     for (const file of selected) {
       if (file.type.startsWith("image/")) {
-        if (file.size > MAX_IMAGE_SIZE) {
-          try {
-            const compressed = await imageCompression(file, {
-              maxSizeMB: 10,
-              maxWidthOrHeight: 2048,
-              useWebWorker: true,
-            });
-            processed.push(compressed);
-          } catch {
-            toast.error("Bild konnte nicht komprimiert werden.");
+        try {
+          const compressed = await imageCompression(file, {
+            maxSizeMB: IMAGE_COMPRESSION_MAX_MB,
+            maxWidthOrHeight: IMAGE_COMPRESSION_MAX_PX,
+            useWebWorker: true,
+          });
+          if (compressed.size > MAX_IMAGE_SIZE) {
+            toast.error(
+              `Bild zu groß nach Kompression (${formatFileSize(compressed.size)}). Maximal ${formatFileSize(MAX_IMAGE_SIZE)}.`
+            );
+            continue;
           }
-        } else {
-          processed.push(file);
+          processed.push(compressed);
+        } catch {
+          if (file.size <= MAX_IMAGE_SIZE) {
+            processed.push(file);
+          } else {
+            toast.error("Bild konnte nicht komprimiert werden und ist zu groß.");
+          }
         }
       } else if (file.type.startsWith("video/")) {
-        if (file.size > MAX_VIDEO_SIZE) {
-          toast.error(
-            `Video zu groß (${formatFileSize(file.size)}). Maximal ${formatFileSize(MAX_VIDEO_SIZE)} erlaubt.`
-          );
+        const result = await validateVideoConstraints(file);
+        if (!result.valid) {
+          toast.error(result.error);
           continue;
         }
-        processed.push(file);
+        try {
+          const compressed = await compressVideo(file);
+          processed.push(compressed);
+        } catch {
+          processed.push(file);
+        }
       } else {
         processed.push(file);
       }
@@ -119,6 +154,48 @@ export function CaptureModal({ projectId, units }: CaptureModalProps) {
 
     startTransition(async () => {
       try {
+        if (!navigator.onLine) {
+          if (!userId) {
+            toast.error("Offline-Speicherung nicht moeglich. Bitte anmelden.");
+            return;
+          }
+          const defectId = await saveDefectOffline({
+            projectId,
+            title: title.trim(),
+            descriptionOriginal: transcribedText || undefined,
+            descriptionDe: translations.de,
+            descriptionTr: translations.tr,
+            descriptionRu: translations.ru,
+            unitId: unitId || undefined,
+            priority,
+            createdBy: userId,
+          });
+
+          for (const file of files) {
+            const type = file.type.startsWith("image/")
+              ? "image" as const
+              : file.type.startsWith("video/")
+                ? "video" as const
+                : "audio" as const;
+
+            if (type === "audio") {
+              await saveVoiceOffline({
+                defectId,
+                projectId,
+                blob: file,
+                fileName: file.name,
+              });
+            } else {
+              await saveMediaOffline({ defectId, projectId, file, type });
+            }
+          }
+
+          syncEngine.refreshCounts();
+          toast.success("Mangel offline gespeichert. Wird synchronisiert, sobald online.");
+          handleClose();
+          return;
+        }
+
         const defect = await createDefect({
           projectId,
           title: title.trim(),
@@ -137,6 +214,37 @@ export function CaptureModal({ projectId, units }: CaptureModalProps) {
         toast.success("Mangel erfasst!");
         handleClose();
       } catch {
+        if (!navigator.onLine && userId) {
+          try {
+            const defectId = await saveDefectOffline({
+              projectId,
+              title: title.trim(),
+              descriptionOriginal: transcribedText || undefined,
+              descriptionDe: translations.de,
+              descriptionTr: translations.tr,
+              descriptionRu: translations.ru,
+              unitId: unitId || undefined,
+              priority,
+              createdBy: userId,
+            });
+
+            for (const file of files) {
+              const type = file.type.startsWith("image/")
+                ? "image" as const
+                : file.type.startsWith("video/")
+                  ? "video" as const
+                  : "audio" as const;
+              await saveMediaOffline({ defectId, projectId, file, type });
+            }
+
+            syncEngine.refreshCounts();
+            toast.success("Mangel offline gespeichert.");
+            handleClose();
+            return;
+          } catch {
+            // fall through
+          }
+        }
         toast.error("Fehler beim Speichern des Mangels.");
       }
     });
@@ -239,10 +347,10 @@ export function CaptureModal({ projectId, units }: CaptureModalProps) {
                           key={i}
                           className="relative shrink-0 h-20 w-20 rounded-2xl bg-muted flex items-center justify-center overflow-hidden border border-border"
                         >
-                          {f.type.startsWith("image/") ? (
+                          {f.type.startsWith("image/") && previewUrls[i] ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
-                              src={URL.createObjectURL(f)}
+                              src={previewUrls[i]}
                               alt=""
                               className="h-full w-full object-cover"
                             />

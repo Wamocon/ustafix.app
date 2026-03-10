@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
 import type { MemberRole } from "@/lib/db/schema";
 
 export async function getProjects() {
@@ -133,11 +132,9 @@ export async function createUnit(projectId: string, name: string) {
 
 export async function getProjectMembers(projectId: string) {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("project_members")
-    .select("id, user_id, role, created_at")
-    .eq("project_id", projectId)
-    .order("created_at", { ascending: true });
+  const { data } = await supabase.rpc("get_project_members_with_info", {
+    p_project_id: projectId,
+  });
 
   return data ?? [];
 }
@@ -196,26 +193,23 @@ export async function addProjectMember(
   const normalizedEmail = email.trim().toLowerCase();
   if (!normalizedEmail) return { error: "Bitte eine E-Mail-Adresse angeben." };
 
-  const admin = createAdminClient();
-  const { data: { users }, error: listError } = await admin.auth.admin.listUsers({
-    perPage: 1000,
-  });
+  const { data: foundUserId, error: lookupError } = await supabase.rpc(
+    "get_user_id_by_email",
+    { p_email: normalizedEmail }
+  );
 
-  if (listError) {
-    console.error("listUsers error:", listError);
+  if (lookupError) {
+    console.error("user lookup error:", lookupError);
     return { error: "Nutzer-Suche fehlgeschlagen." };
   }
 
-  const existingUser = users?.find(
-    (u) => u.email?.toLowerCase() === normalizedEmail
-  );
-  if (!existingUser) {
+  if (!foundUserId) {
     return { error: "Nutzer existiert nicht im System. Die Person muss sich zuerst registrieren." };
   }
 
   const { error: insertError } = await supabase.from("project_members").insert({
     project_id: projectId,
-    user_id: existingUser.id,
+    user_id: foundUserId,
     role,
   });
 
