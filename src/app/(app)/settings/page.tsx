@@ -68,7 +68,7 @@ export default async function SettingsPage() {
               <span className="font-semibold text-foreground">PWA</span>
             </div>
             <p className="pt-2 text-xs">
-              Baumängel.app — Baustellenmängel einfach erfassen und verwalten.
+              Ustafix.app — Baustellenmängel einfach erfassen und verwalten.
             </p>
           </div>
         </div>

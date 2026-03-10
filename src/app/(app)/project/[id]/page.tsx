@@ -1,11 +1,15 @@
-import { getProject } from "@/lib/actions/projects";
+import { getProject, getProjectMembers } from "@/lib/actions/projects";
 import { getDefects } from "@/lib/actions/defects";
 import { DefectList } from "@/components/defect-list";
 import { CaptureModal } from "@/components/capture-modal";
 import { RealtimeWrapper } from "@/components/realtime-wrapper";
+import { ProjectTeamSection } from "@/components/project-team-section";
+import { AddUnitForm } from "@/components/add-unit-form";
 import { ArrowLeft, MapPin } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import type { MemberRole } from "@/lib/db/schema";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -13,12 +17,18 @@ interface Props {
 
 export default async function ProjectPage({ params }: Props) {
   const { id } = await params;
-  const [project, defects] = await Promise.all([
+  const [project, defects, members] = await Promise.all([
     getProject(id),
     getDefects(id),
+    getProjectMembers(id),
   ]);
 
   if (!project) notFound();
+
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const myRole = (project.myRole as MemberRole) ?? null;
+  const isAdminOrManager = myRole === "admin" || myRole === "manager";
 
   const counts = {
     offen: defects.filter((d) => d.status === "offen").length,
@@ -87,6 +97,22 @@ export default async function ProjectPage({ params }: Props) {
           />
         </div>
       </header>
+
+      {isAdminOrManager && (
+        <>
+          <section className="mb-6">
+            <h2 className="text-sm font-semibold text-muted-foreground mb-2">Einheiten</h2>
+            <AddUnitForm projectId={id} />
+          </section>
+          <section className="mb-6">
+            <ProjectTeamSection
+              projectId={id}
+              members={members as { id: string; user_id: string; role: string; created_at: string }[]}
+              currentUserId={user?.id ?? ""}
+            />
+          </section>
+        </>
+      )}
 
       <RealtimeWrapper projectId={id} />
       <DefectList defects={defects} projectId={id} />

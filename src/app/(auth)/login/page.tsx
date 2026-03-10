@@ -60,7 +60,7 @@ export default function LoginPage() {
           </motion.div>
           <div className="text-center">
             <h1 className="text-3xl font-extrabold tracking-tight">
-              Baumängel<span className="gradient-text">.app</span>
+              Ustafix<span className="gradient-text">.app</span>
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
               Melden Sie sich an, um Ihre Bauprojekte zu verwalten.

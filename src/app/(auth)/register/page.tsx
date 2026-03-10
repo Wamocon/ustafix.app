@@ -82,7 +82,7 @@ export default function RegisterPage() {
               Konto erstellen
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              Erstellen Sie ein Konto, um Baumängel zu erfassen.
+              Erstellen Sie ein Konto, um Mängel zu erfassen.
             </p>
           </div>
         </div>

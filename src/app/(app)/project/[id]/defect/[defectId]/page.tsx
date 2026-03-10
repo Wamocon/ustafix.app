@@ -1,11 +1,16 @@
 import { getDefect } from "@/lib/actions/defects";
+import { getProject } from "@/lib/actions/projects";
+import { getDefectComments } from "@/lib/actions/comments";
 import { StatusToggle } from "@/components/status-toggle";
 import { MediaViewer } from "@/components/media-viewer";
 import { DefectActions } from "@/components/defect-actions";
-import { ArrowLeft, MapPin, Clock, AlertTriangle } from "lucide-react";
+import { DefectComments } from "@/components/defect-comments";
+import { ArrowLeft, MapPin, Clock } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/server";
+import type { MemberRole } from "@/lib/db/schema";
 
 interface Props {
   params: Promise<{ id: string; defectId: string }>;
@@ -19,9 +24,21 @@ const PRIORITY_CONFIG = {
 
 export default async function DefectDetailPage({ params }: Props) {
   const { id: projectId, defectId } = await params;
-  const defect = await getDefect(defectId);
+  const [defect, project, commentsResult] = await Promise.all([
+    getDefect(defectId),
+    getProject(projectId),
+    getDefectComments(defectId),
+  ]);
 
   if (!defect) notFound();
+  if (!project) notFound();
+
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const myRole = (project.myRole as MemberRole) ?? null;
+  const canDeleteDefect = myRole === "admin" || myRole === "manager";
+  const canDeleteAllMedia = canDeleteDefect;
+  const canDeleteAnyComment = canDeleteDefect;
 
   const media =
     (defect.defect_media as Array<{
@@ -30,6 +47,7 @@ export default async function DefectDetailPage({ params }: Props) {
       storage_path: string;
       file_size: number;
       mime_type: string;
+      created_by?: string | null;
     }>) ?? [];
 
   const unitName = (defect.units as { name: string } | null)?.name;
@@ -79,6 +97,8 @@ export default async function DefectDetailPage({ params }: Props) {
             media={media}
             projectId={projectId}
             defectId={defectId}
+            currentUserId={user?.id ?? null}
+            canDeleteAll={canDeleteAllMedia}
           />
         </div>
       )}
@@ -115,8 +135,21 @@ export default async function DefectDetailPage({ params }: Props) {
         )}
       </div>
 
+      {/* Kommentare (Fragen & Anweisungen) */}
+      <DefectComments
+        projectId={projectId}
+        defectId={defectId}
+        comments={commentsResult}
+        currentUserId={user?.id ?? null}
+        canDeleteAnyComment={canDeleteAnyComment}
+      />
+
       <div className="mt-8">
-        <DefectActions defectId={defect.id} projectId={projectId} />
+        <DefectActions
+          defectId={defect.id}
+          projectId={projectId}
+          canDelete={canDeleteDefect}
+        />
       </div>
     </div>
   );

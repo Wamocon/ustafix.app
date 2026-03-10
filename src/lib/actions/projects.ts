@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import type { MemberRole } from "@/lib/db/schema";
 
 export async function getProjects() {
   const supabase = await createClient();
@@ -15,19 +17,34 @@ export async function getProjects() {
 
   return (data ?? []).map((pm) => ({
     ...pm.projects,
-    role: pm.role,
+    role: pm.role as MemberRole,
   }));
 }
 
 export async function getProject(id: string) {
   const supabase = await createClient();
-  const { data } = await supabase
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const { data: project } = await supabase
     .from("projects")
     .select("*, organizations(name), units(*)")
     .eq("id", id)
     .single();
 
-  return data;
+  if (!project) return null;
+
+  let myRole: MemberRole | null = null;
+  if (user) {
+    const { data: membership } = await supabase
+      .from("project_members")
+      .select("role")
+      .eq("project_id", id)
+      .eq("user_id", user.id)
+      .single();
+    myRole = (membership?.role as MemberRole) ?? null;
+  }
+
+  return { ...project, myRole };
 }
 
 export async function createProject(formData: FormData) {
@@ -87,6 +104,20 @@ export async function createProject(formData: FormData) {
 
 export async function createUnit(projectId: string, name: string) {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Nicht authentifiziert");
+
+  const { data: membership } = await supabase
+    .from("project_members")
+    .select("role")
+    .eq("project_id", projectId)
+    .eq("user_id", user.id)
+    .single();
+
+  const role = membership?.role as MemberRole | undefined;
+  if (role !== "admin" && role !== "manager") {
+    throw new Error("Nur Admin oder Manager dürfen Einheiten anlegen.");
+  }
 
   const { data, error } = await supabase
     .from("units")
@@ -98,4 +129,103 @@ export async function createUnit(projectId: string, name: string) {
 
   revalidatePath(`/project/${projectId}`);
   return data;
+}
+
+export async function getProjectMembers(projectId: string) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("project_members")
+    .select("id, user_id, role, created_at")
+    .eq("project_id", projectId)
+    .order("created_at", { ascending: true });
+
+  return data ?? [];
+}
+
+export async function removeProjectMember(projectId: string, userId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Nicht authentifiziert");
+
+  const { data: myMembership } = await supabase
+    .from("project_members")
+    .select("role")
+    .eq("project_id", projectId)
+    .eq("user_id", user.id)
+    .single();
+
+  const myRole = myMembership?.role as MemberRole | undefined;
+  if (myRole !== "admin" && myRole !== "manager") {
+    throw new Error("Nur Admin oder Manager dürfen Mitglieder entfernen.");
+  }
+
+  const { error } = await supabase
+    .from("project_members")
+    .delete()
+    .eq("project_id", projectId)
+    .eq("user_id", userId);
+
+  if (error) throw new Error("Fehler beim Entfernen des Mitglieds");
+  revalidatePath(`/project/${projectId}`);
+}
+
+/** Rolle beim Hinzufügen: nur manager oder worker (admin wird nicht vergeben). */
+export type InviteRole = "manager" | "worker";
+
+export async function addProjectMember(
+  projectId: string,
+  email: string,
+  role: InviteRole
+): Promise<{ error?: string }> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Nicht authentifiziert" };
+
+  const { data: myMembership } = await supabase
+    .from("project_members")
+    .select("role")
+    .eq("project_id", projectId)
+    .eq("user_id", user.id)
+    .single();
+
+  const myRole = myMembership?.role as MemberRole | undefined;
+  if (myRole !== "admin" && myRole !== "manager") {
+    return { error: "Nur Admin oder Manager dürfen Nutzer hinzufügen." };
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+  if (!normalizedEmail) return { error: "Bitte eine E-Mail-Adresse angeben." };
+
+  const admin = createAdminClient();
+  const { data: { users }, error: listError } = await admin.auth.admin.listUsers({
+    perPage: 1000,
+  });
+
+  if (listError) {
+    console.error("listUsers error:", listError);
+    return { error: "Nutzer-Suche fehlgeschlagen." };
+  }
+
+  const existingUser = users?.find(
+    (u) => u.email?.toLowerCase() === normalizedEmail
+  );
+  if (!existingUser) {
+    return { error: "Nutzer existiert nicht im System. Die Person muss sich zuerst registrieren." };
+  }
+
+  const { error: insertError } = await supabase.from("project_members").insert({
+    project_id: projectId,
+    user_id: existingUser.id,
+    role,
+  });
+
+  if (insertError) {
+    if (insertError.code === "23505") {
+      return { error: "Diese Person ist bereits im Projekt." };
+    }
+    return { error: insertError.message || "Fehler beim Hinzufügen." };
+  }
+
+  revalidatePath(`/project/${projectId}`);
+  return {};
 }

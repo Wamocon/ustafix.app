@@ -1,7 +1,7 @@
 {
-  "name": "Baumängel.app",
-  "short_name": "Baumängel",
-  "description": "Baumängel erfassen, verwalten und verfolgen – direkt von der Baustelle.",
+  "name": "Ustafix.app",
+  "short_name": "Ustafix",
+  "description": "Mängel erfassen, verwalten und verfolgen – direkt von der Baustelle.",
   "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#0a0a0a",

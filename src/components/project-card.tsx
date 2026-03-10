@@ -51,9 +51,9 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
             <span className="text-xs text-muted-foreground font-medium">
               {project.role === "admin"
                 ? "Admin"
-                : project.role === "melder"
-                  ? "Melder"
-                  : "Betrachter"}
+                : project.role === "manager"
+                  ? "Manager"
+                  : "Mitarbeiter"}
             </span>
           </div>
         </div>

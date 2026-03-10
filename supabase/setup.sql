@@ -1,9 +1,9 @@
--- Baumängel.app Database Setup
--- Run this in the Supabase SQL Editor to set up all tables and RLS policies.
+-- Ustafix.app Database Setup (Neuinstallation)
+-- Für bestehende Datenbanken: Migration supabase/migrations/20250309_roles_admin_manager_worker.sql ausführen.
 
 -- Enums
 CREATE TYPE project_status AS ENUM ('aktiv', 'abgeschlossen');
-CREATE TYPE member_role AS ENUM ('admin', 'melder', 'viewer');
+CREATE TYPE member_role AS ENUM ('admin', 'manager', 'worker');
 CREATE TYPE defect_status AS ENUM ('offen', 'in_arbeit', 'erledigt');
 CREATE TYPE defect_priority AS ENUM ('niedrig', 'mittel', 'hoch');
 CREATE TYPE media_type AS ENUM ('image', 'video', 'audio');
@@ -30,7 +30,7 @@ CREATE TABLE project_members (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  role member_role NOT NULL DEFAULT 'melder',
+  role member_role NOT NULL DEFAULT 'worker',
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   UNIQUE(project_id, user_id)
 );
@@ -71,10 +71,21 @@ CREATE TABLE defect_media (
   storage_path TEXT NOT NULL,
   file_size INTEGER NOT NULL,
   mime_type TEXT NOT NULL,
+  created_by UUID REFERENCES auth.users(id) ON DELETE SET NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE INDEX idx_media_defect ON defect_media(defect_id);
+
+-- Defect Comments (Fragen & Anweisungen)
+CREATE TABLE defect_comments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  defect_id UUID NOT NULL REFERENCES defects(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  message TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_defect_comments_defect ON defect_comments(defect_id);
 
 -- ============================================================
 -- Row Level Security (RLS)
@@ -104,6 +115,16 @@ RETURNS member_role AS $$
   LIMIT 1;
 $$ LANGUAGE sql SECURITY DEFINER STABLE;
 
+CREATE OR REPLACE FUNCTION is_admin_or_manager(p_project_id UUID)
+RETURNS BOOLEAN AS $$
+  SELECT get_project_role(p_project_id) IN ('admin', 'manager');
+$$ LANGUAGE sql SECURITY DEFINER STABLE;
+
+CREATE OR REPLACE FUNCTION is_project_admin(p_project_id UUID)
+RETURNS BOOLEAN AS $$
+  SELECT get_project_role(p_project_id) = 'admin';
+$$ LANGUAGE sql SECURITY DEFINER STABLE;
+
 -- Organizations: members can see their orgs
 CREATE POLICY "Users can view their organizations" ON organizations
   FOR SELECT USING (
@@ -117,80 +138,98 @@ CREATE POLICY "Users can view their organizations" ON organizations
 CREATE POLICY "Authenticated users can create organizations" ON organizations
   FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
 
--- Projects: members only
+-- Projects
 CREATE POLICY "Members can view projects" ON projects
   FOR SELECT USING (is_project_member(id));
 
-CREATE POLICY "Authenticated users can create projects" ON projects
-  FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
+CREATE POLICY "projects_insert" ON projects
+  FOR INSERT WITH CHECK (
+    auth.uid() IS NOT NULL
+    AND (
+      NOT EXISTS (SELECT 1 FROM project_members WHERE user_id = auth.uid())
+      OR organization_id IN (
+        SELECT p.organization_id FROM projects p
+        JOIN project_members pm ON pm.project_id = p.id
+        WHERE pm.user_id = auth.uid() AND pm.role IN ('admin', 'manager')
+      )
+    )
+  );
 
-CREATE POLICY "Admins can update projects" ON projects
-  FOR UPDATE USING (get_project_role(id) = 'admin');
+CREATE POLICY "projects_update" ON projects
+  FOR UPDATE USING (is_admin_or_manager(id));
 
--- Project Members: members can see fellow members
+CREATE POLICY "projects_delete" ON projects
+  FOR DELETE USING (is_project_admin(id));
+
+-- Project Members
 CREATE POLICY "Members can view project members" ON project_members
   FOR SELECT USING (is_project_member(project_id));
 
-CREATE POLICY "Admins can manage members" ON project_members
-  FOR INSERT WITH CHECK (
-    auth.uid() IS NOT NULL AND (
-      get_project_role(project_id) = 'admin'
-      OR NOT EXISTS (SELECT 1 FROM project_members WHERE project_id = project_members.project_id)
-    )
-  );
+CREATE POLICY "project_members_insert" ON project_members
+  FOR INSERT WITH CHECK (auth.uid() IS NOT NULL AND is_admin_or_manager(project_id) = true);
 
-CREATE POLICY "Admins can remove members" ON project_members
-  FOR DELETE USING (get_project_role(project_id) = 'admin');
+CREATE POLICY "project_members_update_role" ON project_members
+  FOR UPDATE USING (is_admin_or_manager(project_id));
 
--- Units: project members can manage
+CREATE POLICY "project_members_delete" ON project_members
+  FOR DELETE USING (is_admin_or_manager(project_id));
+
+-- Units: nur admin/manager dürfen anlegen
 CREATE POLICY "Members can view units" ON units
   FOR SELECT USING (is_project_member(project_id));
 
-CREATE POLICY "Members can create units" ON units
-  FOR INSERT WITH CHECK (is_project_member(project_id));
+CREATE POLICY "units_insert" ON units
+  FOR INSERT WITH CHECK (is_project_member(project_id) AND is_admin_or_manager(project_id));
 
--- Defects: project members can CRUD
+-- Defects: alle Mitglieder Insert/Update; Delete nur admin/manager
 CREATE POLICY "Members can view defects" ON defects
   FOR SELECT USING (is_project_member(project_id));
 
-CREATE POLICY "Members can create defects" ON defects
-  FOR INSERT WITH CHECK (
-    is_project_member(project_id) AND
-    get_project_role(project_id) IN ('admin', 'melder')
-  );
+CREATE POLICY "defects_insert" ON defects
+  FOR INSERT WITH CHECK (is_project_member(project_id));
 
-CREATE POLICY "Members can update defects" ON defects
-  FOR UPDATE USING (
-    is_project_member(project_id) AND
-    get_project_role(project_id) IN ('admin', 'melder')
-  );
+CREATE POLICY "defects_update" ON defects
+  FOR UPDATE USING (is_project_member(project_id));
 
-CREATE POLICY "Admins can delete defects" ON defects
-  FOR DELETE USING (get_project_role(project_id) = 'admin');
+CREATE POLICY "defects_delete" ON defects
+  FOR DELETE USING (is_admin_or_manager(project_id));
 
--- Defect Media: follows defect access
+-- Defect Media: Insert alle (created_by = auth.uid()); Delete admin/manager alle, worker nur eigenes
 CREATE POLICY "Members can view media" ON defect_media
   FOR SELECT USING (
-    defect_id IN (
-      SELECT id FROM defects WHERE is_project_member(project_id)
-    )
+    defect_id IN (SELECT d.id FROM defects d WHERE is_project_member(d.project_id))
   );
 
-CREATE POLICY "Members can upload media" ON defect_media
+CREATE POLICY "defect_media_insert" ON defect_media
   FOR INSERT WITH CHECK (
-    defect_id IN (
-      SELECT id FROM defects
-      WHERE is_project_member(project_id)
-        AND get_project_role(project_id) IN ('admin', 'melder')
-    )
+    defect_id IN (SELECT d.id FROM defects d WHERE is_project_member(d.project_id))
+    AND (created_by IS NULL OR created_by = auth.uid())
   );
 
-CREATE POLICY "Admins can delete media" ON defect_media
+CREATE POLICY "defect_media_delete_admin_manager" ON defect_media
   FOR DELETE USING (
-    defect_id IN (
-      SELECT id FROM defects
-      WHERE get_project_role(project_id) = 'admin'
-    )
+    defect_id IN (SELECT d.id FROM defects d WHERE is_admin_or_manager(d.project_id))
+  );
+
+CREATE POLICY "defect_media_delete_worker_own" ON defect_media
+  FOR DELETE USING (
+    created_by = auth.uid()
+    AND defect_id IN (SELECT d.id FROM defects d WHERE is_project_member(d.project_id))
+  );
+
+-- Defect Comments
+ALTER TABLE defect_comments ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "defect_comments_select" ON defect_comments
+  FOR SELECT USING (defect_id IN (SELECT d.id FROM defects d WHERE is_project_member(d.project_id)));
+CREATE POLICY "defect_comments_insert" ON defect_comments
+  FOR INSERT WITH CHECK (
+    auth.uid() IS NOT NULL AND user_id = auth.uid()
+    AND defect_id IN (SELECT d.id FROM defects d WHERE is_project_member(d.project_id))
+  );
+CREATE POLICY "defect_comments_delete" ON defect_comments
+  FOR DELETE USING (
+    (user_id = auth.uid())
+    OR defect_id IN (SELECT d.id FROM defects d WHERE is_admin_or_manager(d.project_id))
   );
 
 -- ============================================================
@@ -225,3 +264,4 @@ CREATE POLICY "Authenticated users can delete own" ON storage.objects
 -- ============================================================
 
 ALTER PUBLICATION supabase_realtime ADD TABLE defects;
+ALTER PUBLICATION supabase_realtime ADD TABLE defect_comments;

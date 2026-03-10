@@ -6,6 +6,7 @@ export async function uploadFileClient(
   projectId: string
 ): Promise<{ path: string; type: "image" | "video" | "audio" }> {
   const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
 
   const type: "image" | "video" | "audio" = file.type.startsWith("image/")
     ? "image"
@@ -30,6 +31,7 @@ export async function uploadFileClient(
     storage_path: path,
     file_size: file.size,
     mime_type: file.type,
+    created_by: user?.id ?? null,
   });
 
   if (dbError) {

@@ -40,3 +40,7 @@ next-env.d.ts
 agent-transcripts/
 mcps/
 terminals/
+
+# Xray scripts (generierte Zuordnung + Testergebnisse, pro Umgebung)
+scripts/xray/created-tests-mapping.json
+scripts/xray/results-rolenkonzept.json

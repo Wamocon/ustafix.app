@@ -16,8 +16,8 @@ export const projectStatusEnum = pgEnum("project_status", [
 
 export const memberRoleEnum = pgEnum("member_role", [
   "admin",
-  "melder",
-  "viewer",
+  "manager",
+  "worker",
 ]);
 
 export const defectStatusEnum = pgEnum("defect_status", [
@@ -63,7 +63,7 @@ export const projectMembers = pgTable(
       .references(() => projects.id, { onDelete: "cascade" })
       .notNull(),
     userId: uuid("user_id").notNull(),
-    role: memberRoleEnum("role").default("melder").notNull(),
+    role: memberRoleEnum("role").default("worker").notNull(),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [
@@ -116,9 +116,24 @@ export const defectMedia = pgTable(
     storagePath: text("storage_path").notNull(),
     fileSize: integer("file_size").notNull(),
     mimeType: text("mime_type").notNull(),
+    createdBy: uuid("created_by"),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [index("idx_media_defect").on(table.defectId)]
+);
+
+export const defectComments = pgTable(
+  "defect_comments",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    defectId: uuid("defect_id")
+      .references(() => defects.id, { onDelete: "cascade" })
+      .notNull(),
+    userId: uuid("user_id").notNull(),
+    message: text("message").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [index("idx_defect_comments_defect").on(table.defectId)]
 );
 
 export type Organization = typeof organizations.$inferSelect;
@@ -127,6 +142,7 @@ export type ProjectMember = typeof projectMembers.$inferSelect;
 export type Unit = typeof units.$inferSelect;
 export type Defect = typeof defects.$inferSelect;
 export type DefectMedia = typeof defectMedia.$inferSelect;
+export type DefectComment = typeof defectComments.$inferSelect;
 export type DefectStatus = "offen" | "in_arbeit" | "erledigt";
 export type DefectPriority = "niedrig" | "mittel" | "hoch";
-export type MemberRole = "admin" | "melder" | "viewer";
+export type MemberRole = "admin" | "manager" | "worker";

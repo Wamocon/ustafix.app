@@ -9,6 +9,9 @@ export async function uploadMedia(
   formData: FormData
 ) {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Nicht authentifiziert");
+
   const file = formData.get("file") as File;
   if (!file) throw new Error("Keine Datei ausgewählt");
 
@@ -36,6 +39,7 @@ export async function uploadMedia(
     storage_path: path,
     file_size: file.size,
     mime_type: file.type,
+    created_by: user.id,
   });
 
   if (dbError) throw new Error("Fehler beim Speichern der Mediendaten");

@@ -1,4 +1,4 @@
-# Baumängel.app
+# Ustafix.app
 
 Construction defect management app for the German construction industry. Document, track, and manage building defects directly from the construction site with voice-first input, photo/video capture, and AI-powered multilingual translation.
 
@@ -44,6 +44,22 @@ DEEPL_API_KEY=your_deepl_api_key
 
 Open the Supabase SQL Editor and run the contents of `supabase/setup.sql`. This creates all tables, RLS policies, storage buckets, and enables Realtime.
 
+- **Bestehende Datenbanken:** Zuerst die Migration `supabase/migrations/20250309_roles_admin_manager_worker.sql` ausführen (Rollen admin/manager/worker, defect_comments, RLS).
+
+#### Rollenkonzept zuerst testen (empfohlen)
+
+Vor dem Einsatz auf einer produktiven oder wichtigen Datenbank das Rollenkonzept auf einer **Test-DB** prüfen:
+
+1. Neues Supabase-Projekt anlegen (z. B. „ustafix-test“) oder eine unkritische Test-DB nutzen.
+2. `.env.local` vorübergehend auf die Test-Projekt-URL und -Keys umstellen, App starten (`npm run dev`).
+3. Im Supabase SQL Editor der Test-DB: bei frischer DB `supabase/setup.sql` ausführen, bei bestehender DB die Migration `supabase/migrations/20250309_roles_admin_manager_worker.sql`.
+4. Den **Testplan** durchgehen: [docs/TESTPLAN-Rollenkonzept.md](docs/TESTPLAN-Rollenkonzept.md) (Checklisten für Admin, Manager, Worker, Empty State, Realtime/PWA).
+5. Erst nach erfolgreichem Durchlauf die Migration auf der Ziel- bzw. Produktions-Datenbank ausführen.
+
+Weitere Testdokumentation:
+- **Teststufen** (Unit, Funktionstest, Systemintegration, Abnahme): [docs/TESTSTUFEN-Rollenkonzept.md](docs/TESTSTUFEN-Rollenkonzept.md)
+- **Dokumentation in Jira Xray:** [docs/Jira-Xray-Anleitung.md](docs/Jira-Xray-Anleitung.md) (Projekt FR: Tests anlegen, Test Plan, Test Execution für Abnahme)
+
 ### 4. Run the dev server
 
 ```bash
@@ -59,4 +75,6 @@ Open [http://localhost:3000](http://localhost:3000).
 - **One-tap status updates**: Toggle between Open/In Progress/Done with instant auto-save
 - **Real-time sync**: All changes sync live across connected users via Supabase Realtime
 - **Offline resilience**: PWA with cached app shell and offline indicator
-- **Multi-tenant**: Organizations manage multiple construction projects with role-based access (Admin/Reporter/Viewer)
+- **Roles (admin, manager, worker)**: Admin/Manager verwalten Projekte, Team und Einheiten; Worker erfassen Mängel und wechseln Status; Löschen von Mängeln/Medien nach Rolle
+- **Projekt-Team (Pull-Modell)**: Nutzer per E-Mail hinzufügen (muss registriert sein); nur Admin/Manager
+- **Kommentare pro Mangel**: Fragen & Anweisungen (defect_comments); alle lesen/schreiben, Löschen nur Ersteller oder Admin/Manager

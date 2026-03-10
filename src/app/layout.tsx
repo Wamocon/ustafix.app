@@ -9,14 +9,14 @@ const font = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Baumängel.app",
+  title: "Ustafix.app",
   description:
-    "Baumängel erfassen, verwalten und verfolgen – direkt von der Baustelle.",
+    "Mängel erfassen, verwalten und verfolgen – direkt von der Baustelle.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Baumängel",
+    title: "Ustafix",
   },
 };
 

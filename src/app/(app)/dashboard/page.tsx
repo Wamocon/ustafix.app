@@ -2,9 +2,15 @@ import { getProjects } from "@/lib/actions/projects";
 import { ProjectCard } from "@/components/project-card";
 import { CreateProjectDialog } from "@/components/create-project-dialog";
 import { HardHat, Sparkles } from "lucide-react";
+import type { MemberRole } from "@/lib/db/schema";
 
 export default async function DashboardPage() {
   const projects = await getProjects();
+  const canCreateProject =
+    projects.length === 0 ||
+    projects.some(
+      (p) => (p.role as MemberRole) === "admin" || (p.role as MemberRole) === "manager"
+    );
 
   return (
     <div className="mx-auto max-w-lg px-4 pt-6 pb-4">
@@ -22,7 +28,7 @@ export default async function DashboardPage() {
               {projects.length === 1 ? "Projekt" : "Projekte"} aktiv
             </p>
           </div>
-          <CreateProjectDialog />
+          {canCreateProject && <CreateProjectDialog />}
         </div>
       </header>
 
@@ -32,12 +38,16 @@ export default async function DashboardPage() {
             <HardHat className="h-10 w-10 text-white" />
           </div>
           <div>
-            <p className="text-lg font-bold">Noch keine Projekte</p>
+            <p className="text-lg font-bold">
+              {canCreateProject ? "Noch keine Projekte" : "Willkommen!"}
+            </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Erstellen Sie Ihr erstes Bauprojekt und legen Sie direkt los.
+              {canCreateProject
+                ? "Erstellen Sie Ihr erstes Bauprojekt und legen Sie direkt los."
+                : "Warte auf die Zuweisung zu einem Projekt durch deinen Bauleiter."}
             </p>
           </div>
-          <CreateProjectDialog variant="inline" />
+          {canCreateProject && <CreateProjectDialog variant="inline" />}
         </div>
       ) : (
         <div className="space-y-3">

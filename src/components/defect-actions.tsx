@@ -10,9 +10,15 @@ import { motion, AnimatePresence } from "framer-motion";
 interface DefectActionsProps {
   defectId: string;
   projectId: string;
+  /** Nur Admin und Manager sehen den Löschen-Button (Worker nicht). */
+  canDelete: boolean;
 }
 
-export function DefectActions({ defectId, projectId }: DefectActionsProps) {
+export function DefectActions({
+  defectId,
+  projectId,
+  canDelete,
+}: DefectActionsProps) {
   const [confirm, setConfirm] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -34,6 +40,8 @@ export function DefectActions({ defectId, projectId }: DefectActionsProps) {
       }
     });
   }
+
+  if (!canDelete) return null;
 
   return (
     <div className="border-t border-border pt-6">
