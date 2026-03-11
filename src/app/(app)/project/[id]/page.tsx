@@ -30,6 +30,7 @@ export default async function ProjectPage({ params }: Props) {
     offen: defects.filter((d) => d.status === "offen").length,
     in_arbeit: defects.filter((d) => d.status === "in_arbeit").length,
     erledigt: defects.filter((d) => d.status === "erledigt").length,
+    problem: defects.filter((d) => d.status === "problem").length,
   };
 
   const total = defects.length;

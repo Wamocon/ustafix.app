@@ -24,6 +24,7 @@ export const defectStatusEnum = pgEnum("defect_status", [
   "offen",
   "in_arbeit",
   "erledigt",
+  "problem",
 ]);
 
 export const defectPriorityEnum = pgEnum("defect_priority", [
@@ -291,7 +292,7 @@ export type AcceptanceVerdict = "akzeptiert" | "beanstandet" | "zurueckgestellt"
 export type PhaseUpdate = typeof phaseUpdates.$inferSelect;
 export type PhaseUpdateMedia = typeof phaseUpdateMedia.$inferSelect;
 export type MediaPhase = "erfassung" | "fortschritt" | "abnahme";
-export type DefectStatus = "offen" | "in_arbeit" | "erledigt";
+export type DefectStatus = "offen" | "in_arbeit" | "erledigt" | "problem";
 export type DefectPriority = "niedrig" | "mittel" | "hoch";
 export type MemberRole = "admin" | "manager" | "worker";
 

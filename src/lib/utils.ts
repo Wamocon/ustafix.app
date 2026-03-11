@@ -51,9 +51,37 @@ export const TRANSITION_RULES: Record<string, TransitionRule> = {
   "in_arbeit->erledigt": {
     requiresMedia: true,
     requiresNote: true,
-    allowedRoles: ["admin", "manager", "worker"],
+    allowedRoles: ["admin", "manager"],
     label: "Als erledigt markieren",
     labelKey: "statusModal.label.markDone",
+  },
+  "in_arbeit->problem": {
+    requiresMedia: false,
+    requiresNote: true,
+    allowedRoles: ["admin", "manager", "worker"],
+    label: "Problem melden",
+    labelKey: "statusModal.label.reportProblem",
+  },
+  "erledigt->problem": {
+    requiresMedia: true,
+    requiresNote: true,
+    allowedRoles: ["admin", "manager"],
+    label: "Problem festgestellt",
+    labelKey: "statusModal.label.foundProblem",
+  },
+  "problem->in_arbeit": {
+    requiresMedia: false,
+    requiresNote: true,
+    allowedRoles: ["admin", "manager", "worker"],
+    label: "Erneut bearbeiten",
+    labelKey: "statusModal.label.rework",
+  },
+  "problem->offen": {
+    requiresMedia: false,
+    requiresNote: true,
+    allowedRoles: ["admin", "manager"],
+    label: "Zurück auf Offen",
+    labelKey: "statusModal.label.backToOpen",
   },
   "erledigt->offen": {
     requiresMedia: false,
@@ -75,13 +103,6 @@ export const TRANSITION_RULES: Record<string, TransitionRule> = {
     allowedRoles: ["admin", "manager"],
     label: "Direkt als erledigt markieren",
     labelKey: "statusModal.label.directDone",
-  },
-  "erledigt->in_arbeit": {
-    requiresMedia: false,
-    requiresNote: true,
-    allowedRoles: ["admin", "manager"],
-    label: "Zurück in Arbeit setzen",
-    labelKey: "statusModal.label.backToWork",
   },
 };
 

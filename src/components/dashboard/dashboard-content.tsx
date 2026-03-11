@@ -48,6 +48,7 @@ export function DashboardContent({ stats }: DashboardContentProps) {
       open: acc.open + p.defect_counts.offen,
       inProgress: acc.inProgress + p.defect_counts.in_arbeit,
       done: acc.done + p.defect_counts.erledigt,
+      problem: acc.problem + p.defect_counts.problem,
       highPriority: acc.highPriority + p.priority_counts.hoch,
       members: acc.members + p.member_count,
       protocols: acc.protocols + p.protocol_count,
@@ -58,6 +59,7 @@ export function DashboardContent({ stats }: DashboardContentProps) {
       open: 0,
       inProgress: 0,
       done: 0,
+      problem: 0,
       highPriority: 0,
       members: 0,
       protocols: 0,
@@ -148,6 +150,7 @@ interface DashTotals {
   open: number;
   inProgress: number;
   done: number;
+  problem: number;
   highPriority: number;
   members: number;
   protocols: number;
@@ -195,7 +198,7 @@ function AdminDashboard({
         />
         <StatCard
           label={t("dashboard.openDefects")}
-          value={totals.open + totals.inProgress}
+          value={totals.open + totals.inProgress + totals.problem}
           icon={AlertTriangle}
           color="red"
           delay={0.1}
@@ -298,7 +301,7 @@ function ManagerDashboard({
         />
         <StatCard
           label={t("dashboard.openDefects")}
-          value={totals.open + totals.inProgress}
+          value={totals.open + totals.inProgress + totals.problem}
           icon={AlertTriangle}
           color="red"
           delay={0.05}

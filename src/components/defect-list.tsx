@@ -16,6 +16,7 @@ const STATUS_FILTERS: { value: DefectStatus | "alle"; labelKey: string; emoji?: 
   { value: "offen", labelKey: "status.offen", emoji: "🔴" },
   { value: "in_arbeit", labelKey: "status.in_arbeit", emoji: "🟡" },
   { value: "erledigt", labelKey: "status.erledigt", emoji: "🟢" },
+  { value: "problem", labelKey: "status.problem", emoji: "🟣" },
 ];
 
 export function DefectList({ defects, projectId }: DefectListProps) {

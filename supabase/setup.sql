@@ -4,7 +4,7 @@
 -- Enums
 CREATE TYPE project_status AS ENUM ('aktiv', 'abgeschlossen');
 CREATE TYPE member_role AS ENUM ('admin', 'manager', 'worker');
-CREATE TYPE defect_status AS ENUM ('offen', 'in_arbeit', 'erledigt');
+CREATE TYPE defect_status AS ENUM ('offen', 'in_arbeit', 'erledigt', 'problem');
 CREATE TYPE defect_priority AS ENUM ('niedrig', 'mittel', 'hoch');
 CREATE TYPE media_type AS ENUM ('image', 'video', 'audio');
 CREATE TYPE media_phase AS ENUM ('erfassung', 'fortschritt', 'abnahme');
@@ -621,7 +621,8 @@ BEGIN
           'defect_counts', (
             SELECT jsonb_build_object('offen', count(*) FILTER (WHERE d.status='offen'),
               'in_arbeit', count(*) FILTER (WHERE d.status='in_arbeit'),
-              'erledigt', count(*) FILTER (WHERE d.status='erledigt'), 'total', count(*))
+              'erledigt', count(*) FILTER (WHERE d.status='erledigt'),
+              'problem', count(*) FILTER (WHERE d.status='problem'), 'total', count(*))
             FROM public.defects d WHERE d.project_id = p.id),
           'priority_counts', (
             SELECT jsonb_build_object('hoch', count(*) FILTER (WHERE d.priority='hoch' AND d.status!='erledigt'),

@@ -4,6 +4,12 @@ import { getProjects, getProjectMembers } from "./projects";
 import { getDefects } from "./defects";
 import { getProtocols } from "./protocols";
 
+interface ProjectRef {
+  id: string;
+  name: string;
+  role: string;
+}
+
 export interface AggregateDefect {
   id: string;
   project_id: string;
@@ -40,16 +46,17 @@ export interface AggregateProtocol {
 }
 
 export async function getAllDefects(): Promise<AggregateDefect[]> {
-  const projects = await getProjects();
+  const raw = await getProjects();
+  const projects = raw as unknown as ProjectRef[];
   if (!projects.length) return [];
 
   const results = await Promise.all(
     projects.map(async (p) => {
-      const defects = await getDefects(p.id!);
+      const defects = await getDefects(p.id);
       return defects.map((d: Record<string, unknown>) => ({
         id: d.id as string,
-        project_id: p.id as string,
-        project_name: p.name as string,
+        project_id: p.id,
+        project_name: p.name,
         title: d.title as string,
         status: d.status as string,
         priority: d.priority as string,
@@ -69,17 +76,18 @@ export async function getAllDefects(): Promise<AggregateDefect[]> {
 }
 
 export async function getAllMembers(): Promise<AggregateMember[]> {
-  const projects = await getProjects();
+  const raw = await getProjects();
+  const projects = raw as unknown as ProjectRef[];
   if (!projects.length) return [];
 
   const results = await Promise.all(
     projects.map(async (p) => {
-      const members = await getProjectMembers(p.id!);
+      const members = await getProjectMembers(p.id);
       return members.map((m: Record<string, unknown>) => ({
         id: m.id as string,
         user_id: m.user_id as string,
-        project_id: p.id as string,
-        project_name: p.name as string,
+        project_id: p.id,
+        project_name: p.name,
         full_name: (m.full_name as string) ?? null,
         email: (m.email as string) ?? null,
         role: m.role as string,
@@ -92,16 +100,17 @@ export async function getAllMembers(): Promise<AggregateMember[]> {
 }
 
 export async function getAllProtocols(): Promise<AggregateProtocol[]> {
-  const projects = await getProjects();
+  const raw = await getProjects();
+  const projects = raw as unknown as ProjectRef[];
   if (!projects.length) return [];
 
   const results = await Promise.all(
     projects.map(async (p) => {
-      const protocols = await getProtocols(p.id!);
+      const protocols = await getProtocols(p.id);
       return protocols.map((pr: Record<string, unknown>) => ({
         id: pr.id as string,
-        project_id: p.id as string,
-        project_name: p.name as string,
+        project_id: p.id,
+        project_name: p.name,
         title: pr.title as string,
         inspection_date: pr.inspection_date as string,
         location: (pr.location as string) ?? null,

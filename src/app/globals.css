@@ -178,6 +178,10 @@
   .status-glow-done {
     box-shadow: 0 0 12px rgba(34, 197, 94, 0.4), 0 0 4px rgba(34, 197, 94, 0.2);
   }
+
+  .status-glow-problem {
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.4), 0 0 4px rgba(168, 85, 247, 0.2);
+  }
 }
 
 

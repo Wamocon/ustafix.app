@@ -124,7 +124,7 @@ export function DefectDetailContent({
         <StatusToggle
           defectId={defect.id}
           projectId={projectId}
-          currentStatus={defect.status as "offen" | "in_arbeit" | "erledigt"}
+          currentStatus={defect.status as "offen" | "in_arbeit" | "erledigt" | "problem"}
           userRole={userRole as "admin" | "manager" | "worker"}
           userId={currentUserId ?? undefined}
         />

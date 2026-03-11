@@ -127,8 +127,9 @@ export const translations = {
     "project.progress": "Fortschritt",
     "project.units": "Einheiten",
     "project.open": "Offen",
-    "project.inProgress": "In Arbeit",
+    "project.inProgress": "In Bearbeitung",
     "project.done": "Erledigt",
+    "project.problem": "Problem",
     "project.backToList": "Zurück zur Liste",
 
     // Defect page
@@ -165,8 +166,9 @@ export const translations = {
 
     // Status
     "status.offen": "Offen",
-    "status.in_arbeit": "In Arbeit",
+    "status.in_arbeit": "In Bearbeitung",
     "status.erledigt": "Erledigt",
+    "status.problem": "Problem",
     "status.transitionNotAllowed": "Dieser Statuswechsel ist nicht möglich.",
     "status.onlyRoles": "Nur",
     "status.and": "und",
@@ -197,20 +199,30 @@ export const translations = {
     "statusModal.videoCompressing": "Video wird komprimiert...",
     "statusModal.placeholders.offen->in_arbeit": "z.B. Bin vor Ort, beginne mit der Reparatur...",
     "statusModal.placeholders.in_arbeit->erledigt":
-      "z.B. Reparatur abgeschlossen, Riss wurde verspachtelt und gestrichen...",
+      "z.B. Vor-Ort-Prüfung bestanden, Mangel ist behoben...",
+    "statusModal.placeholders.in_arbeit->problem":
+      "z.B. Kann nicht repariert werden, Material nicht verfügbar...",
+    "statusModal.placeholders.erledigt->problem":
+      "z.B. Bei der Kontrolle festgestellt: Reparatur unzureichend...",
+    "statusModal.placeholders.problem->in_arbeit":
+      "z.B. Neuer Ansatz, beginne erneut mit der Reparatur...",
+    "statusModal.placeholders.problem->offen":
+      "z.B. Muss komplett neu bewertet werden...",
     "statusModal.placeholders.erledigt->offen":
       "z.B. Mangel tritt erneut auf, muss nachgebessert werden...",
     "statusModal.placeholders.in_arbeit->offen":
       "z.B. Material fehlt, Arbeit wird unterbrochen...",
     "statusModal.placeholders.offen->erledigt":
       "z.B. War bereits behoben, Dokumentation nachgeholt...",
-    "statusModal.placeholders.erledigt->in_arbeit": "z.B. Nachbesserung erforderlich...",
     "statusModal.label.workBegin": "Arbeit beginnen",
     "statusModal.label.markDone": "Als erledigt markieren",
+    "statusModal.label.reportProblem": "Problem melden",
+    "statusModal.label.foundProblem": "Problem festgestellt",
+    "statusModal.label.rework": "Erneut bearbeiten",
+    "statusModal.label.backToOpen": "Zurück auf Offen",
     "statusModal.label.reopenDefect": "Mangel wiedereröffnen",
     "statusModal.label.stopWork": "Arbeit stoppen",
     "statusModal.label.directDone": "Direkt als erledigt markieren",
-    "statusModal.label.backToWork": "Zurück in Arbeit setzen",
 
     // Phase update modal
     "phaseModal.title": "Update hinzufügen",
@@ -518,7 +530,8 @@ export const translations = {
     "project.units": "Единицы",
     "project.open": "Открыт",
     "project.inProgress": "В работе",
-    "project.done": "Выполнено",
+    "project.done": "Завершено",
+    "project.problem": "Проблема",
     "project.backToList": "Назад к списку",
 
     // Defect page
@@ -556,7 +569,8 @@ export const translations = {
     // Status
     "status.offen": "Открыт",
     "status.in_arbeit": "В работе",
-    "status.erledigt": "Выполнено",
+    "status.erledigt": "Завершено",
+    "status.problem": "Проблема",
     "status.transitionNotAllowed": "Этот переход статуса невозможен.",
     "status.onlyRoles": "Только",
     "status.and": "и",
@@ -587,18 +601,28 @@ export const translations = {
     "statusModal.videoCompressing": "Сжатие видео...",
     "statusModal.placeholders.offen->in_arbeit": "Напр. На месте, начинаю ремонт...",
     "statusModal.placeholders.in_arbeit->erledigt":
-      "Напр. Ремонт завершён, трещина зашпаклёвана и покрашена...",
+      "Напр. Проверка на месте пройдена, дефект устранён...",
+    "statusModal.placeholders.in_arbeit->problem":
+      "Напр. Не могу исправить, материал недоступен...",
+    "statusModal.placeholders.erledigt->problem":
+      "Напр. При проверке обнаружено: ремонт недостаточный...",
+    "statusModal.placeholders.problem->in_arbeit":
+      "Напр. Новый подход, начинаю ремонт заново...",
+    "statusModal.placeholders.problem->offen":
+      "Напр. Требуется полная переоценка...",
     "statusModal.placeholders.erledigt->offen":
       "Напр. Дефект проявился снова, требуется доработка...",
     "statusModal.placeholders.in_arbeit->offen": "Напр. Нет материала, работа приостановлена...",
     "statusModal.placeholders.offen->erledigt": "Напр. Уже исправлено, документировано задним числом...",
-    "statusModal.placeholders.erledigt->in_arbeit": "Напр. Требуется доработка...",
     "statusModal.label.workBegin": "Начать работу",
-    "statusModal.label.markDone": "Отметить выполненным",
+    "statusModal.label.markDone": "Отметить завершённым",
+    "statusModal.label.reportProblem": "Сообщить о проблеме",
+    "statusModal.label.foundProblem": "Обнаружена проблема",
+    "statusModal.label.rework": "Переработать",
+    "statusModal.label.backToOpen": "Вернуть в Открыт",
     "statusModal.label.reopenDefect": "Повторно открыть",
     "statusModal.label.stopWork": "Остановить работу",
-    "statusModal.label.directDone": "Сразу отметить выполненным",
-    "statusModal.label.backToWork": "Вернуть в работу",
+    "statusModal.label.directDone": "Сразу отметить завершённым",
 
     // Phase update modal
     "phaseModal.title": "Добавить обновление",
@@ -905,8 +929,9 @@ export const translations = {
     "project.progress": "İlerleme",
     "project.units": "Birimler",
     "project.open": "Açık",
-    "project.inProgress": "Devam ediyor",
+    "project.inProgress": "Devam Ediyor",
     "project.done": "Tamamlandı",
+    "project.problem": "Sorun",
     "project.backToList": "Listeye dön",
 
     // Defect page
@@ -943,8 +968,9 @@ export const translations = {
 
     // Status
     "status.offen": "Açık",
-    "status.in_arbeit": "Devam ediyor",
+    "status.in_arbeit": "Devam Ediyor",
     "status.erledigt": "Tamamlandı",
+    "status.problem": "Sorun",
     "status.transitionNotAllowed": "Bu durum geçişi mümkün değil.",
     "status.onlyRoles": "Sadece",
     "status.and": "ve",
@@ -975,18 +1001,28 @@ export const translations = {
     "statusModal.videoCompressing": "Video sıkıştırılıyor...",
     "statusModal.placeholders.offen->in_arbeit": "Örn. Sahadayım, tadilata başlıyorum...",
     "statusModal.placeholders.in_arbeit->erledigt":
-      "Örn. Tadilat tamamlandı, çatlak sıva ve boya yapıldı...",
+      "Örn. Yerinde kontrol edildi, kusur giderildi...",
+    "statusModal.placeholders.in_arbeit->problem":
+      "Örn. Tamir edilemiyor, malzeme mevcut değil...",
+    "statusModal.placeholders.erledigt->problem":
+      "Örn. Kontrolde tespit edildi: onarım yetersiz...",
+    "statusModal.placeholders.problem->in_arbeit":
+      "Örn. Yeni yaklaşım, tamire yeniden başlıyorum...",
+    "statusModal.placeholders.problem->offen":
+      "Örn. Tamamen yeniden değerlendirilmeli...",
     "statusModal.placeholders.erledigt->offen":
       "Örn. Kusur tekrar ortaya çıktı, düzeltme gerekli...",
     "statusModal.placeholders.in_arbeit->offen": "Örn. Malzeme yok, iş durdu...",
     "statusModal.placeholders.offen->erledigt": "Örn. Zaten düzeltilmişti, dokümantasyon sonradan...",
-    "statusModal.placeholders.erledigt->in_arbeit": "Örn. Düzeltme gerekli...",
     "statusModal.label.workBegin": "İşe başla",
     "statusModal.label.markDone": "Tamamlandı işaretle",
+    "statusModal.label.reportProblem": "Sorun bildir",
+    "statusModal.label.foundProblem": "Sorun tespit edildi",
+    "statusModal.label.rework": "Yeniden işle",
+    "statusModal.label.backToOpen": "Açık'a geri dön",
     "statusModal.label.reopenDefect": "Kusuru yeniden aç",
     "statusModal.label.stopWork": "İşi durdur",
     "statusModal.label.directDone": "Direkt tamamlandı işaretle",
-    "statusModal.label.backToWork": "Tekrar işe al",
 
     // Phase update modal
     "phaseModal.title": "Güncelleme ekle",

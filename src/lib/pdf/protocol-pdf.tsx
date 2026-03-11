@@ -332,8 +332,9 @@ const VERDICT_MAP: Record<string, string> = {
 
 const STATUS_MAP: Record<string, string> = {
   offen: "Offen",
-  in_arbeit: "In Arbeit",
+  in_arbeit: "In Bearbeitung",
   erledigt: "Erledigt",
+  problem: "Problem",
 };
 
 function verdictStyle(v: string) {

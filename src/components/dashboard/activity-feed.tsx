@@ -10,14 +10,16 @@ import type { RecentTransition } from "@/lib/actions/dashboard";
 
 const STATUS_LABELS: Record<string, string> = {
   offen: "Offen",
-  in_arbeit: "In Arbeit",
+  in_arbeit: "In Bearbeitung",
   erledigt: "Erledigt",
+  problem: "Problem",
 };
 
 const STATUS_COLORS: Record<string, string> = {
   offen: "text-red-500",
   in_arbeit: "text-amber-500",
   erledigt: "text-emerald-500",
+  problem: "text-purple-500",
 };
 
 interface ActivityFeedProps {

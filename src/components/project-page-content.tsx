@@ -15,7 +15,7 @@ interface ProjectPageContentProps {
   projectName: string;
   projectAddress: string | null;
   units: { id: string; name: string }[];
-  counts: { offen: number; in_arbeit: number; erledigt: number };
+  counts: { offen: number; in_arbeit: number; erledigt: number; problem: number };
   donePercent: number;
   total: number;
   defects: Array<Record<string, unknown>>;
@@ -101,7 +101,7 @@ export function ProjectPageContent({
           </div>
         )}
 
-        <div className="mt-3 grid grid-cols-3 gap-2">
+        <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2">
           <StatusBadge
             count={counts.offen}
             label={t("project.open")}
@@ -119,6 +119,12 @@ export function ProjectPageContent({
             label={t("project.done")}
             emoji="🟢"
             className="bg-green-50 text-status-done border border-green-200"
+          />
+          <StatusBadge
+            count={counts.problem}
+            label={t("project.problem")}
+            emoji="🟣"
+            className="bg-purple-50 text-purple-600 border border-purple-200"
           />
         </div>
       </header>

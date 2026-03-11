@@ -47,6 +47,14 @@ const STATUS_OPTIONS: {
       "bg-linear-to-br from-green-500 to-green-600 text-white shadow-lg shadow-green-500/30",
     glowClass: "status-glow-done",
   },
+  {
+    value: "problem",
+    labelKey: "status.problem",
+    emoji: "🟣",
+    activeClass:
+      "bg-linear-to-br from-purple-500 to-purple-600 text-white shadow-lg shadow-purple-500/30",
+    glowClass: "status-glow-problem",
+  },
 ];
 
 export function StatusToggle({
@@ -89,7 +97,7 @@ export function StatusToggle({
         <label className="text-sm font-semibold text-muted-foreground">
           {t("common.status")}
         </label>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {STATUS_OPTIONS.map((option) => {
             const isActive = currentStatus === option.value;
             return (

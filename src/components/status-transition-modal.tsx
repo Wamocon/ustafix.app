@@ -44,6 +44,7 @@ const STATUS_KEYS: Record<DefectStatus, string> = {
   offen: "status.offen",
   in_arbeit: "status.in_arbeit",
   erledigt: "status.erledigt",
+  problem: "status.problem",
 };
 
 export function StatusTransitionModal({
@@ -285,14 +286,14 @@ export function StatusTransitionModal({
               {/* Status transition visual */}
               <div className="flex items-center justify-center gap-3">
                 <div className="flex flex-col items-center gap-1 rounded-2xl border border-border bg-card px-5 py-3">
-                  <span className="text-lg">{fromStatus === "offen" ? "🔴" : fromStatus === "in_arbeit" ? "🟡" : "🟢"}</span>
+                  <span className="text-lg">{fromStatus === "offen" ? "🔴" : fromStatus === "in_arbeit" ? "🟡" : fromStatus === "problem" ? "🟣" : "🟢"}</span>
                   <span className="text-xs font-semibold text-muted-foreground">
                     {fromLabel}
                   </span>
                 </div>
                 <span className="text-2xl text-muted-foreground">→</span>
                 <div className="flex flex-col items-center gap-1 rounded-2xl border-2 border-amber-500/40 bg-amber-500/5 px-5 py-3">
-                  <span className="text-lg">{toStatus === "offen" ? "🔴" : toStatus === "in_arbeit" ? "🟡" : "🟢"}</span>
+                  <span className="text-lg">{toStatus === "offen" ? "🔴" : toStatus === "in_arbeit" ? "🟡" : toStatus === "problem" ? "🟣" : "🟢"}</span>
                   <span className="text-xs font-bold">{toLabel}</span>
                 </div>
               </div>

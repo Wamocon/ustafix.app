@@ -17,12 +17,14 @@ const STATUS_STYLES: Record<string, string> = {
   offen: "bg-red-50 text-red-600 border-red-200",
   in_arbeit: "bg-amber-50 text-amber-600 border-amber-200",
   erledigt: "bg-emerald-50 text-emerald-600 border-emerald-200",
+  problem: "bg-purple-50 text-purple-600 border-purple-200",
 };
 
 const STATUS_LABELS: Record<string, string> = {
   offen: "Offen",
-  in_arbeit: "In Arbeit",
+  in_arbeit: "In Bearbeitung",
   erledigt: "Erledigt",
+  problem: "Problem",
 };
 
 const PRIORITY_STYLES: Record<string, string> = {
@@ -37,7 +39,7 @@ const PRIORITY_LABELS: Record<string, string> = {
   niedrig: "Niedrig",
 };
 
-const FILTERS = ["all", "offen", "in_arbeit", "erledigt"] as const;
+const FILTERS = ["all", "offen", "in_arbeit", "erledigt", "problem"] as const;
 
 interface Props {
   defects: AggregateDefect[];
@@ -69,6 +71,7 @@ export function AllDefectsContent({ defects }: Props) {
     offen: defects.filter((d) => d.status === "offen").length,
     in_arbeit: defects.filter((d) => d.status === "in_arbeit").length,
     erledigt: defects.filter((d) => d.status === "erledigt").length,
+    problem: defects.filter((d) => d.status === "problem").length,
   };
 
   return (

@@ -92,7 +92,7 @@ export function ProjectHealthCard({
           <div className="flex items-center gap-1.5 text-xs">
             <div className="h-2 w-2 rounded-full bg-amber-500" />
             <span className="text-muted-foreground">
-              {dc.in_arbeit} In Arbeit
+              {dc.in_arbeit} In Bearbeitung
             </span>
           </div>
           <div className="flex items-center gap-1.5 text-xs">
@@ -101,6 +101,14 @@ export function ProjectHealthCard({
               {dc.erledigt} Erledigt
             </span>
           </div>
+          {dc.problem > 0 && (
+            <div className="flex items-center gap-1.5 text-xs">
+              <div className="h-2 w-2 rounded-full bg-purple-500" />
+              <span className="text-muted-foreground">
+                {dc.problem} Problem
+              </span>
+            </div>
+          )}
           {pc.hoch > 0 && (
             <div className="flex items-center gap-1 text-xs text-red-500 font-semibold">
               <AlertTriangle className="h-3 w-3" />

@@ -16,6 +16,7 @@ const STATUS_CONFIG = {
   offen: { dot: "bg-status-open status-glow-open", emoji: "🔴", labelKey: "status.offen" },
   in_arbeit: { dot: "bg-status-progress status-glow-progress", emoji: "🟡", labelKey: "status.in_arbeit" },
   erledigt: { dot: "bg-status-done status-glow-done", emoji: "🟢", labelKey: "status.erledigt" },
+  problem: { dot: "bg-purple-500 status-glow-problem", emoji: "🟣", labelKey: "status.problem" },
 } as const;
 
 const PRIORITY_CONFIG = {
