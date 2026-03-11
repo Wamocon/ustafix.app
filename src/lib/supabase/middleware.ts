@@ -44,13 +44,21 @@ export async function updateSession(request: NextRequest) {
   if (!user && !isAuthPage && request.nextUrl.pathname !== "/") {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    return NextResponse.redirect(url);
+    const redirect = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach((c) =>
+      redirect.cookies.set(c.name, c.value, { path: "/" })
+    );
+    return redirect;
   }
 
   if (user && isAuthPage) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
-    return NextResponse.redirect(url);
+    const redirect = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach((c) =>
+      redirect.cookies.set(c.name, c.value, { path: "/" })
+    );
+    return redirect;
   }
 
   return supabaseResponse;

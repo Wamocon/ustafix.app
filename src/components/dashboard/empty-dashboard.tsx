@@ -1,6 +1,6 @@
 "use client";
 
-import { HardHat } from "lucide-react";
+import { UstafixLogo } from "@/components/ustafix-logo";
 import { CreateProjectDialog } from "@/components/create-project-dialog";
 import { useTranslation } from "@/hooks/use-translations";
 
@@ -14,8 +14,8 @@ export function EmptyDashboard({ canCreate }: EmptyDashboardProps) {
   return (
     <div className="mx-auto max-w-lg px-4 pt-6 pb-4">
       <div className="relative flex flex-col items-center justify-center gap-5 rounded-3xl border border-dashed border-amber-500/30 bg-amber-500/5 p-14 text-center">
-        <div className="flex h-20 w-20 items-center justify-center rounded-3xl gradient-primary shadow-lg shadow-amber-500/20 animate-float">
-          <HardHat className="h-10 w-10 text-white" />
+        <div className="flex h-20 w-20 items-center justify-center rounded-3xl overflow-hidden shadow-lg shadow-amber-500/20 animate-float">
+          <UstafixLogo className="h-full w-full" />
         </div>
         <div>
           <p className="text-lg font-bold">

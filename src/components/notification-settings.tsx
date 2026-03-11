@@ -11,6 +11,19 @@ import {
   updateNotificationPreferences,
 } from "@/lib/actions/notifications";
 
+/** Converts base64url VAPID key to Uint8Array for PushManager.subscribe() */
+function urlBase64ToUint8Array(base64String: string): Uint8Array {
+  const s = base64String.replace(/\s/g, "");
+  const padding = "=".repeat((4 - (s.length % 4)) % 4);
+  const base64 = (s + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const rawData = atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
 interface NotificationSettingsProps {
   preferences: {
     status_changes: boolean;
@@ -23,6 +36,7 @@ export function NotificationSettings({
   preferences,
 }: NotificationSettingsProps) {
   const [pushEnabled, setPushEnabled] = useState(false);
+  const [pushSubscribing, setPushSubscribing] = useState(false);
   const [statusChanges, setStatusChanges] = useState(
     preferences.status_changes
   );
@@ -54,6 +68,12 @@ export function NotificationSettings({
       return;
     }
 
+    const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+    if (!vapidKey) {
+      toast.error(t("notifications.vapidMissing"));
+      return;
+    }
+
     if (pushEnabled) {
       try {
         const registration = await navigator.serviceWorker.ready;
@@ -70,17 +90,34 @@ export function NotificationSettings({
       return;
     }
 
+    // If permission was previously denied, show helpful guidance
+    if (Notification.permission === "denied") {
+      toast.error(t("notifications.deniedHelp"));
+      return;
+    }
+
+    setPushSubscribing(true);
     try {
       const permission = await Notification.requestPermission();
       if (permission !== "granted") {
-        toast.error(t("notifications.denied"));
+        toast.error(
+          permission === "denied"
+            ? t("notifications.deniedHelp")
+            : t("notifications.denied")
+        );
         return;
       }
 
       const registration = await navigator.serviceWorker.ready;
+      if (!registration.pushManager) {
+        toast.error(t("notifications.pushNotSupported"));
+        return;
+      }
+
+      const applicationServerKey = urlBase64ToUint8Array(vapidKey);
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+        applicationServerKey: applicationServerKey as BufferSource,
       });
 
       const key = subscription.getKey("p256dh");
@@ -98,8 +135,11 @@ export function NotificationSettings({
 
       setPushEnabled(true);
       toast.success(t("notifications.pushEnabled"));
-    } catch {
+    } catch (err) {
+      console.error("Push subscription error:", err);
       toast.error(t("notifications.enableError"));
+    } finally {
+      setPushSubscribing(false);
     }
   }
 
@@ -129,8 +169,9 @@ export function NotificationSettings({
 
       <button
         onClick={handleTogglePush}
+        disabled={pushSubscribing}
         className={cn(
-          "flex w-full items-center justify-between rounded-2xl border p-4 transition-all cursor-pointer",
+          "flex w-full items-center justify-between rounded-2xl border p-4 transition-all cursor-pointer disabled:opacity-70 disabled:cursor-wait",
           pushEnabled
             ? "border-green-500/30 bg-green-500/5"
             : "border-border bg-card"
