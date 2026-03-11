@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Mic, Square, Loader2, ArrowLeft, Sparkles } from "lucide-react";
+import { Mic, Square, ArrowLeft, Sparkles } from "lucide-react";
 import { MAX_AUDIO_SIZE, formatFileSize } from "@/lib/utils";
 import { motion } from "framer-motion";
 

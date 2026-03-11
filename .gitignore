@@ -54,3 +54,6 @@ xray-token.txt
 
 # workspace files
 *.code-workspace
+
+# vs code
+.vscode/

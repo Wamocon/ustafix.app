@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { formatDate } from "@/lib/utils";
 import {
@@ -20,7 +20,7 @@ interface MediaItem {
   mime_type: string;
 }
 
-interface Transition {
+export interface Transition {
   id: string;
   defect_id: string;
   from_status: string;
@@ -31,7 +31,7 @@ interface Transition {
   transition_media: MediaItem[];
 }
 
-interface PhaseUpdate {
+export interface PhaseUpdate {
   id: string;
   defect_id: string;
   phase: string;
@@ -77,10 +77,9 @@ export function TransitionTimeline({
   transitions,
   phaseUpdates = [],
 }: UnifiedTimelineProps) {
-  const [mediaUrls, setMediaUrls] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    if (transitions.length === 0 && phaseUpdates.length === 0) return;
+  const mediaUrls = useMemo(() => {
+    if (transitions.length === 0 && phaseUpdates.length === 0)
+      return {} as Record<string, string>;
     const supabase = createClient();
     const urls: Record<string, string> = {};
 
@@ -102,7 +101,7 @@ export function TransitionTimeline({
       }
     }
 
-    setMediaUrls(urls);
+    return urls;
   }, [transitions, phaseUpdates]);
 
   const entries: TimelineEntry[] = [
@@ -121,7 +120,7 @@ export function TransitionTimeline({
   if (entries.length === 0) return null;
 
   return (
-    <div className="mt-6 space-y-3">
+    <div className="mt-6 space-y-3 min-w-0 overflow-hidden">
       <h3 className="text-sm font-semibold text-muted-foreground flex items-center gap-2">
         <History className="h-4 w-4" />
         Verlauf ({entries.length})
@@ -194,7 +193,7 @@ function TransitionCard({
         </span>
       </div>
 
-      <p className="text-sm text-foreground/80 whitespace-pre-wrap">
+      <p className="text-sm text-foreground/80 whitespace-pre-wrap break-words min-w-0">
         {t.note}
       </p>
 
@@ -235,7 +234,7 @@ function PhaseUpdateCard({
         </span>
       </div>
 
-      <p className="text-sm text-foreground/80 whitespace-pre-wrap">
+      <p className="text-sm text-foreground/80 whitespace-pre-wrap break-words min-w-0">
         {update.note}
       </p>
 

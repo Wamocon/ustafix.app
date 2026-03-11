@@ -11,7 +11,6 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import {
-  cn,
   getTransitionRule,
   MAX_IMAGE_SIZE,
   formatFileSize,
@@ -74,16 +73,18 @@ export function StatusTransitionModal({
         urls[i] = URL.createObjectURL(f);
       }
     });
-    setPreviewUrls(urls);
+    queueMicrotask(() => setPreviewUrls(urls));
     return () => Object.values(urls).forEach((url) => URL.revokeObjectURL(url));
   }, [files]);
 
   useEffect(() => {
     if (!open) {
-      setNote("");
-      setFiles([]);
-      setUploadProgress(null);
-      setCompressionProgress(null);
+      queueMicrotask(() => {
+        setNote("");
+        setFiles([]);
+        setUploadProgress(null);
+        setCompressionProgress(null);
+      });
     }
   }, [open]);
 

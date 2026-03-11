@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Settings, User, Mail, Shield, Smartphone } from "lucide-react";
+import { User, Mail, Shield, Smartphone } from "lucide-react";
 import { LogoutButton } from "@/components/logout-button";
 import { NotificationSettings } from "@/components/notification-settings";
 import { getNotificationPreferences } from "@/lib/actions/notifications";

@@ -106,6 +106,19 @@ export default async function ProjectPage({ params }: Props) {
           <section className="mb-6">
             <h2 className="text-sm font-semibold text-muted-foreground mb-2">Einheiten</h2>
             <AddUnitForm projectId={id} />
+            {(project.units as { id: string; name: string }[])?.length > 0 && (
+              <ul className="mt-3 space-y-1.5">
+                {(project.units as { id: string; name: string }[]).map((unit) => (
+                  <li
+                    key={unit.id}
+                    className="flex items-center gap-2 rounded-xl border border-border bg-card/50 px-3 py-2.5 text-sm"
+                  >
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-amber-500/60" />
+                    {unit.name}
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
           <section className="mb-6">
             <ProjectTeamSection
@@ -122,13 +135,13 @@ export default async function ProjectPage({ params }: Props) {
           <ProtocolSection
             projectId={id}
             units={(project.units as { id: string; name: string }[]) ?? []}
-            defects={defects.map((d: any) => ({
+            defects={defects.map((d) => ({
               id: d.id,
               title: d.title,
               status: d.status,
               priority: d.priority,
             }))}
-            protocols={protocols as any}
+            protocols={protocols}
             canCreate={isAdminOrManager}
           />
         </section>

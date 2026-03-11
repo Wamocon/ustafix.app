@@ -30,7 +30,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const TEST_EXECUTION_KEY = process.env.TEST_EXECUTION_KEY;
 const resultsPath = join(__dirname, "results-rolenkonzept.json");
-const templatePath = join(__dirname, "execution-results-template.json");
 
 function loadTestCases() {
   const path = join(__dirname, "test-cases-rolenkonzept.json");

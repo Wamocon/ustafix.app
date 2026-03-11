@@ -4,7 +4,6 @@ import { AlertTriangle, RotateCcw } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function AppError({
-  error,
   reset,
 }: {
   error: Error & { digest?: string };

@@ -390,7 +390,7 @@ CREATE TABLE project_invitations (
   accepted_by UUID REFERENCES auth.users(id) ON DELETE SET NULL,
   expires_at TIMESTAMPTZ NOT NULL DEFAULT (now() + INTERVAL '7 days'),
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE INDEX idx_invitations_project ON project_invitations(project_id);

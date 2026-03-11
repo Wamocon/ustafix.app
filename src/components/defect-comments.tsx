@@ -69,7 +69,7 @@ export function DefectComments({
         Fragen & Anweisungen ({comments.length})
       </h3>
 
-      <div className="space-y-3 max-h-64 overflow-y-auto">
+      <div className="space-y-3 max-h-64 overflow-y-auto overflow-x-hidden">
         {comments.length === 0 ? (
           <p className="text-sm text-muted-foreground py-4 text-center rounded-2xl bg-muted/50">
             Noch keine Kommentare. Stelle eine Frage oder gib eine Anweisung.
@@ -83,14 +83,14 @@ export function DefectComments({
                 key={c.id}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-2xl border border-border bg-card p-4"
+                className="rounded-2xl border border-border bg-card p-4 min-w-0 overflow-hidden"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-semibold text-muted-foreground mb-1">
                       {isOwn ? "Du" : (c.full_name || c.email || "Teammitglied")} · {formatDate(c.created_at)}
                     </p>
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
                       {c.message}
                     </p>
                   </div>

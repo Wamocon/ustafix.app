@@ -7,7 +7,11 @@ import { StatusToggle } from "@/components/status-toggle";
 import { MediaViewer } from "@/components/media-viewer";
 import { DefectActions } from "@/components/defect-actions";
 import { DefectComments } from "@/components/defect-comments";
-import { TransitionTimeline } from "@/components/transition-timeline";
+import {
+  TransitionTimeline,
+  type Transition,
+  type PhaseUpdate,
+} from "@/components/transition-timeline";
 import { PhaseUpdateButton } from "@/components/phase-update-button";
 import { ArrowLeft, MapPin, Clock } from "lucide-react";
 import Link from "next/link";
@@ -125,8 +129,8 @@ export default async function DefectDetailPage({ params }: Props) {
 
       {/* Unified Timeline */}
       <TransitionTimeline
-        transitions={transitions as any}
-        phaseUpdates={phaseUpdates as any}
+        transitions={transitions as Transition[]}
+        phaseUpdates={phaseUpdates as PhaseUpdate[]}
       />
 
       {/* Descriptions / Translations */}
@@ -191,12 +195,12 @@ function DescriptionBlock({
   text: string;
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-4">
+    <div className="rounded-2xl border border-border bg-card p-4 min-w-0 overflow-hidden">
       <p className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
         <span>{flag}</span>
         {label}
       </p>
-      <p className="text-sm leading-relaxed whitespace-pre-wrap">{text}</p>
+      <p className="text-sm leading-relaxed whitespace-pre-wrap break-words min-w-0">{text}</p>
     </div>
   );
 }

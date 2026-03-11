@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { Plus, Loader2 } from "lucide-react";
 import { createUnit } from "@/lib/actions/projects";
 import { toast } from "sonner";
@@ -13,6 +14,7 @@ interface AddUnitFormProps {
 export function AddUnitForm({ projectId, onAdded }: AddUnitFormProps) {
   const [name, setName] = useState("");
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -24,6 +26,7 @@ export function AddUnitForm({ projectId, onAdded }: AddUnitFormProps) {
         await createUnit(projectId, trimmed);
         toast.success("Einheit angelegt.");
         setName("");
+        router.refresh();
         onAdded?.();
       } catch (err) {
         toast.error(err instanceof Error ? err.message : "Fehler beim Anlegen.");
