@@ -13,9 +13,9 @@ import { useTranslation } from "@/hooks/use-translations";
 import type { Transition, PhaseUpdate } from "@/components/transition-timeline";
 
 const PRIORITY_CONFIG: Record<string, { labelKey: string; emoji: string; className: string }> = {
-  niedrig: { labelKey: "defect.priorityLow", emoji: "🟢", className: "bg-status-done/10 text-status-done border-status-done/20" },
-  mittel: { labelKey: "defect.priorityMedium", emoji: "🟡", className: "bg-status-progress/10 text-status-progress border-status-progress/20" },
-  hoch: { labelKey: "defect.priorityHigh", emoji: "🔴", className: "bg-status-open/10 text-status-open border-status-open/20" },
+  niedrig: { labelKey: "defect.priorityLow", emoji: "🟢", className: "bg-green-50 text-green-600 border-green-200" },
+  mittel: { labelKey: "defect.priorityMedium", emoji: "🟡", className: "bg-amber-50 text-amber-600 border-amber-200" },
+  hoch: { labelKey: "defect.priorityHigh", emoji: "🔴", className: "bg-red-50 text-red-600 border-red-200" },
 };
 
 const DESC_LABELS: Record<string, string> = {
@@ -63,8 +63,8 @@ function DescriptionBlock({
   t: (key: string) => string;
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-4 min-w-0 overflow-hidden">
-      <p className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
+    <div className="rounded-2xl border border-border bg-card p-4 min-w-0 overflow-hidden card-elevated">
+      <p className="mb-2 flex items-center gap-1.5 text-xs font-bold text-muted-foreground uppercase tracking-wider">
         <span>{flag}</span>
         {t(labelKey)}
       </p>
@@ -106,7 +106,7 @@ export function DefectDetailContent({
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
         {unitName && (
-          <span className="inline-flex items-center gap-1 rounded-xl bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
+          <span className="inline-flex items-center gap-1 rounded-xl bg-amber-50 border border-amber-200 px-2.5 py-1 text-xs font-semibold text-amber-600">
             <MapPin className="h-3 w-3" />
             {unitName}
           </span>

@@ -19,9 +19,9 @@ const STATUS_CONFIG = {
 } as const;
 
 const PRIORITY_CONFIG = {
-  hoch: { className: "bg-status-open/10 text-status-open border-status-open/20", labelKey: "defect.priorityHigh" },
-  mittel: { className: "bg-status-progress/10 text-status-progress border-status-progress/20", labelKey: "defect.priorityMedium" },
-  niedrig: { className: "bg-muted text-muted-foreground border-transparent", labelKey: "defect.priorityLow" },
+  hoch: { className: "bg-red-50 text-red-600 border-red-200", labelKey: "defect.priorityHigh" },
+  mittel: { className: "bg-amber-50 text-amber-600 border-amber-200", labelKey: "defect.priorityMedium" },
+  niedrig: { className: "bg-stone-100 text-muted-foreground border-stone-200", labelKey: "defect.priorityLow" },
 } as const;
 
 export function DefectCard({ defect, projectId, index = 0 }: DefectCardProps) {
@@ -48,7 +48,7 @@ export function DefectCard({ defect, projectId, index = 0 }: DefectCardProps) {
     >
       <Link
         href={`/project/${projectId}/defect/${defect.id}`}
-        className="group flex items-start gap-3 rounded-2xl border border-border bg-card p-4 card-hover cursor-pointer"
+        className="group flex items-start gap-3 rounded-2xl border border-border bg-card p-4 card-hover card-elevated cursor-pointer"
       >
         <span className="mt-0.5 text-base shrink-0">{status.emoji}</span>
 
@@ -59,7 +59,7 @@ export function DefectCard({ defect, projectId, index = 0 }: DefectCardProps) {
 
           <div className="mt-1.5 flex flex-wrap items-center gap-2">
             {unitName && (
-              <span className="inline-flex items-center rounded-lg bg-amber-500/10 px-2 py-0.5 text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+              <span className="inline-flex items-center rounded-lg bg-amber-50 border border-amber-200 px-2 py-0.5 text-[11px] font-semibold text-amber-600">
                 {unitName}
               </span>
             )}

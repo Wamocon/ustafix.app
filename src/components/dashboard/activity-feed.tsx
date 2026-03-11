@@ -49,9 +49,9 @@ export function ActivityFeed({
           >
             <Link
               href={`/project/${projectId}/defect/${t.defect_id}`}
-              className="flex items-start gap-3 rounded-xl px-3 py-2.5 hover:bg-muted/50 transition-colors"
+              className="flex items-start gap-3 rounded-xl border border-border bg-card px-3 py-2.5 hover:bg-muted/30 transition-colors card-elevated"
             >
-              <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted">
+              <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted border border-border">
                 <ArrowRight className="h-3 w-3 text-muted-foreground" />
               </div>
               <div className="flex-1 min-w-0">

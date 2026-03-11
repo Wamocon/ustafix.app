@@ -1,39 +1,65 @@
 import { SVGProps } from "react";
 
-/** Ustafix logo: hard hat, safety goggles - gradient background, white outline. */
+/** Ustafix logo: hard hat with safety goggles on gradient background. */
 export function UstafixLogo({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 200 200"
+      viewBox="0 0 512 512"
       width="100%"
       height="100%"
       className={className}
       {...props}
     >
       <defs>
-        <linearGradient id="ustafixBgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#FFA836" />
-          <stop offset="100%" stopColor="#E86E00" />
+        <linearGradient id="ustafixBg" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#F5A623" />
+          <stop offset="100%" stopColor="#E8870E" />
         </linearGradient>
       </defs>
 
-      <rect x="0" y="0" width="200" height="200" rx="45" fill="url(#ustafixBgGrad)" />
+      <rect width="512" height="512" rx="112" fill="url(#ustafixBg)" />
 
-      {/* Ridge - orange fill, white border (drawn first so dome connects to it) */}
-      <rect x="88" y="50" width="24" height="40" rx="10" fill="url(#ustafixBgGrad)" stroke="#FFFFFF" strokeWidth="7" className="ustafix-helmet" />
+      {/* Helmet dome: elliptical arc for proper hard hat shape */}
+      <path
+        d="M 92 232 A 164 145 0 0 1 420 232"
+        fill="none" stroke="#FFFFFF" strokeWidth="14" strokeLinecap="round"
+      />
 
-      <g fill="none" stroke="#FFFFFF" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round">
-        <g className="ustafix-helmet">
-          {/* Dome - arcs end at ridge edges (88, 112), no line across sausage */}
-          <path d="M 42 100 A 68 38 0 0 1 88 62" />
-          <path d="M 112 62 A 68 38 0 0 1 158 100" />
-          <rect x="35" y="100" width="130" height="12" rx="6" />
-        </g>
-        {/* Safety glasses - rounded frame, smooth inverted V at bottom (nose bridge) */}
-        <path d="M 44 128 Q 100 124 156 128 Q 168 138 168 164 Q 140 168 100 152 Q 60 168 32 164 Q 32 138 44 128 Z" />
-        <line x1="28" y1="138" x2="28" y2="158" />
-        <line x1="172" y1="138" x2="172" y2="158" />
+      {/* Ridge / vent capsule on dome top */}
+      <rect
+        x="234" y="54" width="44" height="130" rx="22"
+        fill="url(#ustafixBg)" stroke="#FFFFFF" strokeWidth="14"
+      />
+
+      {/* Helmet brim */}
+      <rect
+        x="76" y="226" width="360" height="22" rx="11"
+        fill="none" stroke="#FFFFFF" strokeWidth="14"
+        strokeLinecap="round" strokeLinejoin="round"
+      />
+
+      <g fill="none" stroke="#FFFFFF" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round">
+        {/* Goggles */}
+        <path d="
+          M 130 278
+          Q 256 266 382 278
+          Q 424 278 424 318
+          L 424 344
+          Q 424 382 386 382
+          L 314 382
+          C 282 382 282 342 256 342
+          C 230 342 230 382 198 382
+          L 126 382
+          Q 88 382 88 344
+          L 88 318
+          Q 88 278 130 278
+          Z
+        " />
+
+        {/* Goggle side arms */}
+        <line x1="74" y1="310" x2="74" y2="348" />
+        <line x1="438" y1="310" x2="438" y2="348" />
       </g>
     </svg>
   );

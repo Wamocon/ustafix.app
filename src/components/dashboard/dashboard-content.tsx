@@ -92,14 +92,15 @@ export function DashboardContent({ stats }: DashboardContentProps) {
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="rounded-2xl border border-border bg-card p-5 card-elevated"
       >
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
-              <RoleIcon className="h-3.5 w-3.5" />
+            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
+              <RoleIcon className="h-3.5 w-3.5 text-amber-600" />
               {ROLE_LABELS[role]}
             </p>
-            <h1 className="text-2xl font-extrabold tracking-tight mt-0.5">
+            <h1 className="text-2xl font-extrabold tracking-tight mt-1">
               {t("dashboard.hello")}, {stats.user_name?.split(" ")[0] ?? ""}
             </h1>
           </div>
@@ -166,9 +167,9 @@ function AdminDashboard({
   allTransitions: TransitionWithProject[];
   t: (key: string) => string;
 }) {
-  const firstProjectHref = stats.projects[0]
-    ? `/project/${stats.projects[0].id}`
-    : undefined;
+  const isSingle = stats.projects.length === 1;
+  const projectHref = isSingle ? `/project/${stats.projects[0].id}` : undefined;
+  const scrollToProjects = isSingle ? undefined : () => scrollToId("admin-projects");
 
   return (
     <>
@@ -180,7 +181,8 @@ function AdminDashboard({
           icon={Building2}
           color="amber"
           delay={0}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.totalDefects")}
@@ -188,7 +190,8 @@ function AdminDashboard({
           icon={LayoutDashboard}
           color="blue"
           delay={0.05}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.openDefects")}
@@ -197,7 +200,8 @@ function AdminDashboard({
           color="red"
           delay={0.1}
           subtitle={`${totals.highPriority} ${t("dashboard.highPriority")}`}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.completionRate")}
@@ -206,7 +210,8 @@ function AdminDashboard({
           color="green"
           delay={0.15}
           subtitle={`${totals.done} ${t("dashboard.ofDone")} ${totals.defects} ${t("dashboard.done")}`}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.teamMembers")}
@@ -215,7 +220,8 @@ function AdminDashboard({
           color="purple"
           delay={0.2}
           subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} ${t("dashboard.pendingInvites")}` : undefined}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.protocols")}
@@ -223,12 +229,13 @@ function AdminDashboard({
           icon={FileCheck}
           color="slate"
           delay={0.25}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
       </div>
 
       {/* Project Health */}
-      <Section title={t("dashboard.projectOverview")} icon={Building2}>
+      <Section title={t("dashboard.projectOverview")} icon={Building2} id="admin-projects">
         <div className="space-y-3">
           {stats.projects.map((p, i) => (
             <ProjectHealthCard
@@ -275,9 +282,9 @@ function ManagerDashboard({
   allTransitions: TransitionWithProject[];
   t: (key: string) => string;
 }) {
-  const firstProjectHref = stats.projects[0]
-    ? `/project/${stats.projects[0].id}`
-    : undefined;
+  const isSingle = stats.projects.length === 1;
+  const projectHref = isSingle ? `/project/${stats.projects[0].id}` : undefined;
+  const scrollToProjects = isSingle ? undefined : () => scrollToId("manager-projects");
 
   return (
     <>
@@ -289,7 +296,8 @@ function ManagerDashboard({
           icon={Building2}
           color="amber"
           delay={0}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.openDefects")}
@@ -298,7 +306,8 @@ function ManagerDashboard({
           color="red"
           delay={0.05}
           subtitle={`${totals.highPriority} ${t("dashboard.highPriority")}`}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.completionRate")}
@@ -307,7 +316,8 @@ function ManagerDashboard({
           color="green"
           delay={0.1}
           subtitle={`${totals.done} ${t("dashboard.ofDone")} ${totals.defects} ${t("dashboard.done")}`}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.teamMembers")}
@@ -316,12 +326,13 @@ function ManagerDashboard({
           color="purple"
           delay={0.15}
           subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} ${t("dashboard.invitesOpen")}` : undefined}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
       </div>
 
       {/* Projects */}
-      <Section title={t("dashboard.projectOverview")} icon={Building2}>
+      <Section title={t("dashboard.projectOverview")} icon={Building2} id="manager-projects">
         <div className="space-y-3">
           {stats.projects.map((p, i) => (
             <ProjectHealthCard
@@ -370,9 +381,9 @@ function WorkerDashboard({
     (acc, p) => acc + p.my_defects_open,
     0
   );
-  const firstProjectHref = stats.projects[0]
-    ? `/project/${stats.projects[0].id}`
-    : undefined;
+  const isSingle = stats.projects.length === 1;
+  const projectHref = isSingle ? `/project/${stats.projects[0].id}` : undefined;
+  const scrollToProjects = isSingle ? undefined : () => scrollToId("worker-projects");
 
   return (
     <>
@@ -384,7 +395,8 @@ function WorkerDashboard({
           icon={Building2}
           color="amber"
           delay={0}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.myOpenDefects")}
@@ -392,7 +404,8 @@ function WorkerDashboard({
           icon={Hammer}
           color="red"
           delay={0.05}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.capturedByMe")}
@@ -400,7 +413,8 @@ function WorkerDashboard({
           icon={UserCheck}
           color="blue"
           delay={0.1}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
         <StatCard
           label={t("dashboard.doneDefects")}
@@ -408,12 +422,13 @@ function WorkerDashboard({
           icon={CheckCircle2}
           color="green"
           delay={0.15}
-          href={firstProjectHref}
+          href={projectHref}
+          onClick={scrollToProjects}
         />
       </div>
 
       {/* Projects */}
-      <Section title={t("dashboard.myProjects")} icon={Building2}>
+      <Section title={t("dashboard.myProjects")} icon={Building2} id="worker-projects">
         <div className="space-y-3">
           {stats.projects.map((p, i) => (
             <ProjectHealthCard key={p.id} project={p} index={i} />
@@ -442,26 +457,36 @@ function WorkerDashboard({
 
 /* ─── Shared ─── */
 
+function scrollToId(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function Section({
   title,
   icon: Icon,
   children,
+  id,
 }: {
   title: string;
   icon: typeof Building2;
   children: React.ReactNode;
+  id?: string;
 }) {
   return (
     <motion.section
+      id={id}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3, delay: 0.2 }}
-      className="space-y-3"
+      className="space-y-3 scroll-mt-4"
     >
-      <h2 className="font-bold text-sm flex items-center gap-2 text-muted-foreground uppercase tracking-wider">
-        <Icon className="h-4 w-4" />
-        {title}
-      </h2>
+      <div className="flex items-center gap-2 pb-1 border-b border-border">
+        <Icon className="h-4 w-4 text-amber-600" />
+        <h2 className="font-bold text-sm text-foreground uppercase tracking-wider">
+          {title}
+        </h2>
+      </div>
       {children}
     </motion.section>
   );

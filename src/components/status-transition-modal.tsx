@@ -356,7 +356,7 @@ export function StatusTransitionModal({
                       className="flex w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-amber-500/30 bg-amber-500/5 p-8 transition-all hover:border-amber-500/50 hover:bg-amber-500/10 cursor-pointer"
                     >
                       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-amber-500/10">
-                        <Camera className="h-7 w-7 text-amber-600 dark:text-amber-400" />
+                        <Camera className="h-7 w-7 text-amber-600" />
                       </div>
                       <div className="text-center">
                         <p className="text-sm font-semibold">

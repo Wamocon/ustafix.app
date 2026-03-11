@@ -101,7 +101,7 @@ export function StatusToggle({
                   "relative flex flex-col items-center justify-center gap-1.5 rounded-2xl py-4 text-sm font-bold transition-all cursor-pointer",
                   isActive
                     ? `${option.activeClass} ${option.glowClass}`
-                    : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-foreground/20"
+                    : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-stone-300 shadow-sm"
                 )}
                 aria-pressed={isActive}
                 aria-label={`${t("common.status")}: ${t(option.labelKey)}`}

@@ -22,10 +22,10 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
     >
       <Link
         href={`/project/${project.id}`}
-        className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 card-hover cursor-pointer"
+        className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 card-hover card-elevated cursor-pointer"
       >
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl gradient-primary/10 bg-amber-500/10">
-          <Building2 className="h-6 w-6 text-amber-500" />
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-50 border border-amber-200">
+          <Building2 className="h-6 w-6 text-amber-600" />
         </div>
 
         <div className="flex-1 min-w-0">
@@ -40,10 +40,10 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
           ) : null}
           <div className="mt-2 flex items-center gap-2">
             <span
-              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+              className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${
                 project.status === "aktiv"
-                  ? "bg-status-done/10 text-status-done"
-                  : "bg-muted text-muted-foreground"
+                  ? "bg-green-50 text-green-600 border-green-200"
+                  : "bg-stone-100 text-muted-foreground border-stone-200"
               }`}
             >
               {project.status === "aktiv" ? "Aktiv" : "Abgeschlossen"}

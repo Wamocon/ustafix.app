@@ -183,7 +183,7 @@ function TransitionCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="rounded-2xl border border-border bg-card p-4 space-y-3"
+      className="rounded-2xl border border-border bg-card p-4 space-y-3 card-elevated"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm">
@@ -230,7 +230,7 @@ function PhaseUpdateCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="rounded-2xl border border-dashed border-border bg-card/50 p-4 space-y-3"
+      className="rounded-2xl border border-dashed border-border bg-card p-4 space-y-3"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm">

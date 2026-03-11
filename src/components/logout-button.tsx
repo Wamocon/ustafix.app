@@ -19,7 +19,7 @@ export function LogoutButton() {
   return (
     <button
       onClick={handleLogout}
-      className="flex h-13 w-full items-center justify-center gap-2 rounded-2xl border border-destructive/20 text-destructive font-semibold transition-all hover:bg-destructive/5 active:scale-[0.98] cursor-pointer"
+      className="flex h-13 w-full items-center justify-center gap-2 rounded-2xl border border-red-200 bg-red-50 text-red-600 font-semibold transition-all hover:bg-red-100 active:scale-[0.98] cursor-pointer"
     >
       <LogOut className="h-4 w-4" />
       {t("common.logout")}

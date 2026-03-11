@@ -42,7 +42,7 @@ const s = StyleSheet.create({
   headerBrand: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+    gap: 0,
   },
   headerLogo: {
     fontSize: 16,
