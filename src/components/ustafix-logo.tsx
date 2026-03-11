@@ -22,7 +22,7 @@ export function UstafixLogo({ className, ...props }: SVGProps<SVGSVGElement>) {
 
       {/* Helmet dome: elliptical arc for proper hard hat shape */}
       <path
-        d="M 92 232 A 164 145 0 0 1 420 232"
+        d="M 92 225 A 164 145 0 0 1 420 225"
         fill="none" stroke="#FFFFFF" strokeWidth="14" strokeLinecap="round"
       />
 
