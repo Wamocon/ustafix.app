@@ -166,6 +166,10 @@ function AdminDashboard({
   allTransitions: TransitionWithProject[];
   t: (key: string) => string;
 }) {
+  const firstProjectHref = stats.projects[0]
+    ? `/project/${stats.projects[0].id}`
+    : undefined;
+
   return (
     <>
       {/* KPI Grid */}
@@ -176,6 +180,7 @@ function AdminDashboard({
           icon={Building2}
           color="amber"
           delay={0}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.totalDefects")}
@@ -183,6 +188,7 @@ function AdminDashboard({
           icon={LayoutDashboard}
           color="blue"
           delay={0.05}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.openDefects")}
@@ -191,6 +197,7 @@ function AdminDashboard({
           color="red"
           delay={0.1}
           subtitle={`${totals.highPriority} ${t("dashboard.highPriority")}`}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.completionRate")}
@@ -199,6 +206,7 @@ function AdminDashboard({
           color="green"
           delay={0.15}
           subtitle={`${totals.done} ${t("dashboard.ofDone")} ${totals.defects} ${t("dashboard.done")}`}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.teamMembers")}
@@ -207,6 +215,7 @@ function AdminDashboard({
           color="purple"
           delay={0.2}
           subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} ${t("dashboard.pendingInvites")}` : undefined}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.protocols")}
@@ -214,6 +223,7 @@ function AdminDashboard({
           icon={FileCheck}
           color="slate"
           delay={0.25}
+          href={firstProjectHref}
         />
       </div>
 
@@ -265,6 +275,10 @@ function ManagerDashboard({
   allTransitions: TransitionWithProject[];
   t: (key: string) => string;
 }) {
+  const firstProjectHref = stats.projects[0]
+    ? `/project/${stats.projects[0].id}`
+    : undefined;
+
   return (
     <>
       {/* KPI Grid */}
@@ -275,6 +289,7 @@ function ManagerDashboard({
           icon={Building2}
           color="amber"
           delay={0}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.openDefects")}
@@ -283,6 +298,7 @@ function ManagerDashboard({
           color="red"
           delay={0.05}
           subtitle={`${totals.highPriority} ${t("dashboard.highPriority")}`}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.completionRate")}
@@ -291,6 +307,7 @@ function ManagerDashboard({
           color="green"
           delay={0.1}
           subtitle={`${totals.done} ${t("dashboard.ofDone")} ${totals.defects} ${t("dashboard.done")}`}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.teamMembers")}
@@ -299,6 +316,7 @@ function ManagerDashboard({
           color="purple"
           delay={0.15}
           subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} ${t("dashboard.invitesOpen")}` : undefined}
+          href={firstProjectHref}
         />
       </div>
 
@@ -352,6 +370,9 @@ function WorkerDashboard({
     (acc, p) => acc + p.my_defects_open,
     0
   );
+  const firstProjectHref = stats.projects[0]
+    ? `/project/${stats.projects[0].id}`
+    : undefined;
 
   return (
     <>
@@ -363,6 +384,7 @@ function WorkerDashboard({
           icon={Building2}
           color="amber"
           delay={0}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.myOpenDefects")}
@@ -370,6 +392,7 @@ function WorkerDashboard({
           icon={Hammer}
           color="red"
           delay={0.05}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.capturedByMe")}
@@ -377,6 +400,7 @@ function WorkerDashboard({
           icon={UserCheck}
           color="blue"
           delay={0.1}
+          href={firstProjectHref}
         />
         <StatCard
           label={t("dashboard.doneDefects")}
@@ -384,6 +408,7 @@ function WorkerDashboard({
           icon={CheckCircle2}
           color="green"
           delay={0.15}
+          href={firstProjectHref}
         />
       </div>
 

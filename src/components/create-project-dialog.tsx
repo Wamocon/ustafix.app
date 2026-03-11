@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { Plus, Loader2, X } from "lucide-react";
 import { useTranslation } from "@/hooks/use-translations";
 import { createProject } from "@/lib/actions/projects";
@@ -14,14 +15,19 @@ interface Props {
 export function CreateProjectDialog({ variant = "fab" }: Props) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   const t = useTranslation();
 
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
       try {
-        await createProject(formData);
+        const project = await createProject(formData);
         toast.success(t("createProject.created"));
         setOpen(false);
+        router.refresh();
+        if (project?.id) {
+          router.push(`/project/${project.id}`);
+        }
       } catch (e) {
         const msg = e instanceof Error ? e.message : t("createProject.createError");
         toast.error(msg);

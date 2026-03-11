@@ -1,11 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#0a0a0a"/>
-  <g transform="translate(256, 256)">
-    <path d="M-80,-60 L0,-120 L80,-60 L80,60 L-80,60 Z" fill="none" stroke="#fafafa" stroke-width="16" stroke-linejoin="round"/>
-    <line x1="-40" y1="60" x2="-40" y2="10" stroke="#fafafa" stroke-width="12" stroke-linecap="round"/>
-    <line x1="0" y1="60" x2="0" y2="-10" stroke="#fafafa" stroke-width="12" stroke-linecap="round"/>
-    <line x1="40" y1="60" x2="40" y2="10" stroke="#fafafa" stroke-width="12" stroke-linecap="round"/>
-    <circle cx="60" cy="-20" r="18" fill="#ef4444" stroke="#0a0a0a" stroke-width="4"/>
-    <text x="60" y="-14" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="sans-serif">!</text>
+  <defs>
+    <linearGradient id="iconBgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFA836" />
+      <stop offset="100%" stop-color="#E86E00" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="512" height="512" rx="115" fill="url(#iconBgGrad)" />
+  <g fill="none" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" transform="translate(56, 56) scale(2)">
+    <rect x="88" y="50" width="24" height="40" rx="10" fill="#FFFFFF" />
+    <path d="M 42 100 A 68 38 0 0 1 90 58 L 110 58 A 68 38 0 0 1 158 100" />
+    <rect x="32" y="100" width="136" height="12" rx="6" />
+    <path d="M 65 124 L 135 124 A 10 10 0 0 1 145 134 L 145 144 A 15 15 0 0 1 130 159 L 115 159 A 15 15 0 0 1 100 144 A 15 15 0 0 1 85 159 L 70 159 A 15 15 0 0 1 55 144 L 55 134 A 10 10 0 0 1 65 124 Z" />
+    <line x1="48" y1="134" x2="48" y2="144" />
+    <line x1="152" y1="134" x2="152" y2="144" />
   </g>
 </svg>
