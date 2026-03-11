@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { Plus, Loader2, X } from "lucide-react";
+import { useTranslation } from "@/hooks/use-translations";
 import { createProject } from "@/lib/actions/projects";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,15 +14,16 @@ interface Props {
 export function CreateProjectDialog({ variant = "fab" }: Props) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const t = useTranslation();
 
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
       try {
         await createProject(formData);
-        toast.success("Projekt erstellt!");
+        toast.success(t("createProject.created"));
         setOpen(false);
       } catch (e) {
-        const msg = e instanceof Error ? e.message : "Fehler beim Erstellen";
+        const msg = e instanceof Error ? e.message : t("createProject.createError");
         toast.error(msg);
       }
     });
@@ -38,7 +40,7 @@ export function CreateProjectDialog({ variant = "fab" }: Props) {
         }
       >
         <Plus className="h-5 w-5" strokeWidth={2.5} />
-        {variant === "inline" && "Projekt erstellen"}
+        {variant === "inline" && t("createProject.create")}
       </button>
 
       <AnimatePresence>
@@ -60,7 +62,7 @@ export function CreateProjectDialog({ variant = "fab" }: Props) {
               className="w-full max-w-lg rounded-t-3xl sm:rounded-3xl bg-background p-6 shadow-2xl border border-border"
             >
               <div className="mb-6 flex items-center justify-between">
-                <h2 className="text-xl font-extrabold">Neues Projekt</h2>
+                <h2 className="text-xl font-extrabold">{t("createProject.title")}</h2>
                 <button
                   onClick={() => setOpen(false)}
                   className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted transition-colors cursor-pointer"
@@ -75,13 +77,13 @@ export function CreateProjectDialog({ variant = "fab" }: Props) {
                     htmlFor="proj-name"
                     className="text-sm font-semibold"
                   >
-                    Projektname
+                    {t("createProject.projectName")}
                   </label>
                   <input
                     id="proj-name"
                     name="name"
                     required
-                    placeholder="z.B. Neubau Musterstraße 5"
+                    placeholder={t("createProject.projectNamePlaceholder")}
                     className="flex h-13 w-full rounded-2xl border border-border bg-card px-4 text-base outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
                   />
                 </div>
@@ -91,12 +93,12 @@ export function CreateProjectDialog({ variant = "fab" }: Props) {
                     htmlFor="proj-address"
                     className="text-sm font-semibold"
                   >
-                    Adresse
+                    {t("createProject.address")}
                   </label>
                   <input
                     id="proj-address"
                     name="address"
-                    placeholder="Musterstraße 5, 80331 München"
+                    placeholder={t("createProject.addressPlaceholder")}
                     className="flex h-13 w-full rounded-2xl border border-border bg-card px-4 text-base outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
                   />
                 </div>
@@ -111,7 +113,7 @@ export function CreateProjectDialog({ variant = "fab" }: Props) {
                   ) : (
                     <>
                       <Plus className="h-5 w-5" />
-                      Projekt erstellen
+                      {t("createProject.create")}
                     </>
                   )}
                 </button>

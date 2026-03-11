@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { HardHat, Loader2, ArrowRight, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { claimPendingInvitations } from "@/lib/actions/invitations";
+import { useTranslation } from "@/hooks/use-translations";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const t = useTranslation();
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
@@ -23,7 +25,7 @@ export default function RegisterPage() {
     setError("");
 
     if (password.length < 6) {
-      setError("Passwort muss mindestens 6 Zeichen lang sein.");
+      setError(t("auth.passwordMinLength"));
       setLoading(false);
       return;
     }
@@ -37,13 +39,11 @@ export default function RegisterPage() {
 
     if (error) {
       if (error.message?.includes("email")) {
-        setError(
-          "E-Mail-Bestätigung erforderlich. Bitte deaktivieren Sie die E-Mail-Bestätigung in den Supabase Auth-Einstellungen für die Entwicklung."
-        );
+        setError(t("auth.emailConfirmationRequired"));
       } else if (error.message?.includes("already registered")) {
-        setError("Diese E-Mail ist bereits registriert. Bitte melden Sie sich an.");
+        setError(t("auth.emailAlreadyRegistered"));
       } else {
-        setError(`Registrierung fehlgeschlagen: ${error.message}`);
+        setError(`${t("auth.registerFailed")}: ${error.message}`);
       }
       setLoading(false);
       return;
@@ -81,10 +81,10 @@ export default function RegisterPage() {
           </motion.div>
           <div className="text-center">
             <h1 className="text-3xl font-extrabold tracking-tight">
-              Konto erstellen
+              {t("auth.registerTitle")}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              Erstellen Sie ein Konto, um Mängel zu erfassen.
+              {t("auth.registerSubtitle")}
             </p>
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function RegisterPage() {
           >
             <CheckCircle2 className="h-12 w-12 text-status-done" />
             <p className="text-sm font-semibold text-status-done">
-              Konto erstellt! Sie werden weitergeleitet...
+              {t("auth.accountCreated")}
             </p>
           </motion.div>
         ) : (
@@ -114,7 +114,7 @@ export default function RegisterPage() {
 
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-semibold">
-                Vollständiger Name
+                {t("auth.fullName")}
               </label>
               <input
                 id="name"
@@ -122,7 +122,7 @@ export default function RegisterPage() {
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="Max Mustermann"
+                placeholder={t("auth.fullNamePlaceholder")}
                 className="flex h-13 w-full rounded-2xl border border-border bg-card px-4 text-base outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
                 autoComplete="name"
               />
@@ -130,7 +130,7 @@ export default function RegisterPage() {
 
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-semibold">
-                E-Mail
+                {t("auth.email")}
               </label>
               <input
                 id="email"
@@ -138,7 +138,7 @@ export default function RegisterPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@firma.de"
+                placeholder={t("auth.emailPlaceholder")}
                 className="flex h-13 w-full rounded-2xl border border-border bg-card px-4 text-base outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
                 autoComplete="email"
               />
@@ -146,7 +146,7 @@ export default function RegisterPage() {
 
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-semibold">
-                Passwort
+                {t("auth.password")}
               </label>
               <input
                 id="password"
@@ -154,7 +154,7 @@ export default function RegisterPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Mindestens 6 Zeichen"
+                placeholder={t("auth.passwordPlaceholderMin")}
                 className="flex h-13 w-full rounded-2xl border border-border bg-card px-4 text-base outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
                 autoComplete="new-password"
               />
@@ -169,7 +169,7 @@ export default function RegisterPage() {
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
                 <>
-                  Registrieren
+                  {t("auth.registerSubmit")}
                   <ArrowRight className="h-4 w-4" />
                 </>
               )}
@@ -178,12 +178,12 @@ export default function RegisterPage() {
         )}
 
         <p className="text-center text-sm text-muted-foreground">
-          Bereits ein Konto?{" "}
+          {t("auth.haveAccount")}{" "}
           <Link
             href="/login"
             className="font-semibold text-amber-500 hover:text-amber-400 transition-colors"
           >
-            Anmelden
+            {t("auth.loginLink")}
           </Link>
         </p>
       </motion.div>

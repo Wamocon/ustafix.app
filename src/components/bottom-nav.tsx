@@ -7,15 +7,17 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { useTranslation } from "@/hooks/use-translations";
 
 const navItems = [
-  { href: "/dashboard", label: "Projekte", icon: LayoutDashboard },
-  { href: "/settings", label: "Einstellungen", icon: Settings },
+  { href: "/dashboard", labelKey: "common.projects", icon: LayoutDashboard },
+  { href: "/settings", labelKey: "common.settings", icon: Settings },
 ];
 
 export function BottomNav() {
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslation();
 
   async function handleLogout() {
     const supabase = createClient();
@@ -50,7 +52,7 @@ export function BottomNav() {
                   />
                 )}
                 <item.icon className="h-5 w-5" />
-                <span>{item.label}</span>
+                <span>{t(item.labelKey)}</span>
               </Link>
             );
           })}
@@ -59,7 +61,7 @@ export function BottomNav() {
             className="flex flex-col items-center gap-1 px-5 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
           >
             <LogOut className="h-5 w-5" />
-            <span>Abmelden</span>
+            <span>{t("common.logout")}</span>
           </button>
         </div>
       </div>

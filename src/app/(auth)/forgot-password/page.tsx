@@ -5,12 +5,14 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { HardHat, Loader2, ArrowLeft, Mail, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "@/hooks/use-translations";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const t = useTranslation();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -23,7 +25,7 @@ export default function ForgotPasswordPage() {
     });
 
     if (error) {
-      setError("Fehler beim Senden der E-Mail. Bitte versuchen Sie es erneut.");
+      setError(t("auth.forgotPasswordError"));
       setLoading(false);
       return;
     }
@@ -56,10 +58,10 @@ export default function ForgotPasswordPage() {
           </motion.div>
           <div className="text-center">
             <h1 className="text-3xl font-extrabold tracking-tight">
-              Passwort zurücksetzen
+              {t("auth.forgotPasswordTitle")}
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen.
+              {t("auth.forgotPasswordSubtitle")}
             </p>
           </div>
         </div>
@@ -72,10 +74,10 @@ export default function ForgotPasswordPage() {
           >
             <CheckCircle2 className="h-12 w-12 text-status-done" />
             <p className="text-sm font-semibold text-status-done">
-              E-Mail gesendet! Prüfen Sie Ihren Posteingang.
+              {t("auth.emailSent")}
             </p>
             <p className="text-xs text-muted-foreground">
-              Wenn ein Konto mit dieser Adresse existiert, erhalten Sie einen Link zum Zurücksetzen.
+              {t("auth.emailSentNote")}
             </p>
           </motion.div>
         ) : (
@@ -92,7 +94,7 @@ export default function ForgotPasswordPage() {
 
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-semibold">
-                E-Mail
+                {t("auth.email")}
               </label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -102,7 +104,7 @@ export default function ForgotPasswordPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@firma.de"
+                  placeholder={t("auth.emailPlaceholder")}
                   className="flex h-13 w-full rounded-2xl border border-border bg-card pl-11 pr-4 text-base outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
                   autoComplete="email"
                 />
@@ -117,7 +119,7 @@ export default function ForgotPasswordPage() {
               {loading ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
-                "Link senden"
+                t("auth.sendLink")
               )}
             </button>
           </form>
@@ -129,7 +131,7 @@ export default function ForgotPasswordPage() {
             className="inline-flex items-center gap-1 font-semibold text-amber-500 hover:text-amber-400 transition-colors"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            Zurück zum Login
+            {t("auth.backToLogin")}
           </Link>
         </p>
       </motion.div>

@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { HardHat, Loader2, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { claimPendingInvitations } from "@/lib/actions/invitations";
+import { useTranslation } from "@/hooks/use-translations";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const t = useTranslation();
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -27,7 +29,7 @@ export default function LoginPage() {
     });
 
     if (error) {
-      setError("E-Mail oder Passwort ist falsch.");
+      setError(t("auth.loginError"));
       setLoading(false);
       return;
     }
@@ -66,7 +68,7 @@ export default function LoginPage() {
               Ustafix<span className="gradient-text">.app</span>
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              Melden Sie sich an, um Ihre Bauprojekte zu verwalten.
+              {t("auth.loginSubtitle")}
             </p>
           </div>
         </div>
@@ -84,7 +86,7 @@ export default function LoginPage() {
 
           <div className="space-y-2">
             <label htmlFor="email" className="text-sm font-semibold">
-              E-Mail
+              {t("auth.email")}
             </label>
             <input
               id="email"
@@ -92,7 +94,7 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@firma.de"
+              placeholder={t("auth.emailPlaceholder")}
               className="flex h-13 w-full rounded-2xl border border-border bg-card px-4 text-base outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
               autoComplete="email"
             />
@@ -100,7 +102,7 @@ export default function LoginPage() {
 
           <div className="space-y-2">
             <label htmlFor="password" className="text-sm font-semibold">
-              Passwort
+              {t("auth.password")}
             </label>
             <input
               id="password"
@@ -108,7 +110,7 @@ export default function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder={t("auth.passwordPlaceholder")}
               className="flex h-13 w-full rounded-2xl border border-border bg-card px-4 text-base outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
               autoComplete="current-password"
             />
@@ -123,7 +125,7 @@ export default function LoginPage() {
               <Loader2 className="h-5 w-5 animate-spin" />
             ) : (
               <>
-                Anmelden
+                {t("auth.loginSubmit")}
                 <ArrowRight className="h-4 w-4" />
               </>
             )}
@@ -136,16 +138,16 @@ export default function LoginPage() {
               href="/forgot-password"
               className="font-semibold text-amber-500 hover:text-amber-400 transition-colors"
             >
-              Passwort vergessen?
+              {t("auth.forgotPassword")}
             </Link>
           </p>
           <p>
-            Noch kein Konto?{" "}
+            {t("auth.noAccountYet")}{" "}
             <Link
               href="/register"
               className="font-semibold text-amber-500 hover:text-amber-400 transition-colors"
             >
-              Registrieren
+              {t("auth.registerLink")}
             </Link>
           </p>
         </div>

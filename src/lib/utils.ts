@@ -37,6 +37,7 @@ export type TransitionRule = {
   requiresNote: boolean;
   allowedRoles: ("admin" | "manager" | "worker")[];
   label: string;
+  labelKey: string;
 };
 
 export const TRANSITION_RULES: Record<string, TransitionRule> = {
@@ -45,36 +46,42 @@ export const TRANSITION_RULES: Record<string, TransitionRule> = {
     requiresNote: true,
     allowedRoles: ["admin", "manager", "worker"],
     label: "Arbeit beginnen",
+    labelKey: "statusModal.label.workBegin",
   },
   "in_arbeit->erledigt": {
     requiresMedia: true,
     requiresNote: true,
     allowedRoles: ["admin", "manager", "worker"],
     label: "Als erledigt markieren",
+    labelKey: "statusModal.label.markDone",
   },
   "erledigt->offen": {
     requiresMedia: false,
     requiresNote: true,
     allowedRoles: ["admin", "manager"],
     label: "Mangel wiedereröffnen",
+    labelKey: "statusModal.label.reopenDefect",
   },
   "in_arbeit->offen": {
     requiresMedia: false,
     requiresNote: true,
     allowedRoles: ["admin", "manager", "worker"],
     label: "Arbeit stoppen",
+    labelKey: "statusModal.label.stopWork",
   },
   "offen->erledigt": {
     requiresMedia: true,
     requiresNote: true,
     allowedRoles: ["admin", "manager"],
     label: "Direkt als erledigt markieren",
+    labelKey: "statusModal.label.directDone",
   },
   "erledigt->in_arbeit": {
     requiresMedia: false,
     requiresNote: true,
     allowedRoles: ["admin", "manager"],
     label: "Zurück in Arbeit setzen",
+    labelKey: "statusModal.label.backToWork",
   },
 };
 

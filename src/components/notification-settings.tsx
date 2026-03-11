@@ -2,6 +2,7 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { Bell, BellOff } from "lucide-react";
+import { useTranslation } from "@/hooks/use-translations";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import {
@@ -29,6 +30,7 @@ export function NotificationSettings({
   const [newDefects, setNewDefects] = useState(preferences.new_defects);
   const [isPending, startTransition] = useTransition();
   const [isSupported, setIsSupported] = useState(false);
+  const t = useTranslation();
 
   useEffect(() => {
     const supported =
@@ -48,7 +50,7 @@ export function NotificationSettings({
 
   async function handleTogglePush() {
     if (!isSupported) {
-      toast.error("Push-Benachrichtigungen werden nicht unterstuetzt.");
+      toast.error(t("notifications.pushNotSupported"));
       return;
     }
 
@@ -61,9 +63,9 @@ export function NotificationSettings({
           await subscription.unsubscribe();
         }
         setPushEnabled(false);
-        toast.success("Push-Benachrichtigungen deaktiviert");
+        toast.success(t("notifications.pushDisabled"));
       } catch {
-        toast.error("Fehler beim Deaktivieren.");
+        toast.error(t("notifications.disableError"));
       }
       return;
     }
@@ -71,7 +73,7 @@ export function NotificationSettings({
     try {
       const permission = await Notification.requestPermission();
       if (permission !== "granted") {
-        toast.error("Benachrichtigungen wurden abgelehnt.");
+        toast.error(t("notifications.denied"));
         return;
       }
 
@@ -95,9 +97,9 @@ export function NotificationSettings({
       });
 
       setPushEnabled(true);
-      toast.success("Push-Benachrichtigungen aktiviert");
+      toast.success(t("notifications.pushEnabled"));
     } catch {
-      toast.error("Fehler beim Aktivieren der Benachrichtigungen.");
+      toast.error(t("notifications.enableError"));
     }
   }
 
@@ -113,7 +115,7 @@ export function NotificationSettings({
       try {
         await updateNotificationPreferences({ [field]: value });
       } catch {
-        toast.error("Fehler beim Speichern.");
+        toast.error(t("notifications.saveError"));
       }
     });
   }
@@ -122,7 +124,7 @@ export function NotificationSettings({
     <div className="space-y-4">
       <h3 className="text-sm font-semibold text-muted-foreground flex items-center gap-2">
         <Bell className="h-4 w-4" />
-        Benachrichtigungen
+        {t("notifications.title")}
       </h3>
 
       <button
@@ -141,9 +143,9 @@ export function NotificationSettings({
             <BellOff className="h-5 w-5 text-muted-foreground" />
           )}
           <div className="text-left">
-            <p className="text-sm font-semibold">Push-Benachrichtigungen</p>
+            <p className="text-sm font-semibold">{t("notifications.pushNotifications")}</p>
             <p className="text-xs text-muted-foreground">
-              {pushEnabled ? "Aktiviert" : "Deaktiviert"}
+              {pushEnabled ? t("notifications.enabled") : t("notifications.disabled")}
             </p>
           </div>
         </div>
@@ -164,22 +166,22 @@ export function NotificationSettings({
 
       <div className="space-y-2">
         <ToggleRow
-          label="Statusaenderungen"
-          description="Wenn ein Mangel-Status geaendert wird"
+          label={t("notifications.statusChanges")}
+          description={t("notifications.statusChangesDesc")}
           checked={statusChanges}
           disabled={isPending}
           onChange={(v) => handlePrefChange("statusChanges", v)}
         />
         <ToggleRow
-          label="Neue Kommentare"
-          description="Wenn ein Kommentar hinzugefuegt wird"
+          label={t("notifications.newComments")}
+          description={t("notifications.newCommentsDesc")}
           checked={newComments}
           disabled={isPending}
           onChange={(v) => handlePrefChange("newComments", v)}
         />
         <ToggleRow
-          label="Neue Maengel"
-          description="Wenn ein neuer Mangel erfasst wird"
+          label={t("notifications.newDefects")}
+          description={t("notifications.newDefectsDesc")}
           checked={newDefects}
           disabled={isPending}
           onChange={(v) => handlePrefChange("newDefects", v)}

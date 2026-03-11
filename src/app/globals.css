@@ -203,3 +203,12 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 }
+
+/* Hide scrollbar while keeping scroll functionality */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   AlertTriangle,
 } from "lucide-react";
+import { useTranslation } from "@/hooks/use-translations";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import {
@@ -39,10 +40,10 @@ interface StatusTransitionModalProps {
   userId?: string;
 }
 
-const STATUS_LABELS: Record<DefectStatus, { label: string; emoji: string }> = {
-  offen: { label: "Offen", emoji: "🔴" },
-  in_arbeit: { label: "In Arbeit", emoji: "🟡" },
-  erledigt: { label: "Erledigt", emoji: "🟢" },
+const STATUS_KEYS: Record<DefectStatus, string> = {
+  offen: "status.offen",
+  in_arbeit: "status.in_arbeit",
+  erledigt: "status.erledigt",
 };
 
 export function StatusTransitionModal({
@@ -55,6 +56,7 @@ export function StatusTransitionModal({
   userRole,
   userId,
 }: StatusTransitionModalProps) {
+  const t = useTranslation();
   const rule = getTransitionRule(fromStatus, toStatus);
   const [note, setNote] = useState("");
   const [files, setFiles] = useState<File[]>([]);
@@ -103,7 +105,7 @@ export function StatusTransitionModal({
 
     for (const file of selected) {
       if (files.length + addedCount >= 5) {
-        toast.error("Maximal 5 Dateien erlaubt.");
+        toast.error(t("statusModal.maxFiles"));
         break;
       }
 
@@ -134,9 +136,7 @@ export function StatusTransitionModal({
             useWebWorker: true,
           });
           if (compressed.size > MAX_IMAGE_SIZE) {
-            toast.error(
-              `Bild zu groß nach Kompression (${formatFileSize(compressed.size)}). Maximal ${formatFileSize(MAX_IMAGE_SIZE)}.`
-            );
+            toast.error(t("statusModal.imageTooBig"));
             continue;
           }
           setFiles((prev) => [...prev, compressed]);
@@ -146,11 +146,11 @@ export function StatusTransitionModal({
             setFiles((prev) => [...prev, file]);
             addedCount++;
           } else {
-            toast.error("Bild konnte nicht komprimiert werden und ist zu groß.");
+            toast.error(t("statusModal.imageCompressFailed"));
           }
         }
       } else {
-        toast.error("Nur Fotos und Videos sind erlaubt.");
+        toast.error(t("statusModal.onlyPhotosVideos"));
       }
     }
   }
@@ -165,7 +165,7 @@ export function StatusTransitionModal({
     startTransition(async () => {
       try {
         if (!navigator.onLine && userId) {
-          setUploadProgress("Offline speichern...");
+          setUploadProgress(t("statusModal.offlineSaving"));
           await saveTransitionOffline({
             defectId,
             projectId,
@@ -177,13 +177,13 @@ export function StatusTransitionModal({
           });
           syncEngine.refreshCounts();
           setUploadProgress(null);
-          const toL = STATUS_LABELS[toStatus].label;
-          toast.success(`Status auf "${toL}" offline gespeichert. Wird synchronisiert.`);
+          const toL = t(STATUS_KEYS[toStatus]);
+          toast.success(t("statusModal.statusSavedOffline", { label: toL }));
           onClose();
           return;
         }
 
-        setUploadProgress("Statuswechsel wird gespeichert...");
+        setUploadProgress(t("statusModal.saving"));
 
         const transition = await performStatusTransition({
           defectId,
@@ -194,11 +194,11 @@ export function StatusTransitionModal({
         });
 
         if (files.length > 0) {
-          setUploadProgress(`Dateien werden hochgeladen (0/${files.length})...`);
+          setUploadProgress(t("statusModal.uploading", { current: "0", total: String(files.length) }));
 
           for (let i = 0; i < files.length; i++) {
             setUploadProgress(
-              `Dateien werden hochgeladen (${i + 1}/${files.length})...`
+              t("statusModal.uploading", { current: String(i + 1), total: String(files.length) })
             );
             const formData = new FormData();
             formData.append("file", files[i]);
@@ -212,8 +212,8 @@ export function StatusTransitionModal({
         }
 
         setUploadProgress(null);
-        const toLabel = STATUS_LABELS[toStatus].label;
-        toast.success(`Status auf "${toLabel}" geaendert`);
+        const toLabel = t(STATUS_KEYS[toStatus]);
+        toast.success(t("statusModal.statusChanged", { label: toLabel }));
         onClose();
       } catch (err) {
         if (!navigator.onLine && userId) {
@@ -229,7 +229,7 @@ export function StatusTransitionModal({
             });
             syncEngine.refreshCounts();
             setUploadProgress(null);
-            toast.success("Status offline gespeichert.");
+            toast.success(t("statusModal.offlineSaved"));
             onClose();
             return;
           } catch {
@@ -238,24 +238,19 @@ export function StatusTransitionModal({
         }
         setUploadProgress(null);
         const message =
-          err instanceof Error ? err.message : "Fehler beim Statuswechsel";
+          err instanceof Error ? err.message : t("statusModal.transitionError");
         toast.error(message);
       }
     });
   }
 
-  const fromLabel = STATUS_LABELS[fromStatus];
-  const toLabel = STATUS_LABELS[toStatus];
+  const fromLabel = t(STATUS_KEYS[fromStatus]);
+  const toLabel = t(STATUS_KEYS[toStatus]);
 
-  const notePlaceholders: Record<string, string> = {
-    "offen->in_arbeit": "z.B. Bin vor Ort, beginne mit der Reparatur...",
-    "in_arbeit->erledigt":
-      "z.B. Reparatur abgeschlossen, Riss wurde verspachtelt und gestrichen...",
-    "erledigt->offen": "z.B. Mangel tritt erneut auf, muss nachgebessert werden...",
-    "in_arbeit->offen": "z.B. Material fehlt, Arbeit wird unterbrochen...",
-    "offen->erledigt": "z.B. War bereits behoben, Dokumentation nachgeholt...",
-    "erledigt->in_arbeit": "z.B. Nachbesserung erforderlich...",
-  };
+  const notePlaceholderKey = `statusModal.placeholders.${fromStatus}->${toStatus}`;
+  const notePlaceholder = t(notePlaceholderKey) !== notePlaceholderKey
+    ? t(notePlaceholderKey)
+    : t("statusModal.enterDescription");
 
   return (
     <AnimatePresence>
@@ -275,12 +270,12 @@ export function StatusTransitionModal({
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-              <h2 className="text-lg font-extrabold">Statuswechsel</h2>
+              <h2 className="text-lg font-extrabold">{t("statusModal.title")}</h2>
               <button
                 onClick={onClose}
                 disabled={isPending}
                 className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted transition-colors cursor-pointer"
-                aria-label="Schließen"
+                aria-label={t("common.close")}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -290,15 +285,15 @@ export function StatusTransitionModal({
               {/* Status transition visual */}
               <div className="flex items-center justify-center gap-3">
                 <div className="flex flex-col items-center gap-1 rounded-2xl border border-border bg-card px-5 py-3">
-                  <span className="text-lg">{fromLabel.emoji}</span>
+                  <span className="text-lg">{fromStatus === "offen" ? "🔴" : fromStatus === "in_arbeit" ? "🟡" : "🟢"}</span>
                   <span className="text-xs font-semibold text-muted-foreground">
-                    {fromLabel.label}
+                    {fromLabel}
                   </span>
                 </div>
                 <span className="text-2xl text-muted-foreground">→</span>
                 <div className="flex flex-col items-center gap-1 rounded-2xl border-2 border-amber-500/40 bg-amber-500/5 px-5 py-3">
-                  <span className="text-lg">{toLabel.emoji}</span>
-                  <span className="text-xs font-bold">{toLabel.label}</span>
+                  <span className="text-lg">{toStatus === "offen" ? "🔴" : toStatus === "in_arbeit" ? "🟡" : "🟢"}</span>
+                  <span className="text-xs font-bold">{toLabel}</span>
                 </div>
               </div>
 
@@ -308,20 +303,20 @@ export function StatusTransitionModal({
                   <AlertTriangle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-semibold text-destructive">
-                      Keine Berechtigung
+                      {t("statusModal.noPermission")}
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      Nur{" "}
+                      {t("status.onlyRoles")}{" "}
                       {rule.allowedRoles
                         .map((r) =>
                           r === "admin"
-                            ? "Admins"
+                            ? t("status.admins")
                             : r === "manager"
-                              ? "Manager"
-                              : "Arbeiter"
+                              ? t("status.manager")
+                              : t("status.worker")
                         )
-                        .join(" und ")}{" "}
-                      können diesen Statuswechsel durchführen.
+                        .join(` ${t("status.and")} `)}{" "}
+                      {t("status.canTransition")}
                     </p>
                   </div>
                 </div>
@@ -331,15 +326,12 @@ export function StatusTransitionModal({
               {isAllowed && (
                 <div className="space-y-2">
                   <label className="text-sm font-semibold">
-                    Beschreibung{rule.requiresNote ? " *" : ""}
+                    {t("statusModal.description")}{rule.requiresNote ? " *" : ""}
                   </label>
                   <textarea
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
-                    placeholder={
-                      notePlaceholders[`${fromStatus}->${toStatus}`] ??
-                      "Beschreibung eingeben..."
-                    }
+                    placeholder={notePlaceholder}
                     rows={3}
                     className="flex w-full rounded-2xl border border-border bg-card px-4 py-3 text-sm outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground resize-none"
                   />
@@ -351,7 +343,7 @@ export function StatusTransitionModal({
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <label className="text-sm font-semibold">
-                      Foto / Video Nachweis *
+                      {t("statusModal.photoVideo")} *
                     </label>
                     <span className="text-xs text-muted-foreground">
                       {files.length}/5
@@ -368,10 +360,10 @@ export function StatusTransitionModal({
                       </div>
                       <div className="text-center">
                         <p className="text-sm font-semibold">
-                          Foto oder Video aufnehmen
+                          {t("statusModal.capturePhotoVideo")}
                         </p>
                         <p className="text-xs text-muted-foreground mt-1">
-                          Video max. 30 Sek, 720p • Bild max. 5 MB
+                          {t("statusModal.videoConstraints")}
                         </p>
                       </div>
                     </button>
@@ -425,7 +417,7 @@ export function StatusTransitionModal({
                   {compressionProgress !== null && (
                     <div className="space-y-1.5">
                       <p className="text-xs text-muted-foreground">
-                        Video wird komprimiert... {compressionProgress}%
+                        {t("statusModal.videoCompressing")} {compressionProgress}%
                       </p>
                       <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
                         <div
@@ -460,7 +452,7 @@ export function StatusTransitionModal({
                   ) : (
                     <>
                       <CheckCircle2 className="h-5 w-5" />
-                      {rule.label}
+                      {t(rule.labelKey)}
                     </>
                   )}
                 </button>
