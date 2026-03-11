@@ -30,10 +30,10 @@ export function UstafixLogo({ className, ...props }: SVGProps<SVGSVGElement>) {
           <path d="M 112 62 A 68 38 0 0 1 158 100" />
           <rect x="35" y="100" width="130" height="12" rx="6" />
         </g>
-        {/* Construction safety glasses - bottom like L_Ʌ_⅃ (L and ⅃ have horizontal bases) */}
-        <path d="M 48 128 L 152 128 L 152 166 L 140 166 L 100 152 L 60 166 L 48 166 Z" />
-        <line x1="36" y1="134" x2="36" y2="158" />
-        <line x1="164" y1="134" x2="164" y2="158" />
+        {/* Safety glasses - rounded frame, smooth inverted V at bottom (nose bridge) */}
+        <path d="M 44 128 Q 100 124 156 128 Q 168 138 168 164 Q 140 168 100 152 Q 60 168 32 164 Q 32 138 44 128 Z" />
+        <line x1="28" y1="138" x2="28" y2="158" />
+        <line x1="172" y1="138" x2="172" y2="158" />
       </g>
     </svg>
   );
