@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-/** Ustafix logo: hard hat with safety goggles - gradient background, white outline. */
+/** Ustafix logo: hard hat, safety goggles - gradient background, white outline. */
 export function UstafixLogo({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -20,35 +20,20 @@ export function UstafixLogo({ className, ...props }: SVGProps<SVGSVGElement>) {
 
       <rect x="0" y="0" width="200" height="200" rx="45" fill="url(#ustafixBgGrad)" />
 
+      {/* Ridge - orange fill, white border (drawn first so dome connects to it) */}
+      <rect x="88" y="50" width="24" height="40" rx="10" fill="url(#ustafixBgGrad)" stroke="#FFFFFF" strokeWidth="7" className="ustafix-helmet" />
+
       <g fill="none" stroke="#FFFFFF" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round">
-        {/* Helmet - scaled taller via CSS */}
         <g className="ustafix-helmet">
-          {/* Ridge - filled to close gap at top */}
-          <rect x="88" y="50" width="24" height="40" rx="10" fill="#FFFFFF" />
-          {/* Dome - single path, no overlap at top */}
-          <path d="M 42 100 A 68 38 0 0 1 90 58 L 110 58 A 68 38 0 0 1 158 100" />
-          {/* Brim - meets dome cleanly at y=100 */}
+          {/* Dome - arcs end at ridge edges (88, 112), no line across sausage */}
+          <path d="M 42 100 A 68 38 0 0 1 88 62" />
+          <path d="M 112 62 A 68 38 0 0 1 158 100" />
           <rect x="35" y="100" width="130" height="12" rx="6" />
         </g>
-        <path
-          d="
-      M 65 124
-      L 135 124
-      A 10 10 0 0 1 145 134
-      L 145 144
-      A 15 15 0 0 1 130 159
-      L 115 159
-      A 15 15 0 0 1 100 144
-      A 15 15 0 0 1 85 159
-      L 70 159
-      A 15 15 0 0 1 55 144
-      L 55 134
-      A 10 10 0 0 1 65 124
-      Z
-    "
-        />
-        <line x1="48" y1="134" x2="48" y2="144" />
-        <line x1="152" y1="134" x2="152" y2="144" />
+        {/* Construction safety glasses - bottom like L_Ʌ_⅃ (L and ⅃ have horizontal bases) */}
+        <path d="M 48 128 L 152 128 L 152 166 L 140 166 L 100 152 L 60 166 L 48 166 Z" />
+        <line x1="36" y1="134" x2="36" y2="158" />
+        <line x1="164" y1="134" x2="164" y2="158" />
       </g>
     </svg>
   );

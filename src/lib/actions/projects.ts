@@ -121,7 +121,8 @@ export async function createUnit(projectId: string, name: string) {
     throw new Error("Nur Admin oder Manager dürfen Einheiten anlegen.");
   }
 
-  const { data, error } = await supabase
+  const admin = createAdminClient();
+  const { data, error } = await admin
     .from("units")
     .insert({ project_id: projectId, name })
     .select()
@@ -129,7 +130,7 @@ export async function createUnit(projectId: string, name: string) {
 
   if (error) throw new Error("Fehler beim Erstellen der Einheit");
 
-  revalidatePath(`/project/${projectId}`);
+  revalidatePath(`/project/${projectId}`, "layout");
   return data;
 }
 
