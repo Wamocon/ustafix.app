@@ -10,7 +10,7 @@ export function useOfflineSync() {
   const [isOffline, setIsOffline] = useState(false);
 
   useEffect(() => {
-    setIsOffline(!navigator.onLine);
+    queueMicrotask(() => setIsOffline(!navigator.onLine));
 
     const handleOnline = () => setIsOffline(false);
     const handleOffline = () => setIsOffline(true);

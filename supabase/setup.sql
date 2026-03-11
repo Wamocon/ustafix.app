@@ -221,17 +221,7 @@ CREATE POLICY "Members can view projects" ON projects
   FOR SELECT USING (is_project_member(id));
 
 CREATE POLICY "projects_insert" ON projects
-  FOR INSERT WITH CHECK (
-    auth.uid() IS NOT NULL
-    AND (
-      NOT EXISTS (SELECT 1 FROM project_members WHERE user_id = auth.uid())
-      OR organization_id IN (
-        SELECT p.organization_id FROM projects p
-        JOIN project_members pm ON pm.project_id = p.id
-        WHERE pm.user_id = auth.uid() AND pm.role IN ('admin', 'manager')
-      )
-    )
-  );
+  FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
 
 CREATE POLICY "projects_update" ON projects
   FOR UPDATE USING (is_admin_or_manager(id));
@@ -243,8 +233,19 @@ CREATE POLICY "projects_delete" ON projects
 CREATE POLICY "Members can view project members" ON project_members
   FOR SELECT USING (is_project_member(project_id));
 
+CREATE OR REPLACE FUNCTION project_has_no_members(p_project_id UUID)
+RETURNS BOOLEAN AS $$
+  SELECT NOT EXISTS (SELECT 1 FROM project_members WHERE project_id = p_project_id);
+$$ LANGUAGE sql STABLE SECURITY DEFINER SET search_path TO '';
+
 CREATE POLICY "project_members_insert" ON project_members
-  FOR INSERT WITH CHECK (auth.uid() IS NOT NULL AND is_admin_or_manager(project_id) = true);
+  FOR INSERT WITH CHECK (
+    auth.uid() IS NOT NULL
+    AND (
+      (user_id = auth.uid() AND project_has_no_members(project_id))
+      OR is_admin_or_manager(project_id) = true
+    )
+  );
 
 CREATE POLICY "project_members_update_role" ON project_members
   FOR UPDATE USING (is_admin_or_manager(project_id));
@@ -390,7 +391,7 @@ CREATE TABLE project_invitations (
   accepted_by UUID REFERENCES auth.users(id) ON DELETE SET NULL,
   expires_at TIMESTAMPTZ NOT NULL DEFAULT (now() + INTERVAL '7 days'),
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE INDEX idx_invitations_project ON project_invitations(project_id);
@@ -432,7 +433,7 @@ LANGUAGE sql STABLE SECURITY DEFINER SET search_path TO '' AS $$
   JOIN auth.users au ON au.id = dc.user_id
   WHERE dc.defect_id = p_defect_id
   AND dc.defect_id IN (SELECT d.id FROM public.defects d WHERE public.is_project_member(d.project_id))
-  ORDER BY dc.created_at;
+  ORDER BY dc.created_at DESC;
 $$;
 
 CREATE OR REPLACE FUNCTION get_project_members_with_info(p_project_id UUID)

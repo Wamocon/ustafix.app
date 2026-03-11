@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Trash2, Mic, ImageIcon } from "lucide-react";
 import { deleteMedia } from "@/lib/actions/media";
@@ -32,20 +32,16 @@ export function MediaViewer({
   currentUserId,
   canDeleteAll,
 }: MediaViewerProps) {
-  const [urls, setUrls] = useState<Record<string, string>>({});
-
-  useEffect(() => {
+  const urls = useMemo(() => {
     const supabase = createClient();
-    const newUrls: Record<string, string> = {};
-
+    const result: Record<string, string> = {};
     for (const item of media) {
       const { data } = supabase.storage
         .from("defect-media")
         .getPublicUrl(item.storage_path);
-      newUrls[item.id] = data.publicUrl;
+      result[item.id] = data.publicUrl;
     }
-
-    setUrls(newUrls);
+    return result;
   }, [media]);
 
   function canDeleteItem(item: MediaItem): boolean {

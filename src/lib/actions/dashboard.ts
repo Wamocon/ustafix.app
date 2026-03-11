@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { claimPendingInvitations } from "./invitations";
 
 export interface DefectCounts {
   offen: number;
@@ -62,6 +63,9 @@ export async function getDashboardStats(): Promise<DashboardData | null> {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return null;
+
+  // Claim any pending invitations so new users see their projects immediately
+  await claimPendingInvitations();
 
   const { data, error } = await supabase.rpc("get_dashboard_stats");
 

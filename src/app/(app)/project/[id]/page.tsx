@@ -1,17 +1,10 @@
 import { getProject, getProjectMembers } from "@/lib/actions/projects";
 import { getDefects } from "@/lib/actions/defects";
 import { getProtocols } from "@/lib/actions/protocols";
-import { DefectList } from "@/components/defect-list";
-import { CaptureModal } from "@/components/capture-modal";
-import { RealtimeWrapper } from "@/components/realtime-wrapper";
-import { ProjectTeamSection } from "@/components/project-team-section";
-import { AddUnitForm } from "@/components/add-unit-form";
-import { ProtocolSection } from "@/components/protocol-section";
-import { ArrowLeft, MapPin } from "lucide-react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import type { MemberRole } from "@/lib/db/schema";
+import { ProjectPageContent } from "@/components/project-page-content";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -41,130 +34,22 @@ export default async function ProjectPage({ params }: Props) {
 
   const total = defects.length;
   const donePercent = total > 0 ? Math.round((counts.erledigt / total) * 100) : 0;
+  const units = (project.units as { id: string; name: string }[]) ?? [];
 
   return (
-    <div className="mx-auto max-w-lg px-4 pt-4">
-      <header className="mb-6">
-        <Link
-          href="/dashboard"
-          className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Projekte
-        </Link>
-
-        <h1 className="text-2xl font-extrabold tracking-tight">
-          {project.name}
-        </h1>
-        {project.address && (
-          <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
-            <MapPin className="h-3.5 w-3.5 text-amber-500/60" />
-            {project.address}
-          </p>
-        )}
-
-        {/* Progress bar */}
-        {total > 0 && (
-          <div className="mt-4">
-            <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
-              <span>Fortschritt</span>
-              <span className="font-semibold text-foreground">{donePercent}%</span>
-            </div>
-            <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
-              <div
-                className="h-full rounded-full gradient-primary transition-all duration-700 ease-out"
-                style={{ width: `${donePercent}%` }}
-              />
-            </div>
-          </div>
-        )}
-
-        <div className="mt-4 grid grid-cols-3 gap-2">
-          <StatusBadge
-            count={counts.offen}
-            label="Offen"
-            emoji="🔴"
-            className="bg-status-open/8 text-status-open border border-status-open/15"
-          />
-          <StatusBadge
-            count={counts.in_arbeit}
-            label="In Arbeit"
-            emoji="🟡"
-            className="bg-status-progress/8 text-status-progress border border-status-progress/15"
-          />
-          <StatusBadge
-            count={counts.erledigt}
-            label="Erledigt"
-            emoji="🟢"
-            className="bg-status-done/8 text-status-done border border-status-done/15"
-          />
-        </div>
-      </header>
-
-      {isAdminOrManager && (
-        <>
-          <section className="mb-6">
-            <h2 className="text-sm font-semibold text-muted-foreground mb-2">Einheiten</h2>
-            <AddUnitForm projectId={id} />
-          </section>
-          <section className="mb-6">
-            <ProjectTeamSection
-              projectId={id}
-              members={members as { id: string; user_id: string; role: string; email: string | null; full_name: string | null; created_at: string }[]}
-              currentUserId={user?.id ?? ""}
-            />
-          </section>
-        </>
-      )}
-
-      {isAdminOrManager && (
-        <section className="mb-6">
-          <ProtocolSection
-            projectId={id}
-            units={(project.units as { id: string; name: string }[]) ?? []}
-            defects={defects.map((d: any) => ({
-              id: d.id,
-              title: d.title,
-              status: d.status,
-              priority: d.priority,
-            }))}
-            protocols={protocols as any}
-            canCreate={isAdminOrManager}
-          />
-        </section>
-      )}
-
-      <RealtimeWrapper projectId={id} />
-      <DefectList defects={defects} projectId={id} />
-      <CaptureModal
-        projectId={id}
-        units={(project.units as { id: string; name: string }[]) ?? []}
-        userId={user?.id}
-      />
-    </div>
-  );
-}
-
-function StatusBadge({
-  count,
-  label,
-  emoji,
-  className,
-}: {
-  count: number;
-  label: string;
-  emoji: string;
-  className: string;
-}) {
-  return (
-    <div
-      className={`flex flex-col items-center gap-1 rounded-2xl px-3 py-3 text-center ${className}`}
-    >
-      <span className="text-lg">{emoji}</span>
-      <span className="text-xl font-extrabold">{count}</span>
-      <span className="text-[10px] font-semibold uppercase tracking-wider opacity-80">
-        {label}
-      </span>
-    </div>
+    <ProjectPageContent
+      projectId={id}
+      projectName={project.name}
+      projectAddress={project.address}
+      units={units}
+      counts={counts}
+      donePercent={donePercent}
+      total={total}
+      defects={defects as Array<Record<string, unknown>>}
+      members={members as { id: string; user_id: string; role: string; email: string | null; full_name: string | null; created_at: string }[]}
+      protocols={protocols}
+      currentUserId={user?.id ?? null}
+      isAdminOrManager={isAdminOrManager}
+    />
   );
 }

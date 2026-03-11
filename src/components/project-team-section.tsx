@@ -15,6 +15,7 @@ import {
   X,
   Send,
 } from "lucide-react";
+import { useTranslation } from "@/hooks/use-translations";
 import {
   inviteProjectMember,
   revokeInvitation,
@@ -26,10 +27,10 @@ import { removeProjectMember } from "@/lib/actions/projects";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ROLE_LABELS: Record<string, string> = {
-  admin: "Admin",
-  manager: "Manager",
-  worker: "Mitarbeiter",
+const ROLE_KEYS: Record<string, string> = {
+  admin: "team.admin",
+  manager: "team.manager",
+  worker: "team.worker",
 };
 
 interface MemberRow {
@@ -64,6 +65,7 @@ export function ProjectTeamSection({
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<"manager" | "worker">("worker");
   const [isPending, startTransition] = useTransition();
+  const t = useTranslation();
   const [invitations, setInvitations] = useState<InvitationRow[]>([]);
   const [inviteLink, setInviteLink] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -80,7 +82,7 @@ export function ProjectTeamSection({
     e.preventDefault();
     const trimmed = email.trim().toLowerCase();
     if (!trimmed) {
-      toast.error("Bitte E-Mail-Adresse angeben.");
+      toast.error(t("team.pleaseEmail"));
       return;
     }
 
@@ -97,7 +99,7 @@ export function ProjectTeamSection({
       }
 
       if (result.directlyAdded) {
-        toast.success("Nutzer direkt zum Projekt hinzugefügt.");
+        toast.success(t("team.directlyAdded"));
         setEmail("");
         setInviteLink(null);
         return;
@@ -106,13 +108,9 @@ export function ProjectTeamSection({
       if (result.inviteLink) {
         setInviteLink(result.inviteLink);
         if (result.emailSent) {
-          toast.success(
-            "Einladung gesendet! Eine E-Mail wurde verschickt."
-          );
+          toast.success(t("team.inviteSent"));
         } else {
-          toast.success(
-            "Einladung erstellt! Teilen Sie den Link per Kopieren oder WhatsApp."
-          );
+          toast.success(t("team.inviteCreated"));
         }
         setEmail("");
         loadInvitations();
@@ -124,7 +122,7 @@ export function ProjectTeamSection({
     if (!inviteLink) return;
     navigator.clipboard.writeText(inviteLink).then(() => {
       setCopied(true);
-      toast.success("Einladungslink kopiert!");
+      toast.success(t("team.linkCopied"));
       setTimeout(() => setCopied(false), 2000);
     });
   }
@@ -132,22 +130,22 @@ export function ProjectTeamSection({
   function handleShareWhatsApp() {
     if (!inviteLink) return;
     const text = encodeURIComponent(
-      `Du wurdest zum Ustafix-Projekt eingeladen! Klicke auf den Link, um beizutreten:\n${inviteLink}`
+      `${t("team.youWereInvited")}\n${inviteLink}`
     );
     window.open(`https://wa.me/?text=${text}`, "_blank");
   }
 
   function handleRemove(userId: string) {
     if (userId === currentUserId) {
-      toast.error("Sie können sich nicht selbst entfernen.");
+      toast.error(t("team.cannotRemoveSelf"));
       return;
     }
     startTransition(async () => {
       try {
         await removeProjectMember(projectId, userId);
-        toast.success("Mitglied entfernt.");
+        toast.success(t("team.memberRemoved"));
       } catch {
-        toast.error("Fehler beim Entfernen.");
+        toast.error(t("team.removeError"));
       }
     });
   }
@@ -158,7 +156,7 @@ export function ProjectTeamSection({
       if (result.error) {
         toast.error(result.error);
       } else {
-        toast.success("Einladung widerrufen.");
+        toast.success(t("team.inviteRevoked"));
         loadInvitations();
       }
     });
@@ -171,7 +169,7 @@ export function ProjectTeamSection({
         toast.error(result.error);
       } else if (result.inviteLink) {
         setInviteLink(result.inviteLink);
-        toast.success("Einladung erneuert! Neuer Link bereit zum Teilen.");
+        toast.success(t("team.inviteResent"));
         loadInvitations();
       }
     });
@@ -183,14 +181,13 @@ export function ProjectTeamSection({
         <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/10">
           <Users className="h-4 w-4 text-amber-500" />
         </div>
-        Projekt-Team
+        {t("team.title")}
       </h2>
 
       {/* Invite form */}
       <form onSubmit={handleAdd} className="space-y-3">
         <p className="text-sm text-muted-foreground">
-          Nutzer per E-Mail einladen — registrierte Nutzer werden sofort
-          hinzugefügt, andere erhalten einen Einladungslink.
+          {t("team.inviteDescription")}
         </p>
         <div className="flex flex-col sm:flex-row gap-2">
           <div className="relative flex-1">
@@ -199,7 +196,7 @@ export function ProjectTeamSection({
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="E-Mail-Adresse"
+              placeholder={t("team.emailPlaceholder")}
               className="flex h-11 w-full rounded-xl border border-border bg-background pl-10 pr-4 text-sm outline-none ring-2 ring-transparent focus:ring-amber-500/40"
               disabled={isPending}
             />
@@ -210,8 +207,8 @@ export function ProjectTeamSection({
             className="flex h-11 rounded-xl border border-border bg-background px-4 text-sm outline-none ring-2 ring-transparent focus:ring-amber-500/40"
             disabled={isPending}
           >
-            <option value="manager">Manager</option>
-            <option value="worker">Mitarbeiter</option>
+            <option value="manager">{t("team.manager")}</option>
+            <option value="worker">{t("team.worker")}</option>
           </select>
           <button
             type="submit"
@@ -223,7 +220,7 @@ export function ProjectTeamSection({
             ) : (
               <UserPlus className="h-4 w-4" />
             )}
-            Einladen
+            {t("team.invite")}
           </button>
         </div>
       </form>
@@ -241,7 +238,7 @@ export function ProjectTeamSection({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm font-semibold text-amber-500">
                   <LinkIcon className="h-4 w-4" />
-                  Einladungslink
+                  {t("team.inviteLink")}
                 </div>
                 <button
                   type="button"
@@ -267,7 +264,7 @@ export function ProjectTeamSection({
                   ) : (
                     <Copy className="h-3.5 w-3.5" />
                   )}
-                  {copied ? "Kopiert!" : "Kopieren"}
+                  {copied ? t("common.copied") : t("common.copy")}
                 </button>
                 <button
                   type="button"
@@ -294,9 +291,9 @@ export function ProjectTeamSection({
           >
             <span className="font-medium text-muted-foreground">
               {m.user_id === currentUserId
-                ? "Sie"
-                : m.full_name || m.email || "Mitglied"}{" "}
-              · {ROLE_LABELS[m.role] ?? m.role}
+                ? t("team.you")
+                : m.full_name || m.email || t("team.member")}{" "}
+              · {ROLE_KEYS[m.role] ? t(ROLE_KEYS[m.role]) : m.role}
             </span>
             {m.user_id !== currentUserId && (
               <button
@@ -304,7 +301,7 @@ export function ProjectTeamSection({
                 onClick={() => handleRemove(m.user_id)}
                 disabled={isPending}
                 className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:text-destructive hover:bg-destructive/10 cursor-pointer disabled:opacity-50"
-                aria-label="Mitglied entfernen"
+                aria-label={t("team.removeMember")}
               >
                 <Trash2 className="h-4 w-4" />
               </button>
@@ -318,7 +315,7 @@ export function ProjectTeamSection({
         <div className="space-y-2">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
             <Clock className="h-3.5 w-3.5" />
-            Offene Einladungen ({invitations.length})
+            {t("team.pendingInvitations")} ({invitations.length})
           </h3>
           <ul className="space-y-2">
             {invitations.map((inv) => {
@@ -337,13 +334,13 @@ export function ProjectTeamSection({
                   <div className="flex flex-col gap-0.5 min-w-0 flex-1">
                     <span className="font-medium truncate">{inv.email}</span>
                     <span className="text-xs text-muted-foreground">
-                      {ROLE_LABELS[inv.role] ?? inv.role}
-                      {isExpired && " · Abgelaufen"}
+                      {ROLE_KEYS[inv.role] ? t(ROLE_KEYS[inv.role]) : inv.role}
+                      {isExpired && ` · ${t("team.expired")}`}
                       {!isExpired && (
                         <>
                           {" "}
-                          · Gültig bis{" "}
-                          {new Date(inv.expires_at).toLocaleDateString("de-DE")}
+                          · {t("team.validUntil")}{" "}
+                          {new Date(inv.expires_at).toLocaleDateString()}
                         </>
                       )}
                     </span>
@@ -354,7 +351,7 @@ export function ProjectTeamSection({
                       onClick={() => handleResend(inv.id)}
                       disabled={isPending}
                       className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:text-amber-500 hover:bg-amber-500/10 cursor-pointer disabled:opacity-50"
-                      title="Erneut senden"
+                      title={t("team.resend")}
                     >
                       <RotateCw className="h-4 w-4" />
                     </button>
@@ -363,7 +360,7 @@ export function ProjectTeamSection({
                       onClick={() => handleRevoke(inv.id)}
                       disabled={isPending}
                       className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground hover:text-destructive hover:bg-destructive/10 cursor-pointer disabled:opacity-50"
-                      title="Widerrufen"
+                      title={t("team.revoke")}
                     >
                       <X className="h-4 w-4" />
                     </button>

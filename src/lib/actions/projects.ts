@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import type { MemberRole } from "@/lib/db/schema";
 
 export async function getProjects() {
@@ -66,7 +67,8 @@ export async function createProject(formData: FormData) {
   if (existingMembership?.projects) {
     orgId = (existingMembership.projects as unknown as { organization_id: string }).organization_id;
   } else {
-    const { data: org, error: orgError } = await supabase
+    const admin = createAdminClient();
+    const { data: org, error: orgError } = await admin
       .from("organizations")
       .insert({ name: user.user_metadata?.full_name ?? "Meine Firma" })
       .select()
@@ -76,7 +78,8 @@ export async function createProject(formData: FormData) {
     orgId = org.id;
   }
 
-  const { data: project, error } = await supabase
+  const admin = createAdminClient();
+  const { data: project, error } = await admin
     .from("projects")
     .insert({ name, address, organization_id: orgId })
     .select()
@@ -87,7 +90,7 @@ export async function createProject(formData: FormData) {
     throw new Error(`Fehler beim Erstellen des Projekts: ${error?.message || "Unbekannt"}`);
   }
 
-  const { error: memberError } = await supabase.from("project_members").insert({
+  const { error: memberError } = await admin.from("project_members").insert({
     project_id: project.id,
     user_id: user.id,
     role: "admin",
@@ -118,7 +121,8 @@ export async function createUnit(projectId: string, name: string) {
     throw new Error("Nur Admin oder Manager dürfen Einheiten anlegen.");
   }
 
-  const { data, error } = await supabase
+  const admin = createAdminClient();
+  const { data, error } = await admin
     .from("units")
     .insert({ project_id: projectId, name })
     .select()
@@ -126,7 +130,7 @@ export async function createUnit(projectId: string, name: string) {
 
   if (error) throw new Error("Fehler beim Erstellen der Einheit");
 
-  revalidatePath(`/project/${projectId}`);
+  revalidatePath(`/project/${projectId}`, "layout");
   return data;
 }
 

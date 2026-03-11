@@ -24,7 +24,6 @@ export function ProjectHealthCard({
   showTeamDetails = false,
 }: ProjectHealthCardProps) {
   const { defect_counts: dc, priority_counts: pc } = project;
-  const openTotal = dc.offen + dc.in_arbeit;
   const completionRate =
     dc.total > 0 ? Math.round((dc.erledigt / dc.total) * 100) : 0;
 

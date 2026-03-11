@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 
@@ -10,6 +11,7 @@ interface StatCardProps {
   color?: "amber" | "red" | "blue" | "green" | "purple" | "slate";
   delay?: number;
   subtitle?: string;
+  href?: string;
 }
 
 const COLORS = {
@@ -28,14 +30,10 @@ export function StatCard({
   color = "amber",
   delay = 0,
   subtitle,
+  href,
 }: StatCardProps) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay, ease: [0.16, 1, 0.3, 1] }}
-      className="rounded-2xl border border-border bg-card p-4 flex items-start gap-3"
-    >
+  const content = (
+    <>
       <div
         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${COLORS[color]}`}
       >
@@ -52,6 +50,34 @@ export function StatCard({
           <p className="text-[11px] text-muted-foreground/70">{subtitle}</p>
         )}
       </div>
+    </>
+  );
+
+  const cardClass =
+    "rounded-2xl border border-border bg-card p-4 flex items-start gap-3";
+
+  const motionProps = {
+    initial: { opacity: 0, y: 12 } as const,
+    animate: { opacity: 1, y: 0 } as const,
+    transition: { duration: 0.35, delay, ease: [0.16, 1, 0.3, 1] } as const,
+  };
+
+  if (href) {
+    return (
+      <Link href={href} className="block">
+        <motion.div
+          {...motionProps}
+          className={`${cardClass} card-hover transition-colors hover:border-muted-foreground/20`}
+        >
+          {content}
+        </motion.div>
+      </Link>
+    );
+  }
+
+  return (
+    <motion.div {...motionProps} className={cardClass}>
+      {content}
     </motion.div>
   );
 }

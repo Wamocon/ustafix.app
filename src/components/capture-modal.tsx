@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition, useRef, useEffect } from "react";
-import { X, Camera, Loader2, Mic, Plus, Sparkles, WifiOff } from "lucide-react";
+import { X, Camera, Loader2, Mic, Plus, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FAB } from "./fab";
 import { createDefect } from "@/lib/actions/defects";
@@ -59,7 +59,7 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
         urls[i] = URL.createObjectURL(f);
       }
     });
-    setPreviewUrls(urls);
+    queueMicrotask(() => setPreviewUrls(urls));
     return () => {
       Object.values(urls).forEach((url) => URL.revokeObjectURL(url));
     };

@@ -19,13 +19,8 @@ import { CreateProjectDialog } from "@/components/create-project-dialog";
 import { StatCard } from "./stat-card";
 import { ProjectHealthCard } from "./project-health-card";
 import { ActivityFeed } from "./activity-feed";
+import { useTranslation } from "@/hooks/use-translations";
 import type { DashboardData } from "@/lib/actions/dashboard";
-
-const ROLE_LABELS: Record<string, string> = {
-  admin: "Administrator",
-  manager: "Bauleiter",
-  worker: "Mitarbeiter",
-};
 
 const ROLE_ICONS: Record<string, typeof Shield> = {
   admin: Shield,
@@ -39,6 +34,13 @@ interface DashboardContentProps {
 
 export function DashboardContent({ stats }: DashboardContentProps) {
   const { highest_role: role, projects } = stats;
+  const t = useTranslation();
+
+  const ROLE_LABELS: Record<string, string> = {
+    admin: t("dashboard.administrator"),
+    manager: t("dashboard.bauleiter"),
+    worker: t("dashboard.worker"),
+  };
 
   const totals = projects.reduce(
     (acc, p) => ({
@@ -98,7 +100,7 @@ export function DashboardContent({ stats }: DashboardContentProps) {
               {ROLE_LABELS[role]}
             </p>
             <h1 className="text-2xl font-extrabold tracking-tight mt-0.5">
-              Hallo, {stats.user_name?.split(" ")[0] ?? ""}
+              {t("dashboard.hello")}, {stats.user_name?.split(" ")[0] ?? ""}
             </h1>
           </div>
           <div className="flex items-center gap-2">
@@ -114,6 +116,7 @@ export function DashboardContent({ stats }: DashboardContentProps) {
           totals={totals}
           completionRate={completionRate}
           allTransitions={allTransitions}
+          t={t}
         />
       )}
       {role === "manager" && (
@@ -122,6 +125,7 @@ export function DashboardContent({ stats }: DashboardContentProps) {
           totals={totals}
           completionRate={completionRate}
           allTransitions={allTransitions}
+          t={t}
         />
       )}
       {role === "worker" && (
@@ -129,6 +133,7 @@ export function DashboardContent({ stats }: DashboardContentProps) {
           stats={stats}
           totals={totals}
           allTransitions={allTransitions}
+          t={t}
         />
       )}
     </div>
@@ -153,65 +158,77 @@ function AdminDashboard({
   totals,
   completionRate,
   allTransitions,
+  t,
 }: {
   stats: DashboardData;
   totals: DashTotals;
   completionRate: number;
   allTransitions: TransitionWithProject[];
+  t: (key: string) => string;
 }) {
+  const firstProjectHref = stats.projects[0]
+    ? `/project/${stats.projects[0].id}`
+    : undefined;
+
   return (
     <>
       {/* KPI Grid */}
       <div className="grid grid-cols-2 gap-3">
         <StatCard
-          label="Projekte"
+          label={t("dashboard.projects")}
           value={stats.projects.length}
           icon={Building2}
           color="amber"
           delay={0}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Gesamte Mängel"
+          label={t("dashboard.totalDefects")}
           value={totals.defects}
           icon={LayoutDashboard}
           color="blue"
           delay={0.05}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Offene Mängel"
+          label={t("dashboard.openDefects")}
           value={totals.open + totals.inProgress}
           icon={AlertTriangle}
           color="red"
           delay={0.1}
-          subtitle={`${totals.highPriority} hohe Priorität`}
+          subtitle={`${totals.highPriority} ${t("dashboard.highPriority")}`}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Abschlussrate"
+          label={t("dashboard.completionRate")}
           value={`${completionRate}%`}
           icon={TrendingUp}
           color="green"
           delay={0.15}
-          subtitle={`${totals.done} von ${totals.defects} erledigt`}
+          subtitle={`${totals.done} ${t("dashboard.ofDone")} ${totals.defects} ${t("dashboard.done")}`}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Teammitglieder"
+          label={t("dashboard.teamMembers")}
           value={totals.members}
           icon={Users}
           color="purple"
           delay={0.2}
-          subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} offene Einladungen` : undefined}
+          subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} ${t("dashboard.pendingInvites")}` : undefined}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Protokolle"
+          label={t("dashboard.protocols")}
           value={totals.protocols}
           icon={FileCheck}
           color="slate"
           delay={0.25}
+          href={firstProjectHref}
         />
       </div>
 
       {/* Project Health */}
-      <Section title="Projektübersicht" icon={Building2}>
+      <Section title={t("dashboard.projectOverview")} icon={Building2}>
         <div className="space-y-3">
           {stats.projects.map((p, i) => (
             <ProjectHealthCard
@@ -226,7 +243,7 @@ function AdminDashboard({
 
       {/* Activity */}
       {allTransitions.length > 0 && (
-        <Section title="Letzte Aktivitäten" icon={Clock}>
+        <Section title={t("dashboard.recentActivity")} icon={Clock}>
           {groupTransitionsByProject(allTransitions).map(
             ([projectId, projectName, transitions]) => (
               <ActivityFeed
@@ -250,51 +267,61 @@ function ManagerDashboard({
   totals,
   completionRate,
   allTransitions,
+  t,
 }: {
   stats: DashboardData;
   totals: DashTotals;
   completionRate: number;
   allTransitions: TransitionWithProject[];
+  t: (key: string) => string;
 }) {
+  const firstProjectHref = stats.projects[0]
+    ? `/project/${stats.projects[0].id}`
+    : undefined;
+
   return (
     <>
       {/* KPI Grid */}
       <div className="grid grid-cols-2 gap-3">
         <StatCard
-          label="Meine Projekte"
+          label={t("dashboard.myProjects")}
           value={stats.projects.length}
           icon={Building2}
           color="amber"
           delay={0}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Offene Mängel"
+          label={t("dashboard.openDefects")}
           value={totals.open + totals.inProgress}
           icon={AlertTriangle}
           color="red"
           delay={0.05}
-          subtitle={`${totals.highPriority} hohe Priorität`}
+          subtitle={`${totals.highPriority} ${t("dashboard.highPriority")}`}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Abschlussrate"
+          label={t("dashboard.completionRate")}
           value={`${completionRate}%`}
           icon={TrendingUp}
           color="green"
           delay={0.1}
-          subtitle={`${totals.done} von ${totals.defects} erledigt`}
+          subtitle={`${totals.done} ${t("dashboard.ofDone")} ${totals.defects} ${t("dashboard.done")}`}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Teammitglieder"
+          label={t("dashboard.teamMembers")}
           value={totals.members}
           icon={Users}
           color="purple"
           delay={0.15}
-          subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} Einladungen offen` : undefined}
+          subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} ${t("dashboard.invitesOpen")}` : undefined}
+          href={firstProjectHref}
         />
       </div>
 
       {/* Projects */}
-      <Section title="Projektübersicht" icon={Building2}>
+      <Section title={t("dashboard.projectOverview")} icon={Building2}>
         <div className="space-y-3">
           {stats.projects.map((p, i) => (
             <ProjectHealthCard
@@ -309,7 +336,7 @@ function ManagerDashboard({
 
       {/* Activity */}
       {allTransitions.length > 0 && (
-        <Section title="Letzte Aktivitäten" icon={Clock}>
+        <Section title={t("dashboard.recentActivity")} icon={Clock}>
           {groupTransitionsByProject(allTransitions).map(
             ([projectId, projectName, transitions]) => (
               <ActivityFeed
@@ -332,52 +359,61 @@ function WorkerDashboard({
   stats,
   totals,
   allTransitions,
+  t,
 }: {
   stats: DashboardData;
   totals: DashTotals;
   allTransitions: TransitionWithProject[];
+  t: (key: string) => string;
 }) {
   const myOpenDefects = stats.projects.reduce(
     (acc, p) => acc + p.my_defects_open,
     0
   );
+  const firstProjectHref = stats.projects[0]
+    ? `/project/${stats.projects[0].id}`
+    : undefined;
 
   return (
     <>
       {/* KPI Grid */}
       <div className="grid grid-cols-2 gap-3">
         <StatCard
-          label="Meine Projekte"
+          label={t("dashboard.myProjects")}
           value={stats.projects.length}
           icon={Building2}
           color="amber"
           delay={0}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Meine offenen Mängel"
+          label={t("dashboard.myOpenDefects")}
           value={myOpenDefects}
           icon={Hammer}
           color="red"
           delay={0.05}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Von mir erfasst"
+          label={t("dashboard.capturedByMe")}
           value={stats.total_defects_by_me}
           icon={UserCheck}
           color="blue"
           delay={0.1}
+          href={firstProjectHref}
         />
         <StatCard
-          label="Erledigte Mängel"
+          label={t("dashboard.doneDefects")}
           value={totals.done}
           icon={CheckCircle2}
           color="green"
           delay={0.15}
+          href={firstProjectHref}
         />
       </div>
 
       {/* Projects */}
-      <Section title="Meine Projekte" icon={Building2}>
+      <Section title={t("dashboard.myProjects")} icon={Building2}>
         <div className="space-y-3">
           {stats.projects.map((p, i) => (
             <ProjectHealthCard key={p.id} project={p} index={i} />
@@ -387,7 +423,7 @@ function WorkerDashboard({
 
       {/* Activity */}
       {allTransitions.length > 0 && (
-        <Section title="Letzte Änderungen" icon={Clock}>
+        <Section title={t("dashboard.recentChanges")} icon={Clock}>
           {groupTransitionsByProject(allTransitions).map(
             ([projectId, projectName, transitions]) => (
               <ActivityFeed

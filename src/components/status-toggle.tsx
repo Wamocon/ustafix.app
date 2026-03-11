@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn, getTransitionRule } from "@/lib/utils";
+import { useTranslation } from "@/hooks/use-translations";
 import type { DefectStatus, MemberRole } from "@/lib/db/schema";
 import { motion } from "framer-motion";
 import { StatusTransitionModal } from "./status-transition-modal";
@@ -17,14 +18,14 @@ interface StatusToggleProps {
 
 const STATUS_OPTIONS: {
   value: DefectStatus;
-  label: string;
+  labelKey: string;
   emoji: string;
   activeClass: string;
   glowClass: string;
 }[] = [
   {
     value: "offen",
-    label: "Offen",
+    labelKey: "status.offen",
     emoji: "🔴",
     activeClass:
       "bg-linear-to-br from-red-500 to-red-600 text-white shadow-lg shadow-red-500/30",
@@ -32,7 +33,7 @@ const STATUS_OPTIONS: {
   },
   {
     value: "in_arbeit",
-    label: "In Arbeit",
+    labelKey: "status.in_arbeit",
     emoji: "🟡",
     activeClass:
       "bg-linear-to-br from-amber-400 to-amber-500 text-black shadow-lg shadow-amber-500/30",
@@ -40,7 +41,7 @@ const STATUS_OPTIONS: {
   },
   {
     value: "erledigt",
-    label: "Erledigt",
+    labelKey: "status.erledigt",
     emoji: "🟢",
     activeClass:
       "bg-linear-to-br from-green-500 to-green-600 text-white shadow-lg shadow-green-500/30",
@@ -57,22 +58,23 @@ export function StatusToggle({
 }: StatusToggleProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [targetStatus, setTargetStatus] = useState<DefectStatus | null>(null);
+  const t = useTranslation();
 
   function handleStatusClick(newStatus: DefectStatus) {
     if (newStatus === currentStatus) return;
 
     const rule = getTransitionRule(currentStatus, newStatus);
     if (!rule) {
-      toast.error("Dieser Statuswechsel ist nicht möglich.");
+      toast.error(t("status.transitionNotAllowed"));
       return;
     }
 
     if (!rule.allowedRoles.includes(userRole)) {
       const roleNames = rule.allowedRoles.map((r) =>
-        r === "admin" ? "Admins" : r === "manager" ? "Manager" : "Arbeiter"
+        r === "admin" ? t("status.admins") : r === "manager" ? t("status.manager") : t("status.worker")
       );
       toast.error(
-        `Nur ${roleNames.join(" und ")} können diesen Statuswechsel durchführen.`
+        `${t("status.onlyRoles")} ${roleNames.join(` ${t("status.and")} `)} ${t("status.canTransition")}`
       );
       return;
     }
@@ -85,7 +87,7 @@ export function StatusToggle({
     <>
       <div className="space-y-3">
         <label className="text-sm font-semibold text-muted-foreground">
-          Status
+          {t("common.status")}
         </label>
         <div className="grid grid-cols-3 gap-2">
           {STATUS_OPTIONS.map((option) => {
@@ -102,10 +104,10 @@ export function StatusToggle({
                     : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-foreground/20"
                 )}
                 aria-pressed={isActive}
-                aria-label={`Status: ${option.label}`}
+                aria-label={`${t("common.status")}: ${t(option.labelKey)}`}
               >
                 <span className="text-lg">{option.emoji}</span>
-                <span>{option.label}</span>
+                <span>{t(option.labelKey)}</span>
               </motion.button>
             );
           })}

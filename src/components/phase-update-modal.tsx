@@ -66,7 +66,7 @@ export function PhaseUpdateModal({
   defectId,
   projectId,
   userRole,
-  currentStatus,
+  currentStatus: _currentStatus,
   userId,
 }: PhaseUpdateModalProps) {
   const [phase, setPhase] = useState<MediaPhase>("fortschritt");
@@ -84,16 +84,18 @@ export function PhaseUpdateModal({
         urls[i] = URL.createObjectURL(f);
       }
     });
-    setPreviewUrls(urls);
+    queueMicrotask(() => setPreviewUrls(urls));
     return () => Object.values(urls).forEach((url) => URL.revokeObjectURL(url));
   }, [files]);
 
   useEffect(() => {
     if (!open) {
-      setPhase("fortschritt");
-      setNote("");
-      setFiles([]);
-      setUploadProgress(null);
+      queueMicrotask(() => {
+        setPhase("fortschritt");
+        setNote("");
+        setFiles([]);
+        setUploadProgress(null);
+      });
     }
   }, [open]);
 

@@ -5,7 +5,6 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import {
-  HardHat,
   Loader2,
   ArrowRight,
   CheckCircle2,
@@ -14,6 +13,7 @@ import {
   Shield,
   Users,
 } from "lucide-react";
+import { UstafixLogo } from "@/components/ustafix-logo";
 import { motion } from "framer-motion";
 import {
   getInvitationInfo,
@@ -210,9 +210,9 @@ export default function InvitePage() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
-            className="flex h-20 w-20 items-center justify-center rounded-3xl gradient-primary shadow-lg shadow-amber-500/25"
+            className="flex h-20 w-20 items-center justify-center rounded-3xl overflow-hidden shadow-lg shadow-amber-500/25"
           >
-            <HardHat className="h-10 w-10 text-white" />
+            <UstafixLogo className="h-full w-full" />
           </motion.div>
         </div>
 

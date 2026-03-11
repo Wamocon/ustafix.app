@@ -90,6 +90,12 @@
   }
 }
 
+/* Ustafix logo: helmet height scale (1 = original, 1.25 = 25% taller) */
+.ustafix-helmet {
+  transform-origin: 100px 112px;
+  transform: scaleY(var(--ustafix-helmet-height, 1.2));
+}
+
 @layer utilities {
   .gradient-primary {
     background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
@@ -202,4 +208,13 @@
   .card-hover:active {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
+}
+
+/* Hide scrollbar while keeping scroll functionality */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { formatDate } from "@/lib/utils";
+import { useTranslation } from "@/hooks/use-translations";
 import {
   History,
   ArrowRight,
@@ -20,7 +21,7 @@ interface MediaItem {
   mime_type: string;
 }
 
-interface Transition {
+export interface Transition {
   id: string;
   defect_id: string;
   from_status: string;
@@ -31,7 +32,7 @@ interface Transition {
   transition_media: MediaItem[];
 }
 
-interface PhaseUpdate {
+export interface PhaseUpdate {
   id: string;
   defect_id: string;
   phase: string;
@@ -50,37 +51,38 @@ type TimelineEntry =
   | { kind: "transition"; data: Transition }
   | { kind: "phase"; data: PhaseUpdate };
 
-const STATUS_DISPLAY: Record<string, { label: string; emoji: string }> = {
-  offen: { label: "Offen", emoji: "🔴" },
-  in_arbeit: { label: "In Arbeit", emoji: "🟡" },
-  erledigt: { label: "Erledigt", emoji: "🟢" },
+const STATUS_KEYS: Record<string, string> = {
+  offen: "status.offen",
+  in_arbeit: "status.in_arbeit",
+  erledigt: "status.erledigt",
 };
 
-const PHASE_DISPLAY: Record<
-  string,
-  { label: string; color: string; icon: typeof FileText }
-> = {
-  erfassung: { label: "Erfassung", color: "text-blue-500", icon: FileText },
-  fortschritt: {
-    label: "Fortschritt",
-    color: "text-amber-500",
-    icon: FileText,
-  },
-  abnahme: {
-    label: "Abnahme",
-    color: "text-green-500",
-    icon: ClipboardCheck,
-  },
+const PHASE_KEYS: Record<string, string> = {
+  erfassung: "timeline.phaseErfassung",
+  fortschritt: "timeline.phaseFortschritt",
+  abnahme: "timeline.phaseAbnahme",
+};
+
+const PHASE_COLORS: Record<string, string> = {
+  erfassung: "text-blue-500",
+  fortschritt: "text-amber-500",
+  abnahme: "text-green-500",
+};
+
+const PHASE_ICONS: Record<string, typeof FileText> = {
+  erfassung: FileText,
+  fortschritt: FileText,
+  abnahme: ClipboardCheck,
 };
 
 export function TransitionTimeline({
   transitions,
   phaseUpdates = [],
 }: UnifiedTimelineProps) {
-  const [mediaUrls, setMediaUrls] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    if (transitions.length === 0 && phaseUpdates.length === 0) return;
+  const t = useTranslation();
+  const mediaUrls = useMemo(() => {
+    if (transitions.length === 0 && phaseUpdates.length === 0)
+      return {} as Record<string, string>;
     const supabase = createClient();
     const urls: Record<string, string> = {};
 
@@ -102,7 +104,7 @@ export function TransitionTimeline({
       }
     }
 
-    setMediaUrls(urls);
+    return urls;
   }, [transitions, phaseUpdates]);
 
   const entries: TimelineEntry[] = [
@@ -121,10 +123,10 @@ export function TransitionTimeline({
   if (entries.length === 0) return null;
 
   return (
-    <div className="mt-6 space-y-3">
+    <div className="mt-6 space-y-3 min-w-0 overflow-hidden">
       <h3 className="text-sm font-semibold text-muted-foreground flex items-center gap-2">
         <History className="h-4 w-4" />
-        Verlauf ({entries.length})
+        {t("timeline.history")} ({entries.length})
       </h3>
 
       <div className="space-y-3">
@@ -136,6 +138,7 @@ export function TransitionTimeline({
                 transition={entry.data}
                 index={i}
                 mediaUrls={mediaUrls}
+                t={t}
               />
             );
           }
@@ -145,6 +148,7 @@ export function TransitionTimeline({
               update={entry.data}
               index={i}
               mediaUrls={mediaUrls}
+              t={t}
             />
           );
         })}
@@ -154,23 +158,25 @@ export function TransitionTimeline({
 }
 
 function TransitionCard({
-  transition: t,
+  transition: trans,
   index,
   mediaUrls,
+  t: translate,
 }: {
   transition: Transition;
   index: number;
   mediaUrls: Record<string, string>;
+  t: (key: string) => string;
 }) {
-  const from = STATUS_DISPLAY[t.from_status] ?? {
-    label: t.from_status,
-    emoji: "⚪",
-  };
-  const to = STATUS_DISPLAY[t.to_status] ?? {
-    label: t.to_status,
-    emoji: "⚪",
-  };
-  const media = t.transition_media ?? [];
+  const fromLabel = STATUS_KEYS[trans.from_status]
+    ? translate(STATUS_KEYS[trans.from_status])
+    : trans.from_status;
+  const toLabel = STATUS_KEYS[trans.to_status]
+    ? translate(STATUS_KEYS[trans.to_status])
+    : trans.to_status;
+  const fromEmoji = trans.from_status === "offen" ? "🔴" : trans.from_status === "in_arbeit" ? "🟡" : "🟢";
+  const toEmoji = trans.to_status === "offen" ? "🔴" : trans.to_status === "in_arbeit" ? "🟡" : "🟢";
+  const media = trans.transition_media ?? [];
 
   return (
     <motion.div
@@ -182,23 +188,23 @@ function TransitionCard({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm">
           <span>
-            {from.emoji} {from.label}
+            {fromEmoji} {fromLabel}
           </span>
           <ArrowRight className="h-3.5 w-3.5 text-muted-foreground" />
           <span className="font-semibold">
-            {to.emoji} {to.label}
+            {toEmoji} {toLabel}
           </span>
         </div>
         <span className="text-xs text-muted-foreground">
-          {formatDate(t.created_at)}
+          {formatDate(trans.created_at)}
         </span>
       </div>
 
-      <p className="text-sm text-foreground/80 whitespace-pre-wrap">
-        {t.note}
+      <p className="text-sm text-foreground/80 whitespace-pre-wrap break-words min-w-0">
+        {trans.note}
       </p>
 
-      <MediaRow media={media} mediaUrls={mediaUrls} />
+      <MediaRow media={media} mediaUrls={mediaUrls} t={translate} />
     </motion.div>
   );
 }
@@ -207,13 +213,16 @@ function PhaseUpdateCard({
   update,
   index,
   mediaUrls,
+  t,
 }: {
   update: PhaseUpdate;
   index: number;
   mediaUrls: Record<string, string>;
+  t: (key: string) => string;
 }) {
-  const phase = PHASE_DISPLAY[update.phase] ?? PHASE_DISPLAY.fortschritt;
-  const Icon = phase.icon;
+  const phaseKey = PHASE_KEYS[update.phase] ?? PHASE_KEYS.fortschritt;
+  const phaseColor = PHASE_COLORS[update.phase] ?? PHASE_COLORS.fortschritt;
+  const Icon = PHASE_ICONS[update.phase] ?? FileText;
   const media = update.phase_update_media ?? [];
 
   return (
@@ -225,9 +234,9 @@ function PhaseUpdateCard({
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm">
-          <Icon className={`h-4 w-4 ${phase.color}`} />
-          <span className={`font-semibold ${phase.color}`}>
-            {phase.label}
+          <Icon className={`h-4 w-4 ${phaseColor}`} />
+          <span className={`font-semibold ${phaseColor}`}>
+            {t(phaseKey)}
           </span>
         </div>
         <span className="text-xs text-muted-foreground">
@@ -235,11 +244,11 @@ function PhaseUpdateCard({
         </span>
       </div>
 
-      <p className="text-sm text-foreground/80 whitespace-pre-wrap">
+      <p className="text-sm text-foreground/80 whitespace-pre-wrap break-words min-w-0">
         {update.note}
       </p>
 
-      <MediaRow media={media} mediaUrls={mediaUrls} />
+      <MediaRow media={media} mediaUrls={mediaUrls} t={t} />
     </motion.div>
   );
 }
@@ -247,9 +256,11 @@ function PhaseUpdateCard({
 function MediaRow({
   media,
   mediaUrls,
+  t,
 }: {
   media: MediaItem[];
   mediaUrls: Record<string, string>;
+  t: (key: string) => string;
 }) {
   if (media.length === 0) return null;
 
@@ -264,7 +275,7 @@ function MediaRow({
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={mediaUrls[m.id]}
-              alt="Nachweis"
+              alt={t("timeline.proofAlt")}
               className="h-full w-full object-cover"
               loading="lazy"
             />

@@ -4,8 +4,9 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteDefect } from "@/lib/actions/defects";
 import { Trash2, Loader2, AlertTriangle } from "lucide-react";
+import { useTranslation } from "@/hooks/use-translations";
 import { toast } from "sonner";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface DefectActionsProps {
   defectId: string;
@@ -22,6 +23,7 @@ export function DefectActions({
   const [confirm, setConfirm] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const t = useTranslation();
 
   function handleDelete() {
     if (!confirm) {
@@ -33,10 +35,10 @@ export function DefectActions({
     startTransition(async () => {
       try {
         await deleteDefect(defectId, projectId);
-        toast.success("Mangel gelöscht");
+        toast.success(t("defect.deleteSuccess"));
         router.push(`/project/${projectId}`);
       } catch {
-        toast.error("Fehler beim Löschen");
+        toast.error(t("defect.deleteError"));
       }
     });
   }
@@ -60,12 +62,12 @@ export function DefectActions({
         ) : confirm ? (
           <>
             <AlertTriangle className="h-4 w-4" />
-            Wirklich löschen?
+            {t("defect.reallyDelete")}
           </>
         ) : (
           <>
             <Trash2 className="h-4 w-4" />
-            Mangel löschen
+            {t("defect.deleteDefect")}
           </>
         )}
       </motion.button>
