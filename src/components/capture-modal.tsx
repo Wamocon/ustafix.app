@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition, useRef, useEffect } from "react";
-import { X, Camera, Loader2, Mic, Plus, Sparkles } from "lucide-react";
+import { X, Camera, Loader2, Mic, Plus, Sparkles, Upload } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FAB } from "./fab";
 import { createDefect } from "@/lib/actions/defects";
@@ -51,6 +51,7 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
     ru?: string;
   }>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const localFileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const urls: Record<number, string> = {};
@@ -119,6 +120,12 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
         } catch {
           processed.push(file);
         }
+      } else if (file.type.startsWith("audio/")) {
+        if (file.size > 50 * 1024 * 1024) {
+          toast.error("Audiodatei zu groß. Maximal 50 MB erlaubt.");
+          continue;
+        }
+        processed.push(file);
       } else {
         processed.push(file);
       }
@@ -264,6 +271,15 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
         className="hidden"
       />
 
+      <input
+        ref={localFileInputRef}
+        type="file"
+        accept="image/*,video/*,audio/*"
+        multiple
+        onChange={handleFileChange}
+        className="hidden"
+      />
+
       <AnimatePresence>
         {open && (
           <motion.div
@@ -303,26 +319,36 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="grid grid-cols-2 gap-3"
+                    className="grid grid-cols-3 gap-3"
                   >
                     <button
                       onClick={() => setMode("voice")}
-                      className="group flex flex-col items-center gap-4 rounded-3xl bg-linear-to-br from-red-500/10 to-red-600/5 border-2 border-red-500/20 p-8 transition-all hover:border-red-500/40 hover:shadow-lg hover:shadow-red-500/10 active:scale-[0.97] cursor-pointer"
+                      className="group flex flex-col items-center gap-3 rounded-3xl bg-linear-to-br from-red-500/10 to-red-600/5 border-2 border-red-500/20 p-6 transition-all hover:border-red-500/40 hover:shadow-lg hover:shadow-red-500/10 active:scale-[0.97] cursor-pointer"
                     >
-                      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-red-500 to-red-600 text-white shadow-lg shadow-red-500/30 transition-transform group-hover:scale-105">
-                        <Mic className="h-9 w-9" />
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-red-500 to-red-600 text-white shadow-lg shadow-red-500/30 transition-transform group-hover:scale-105">
+                        <Mic className="h-7 w-7" />
                       </div>
-                      <span className="text-sm font-bold">Sprechen</span>
+                      <span className="text-xs font-bold">Sprechen</span>
                     </button>
 
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="group flex flex-col items-center gap-4 rounded-3xl bg-linear-to-br from-blue-500/10 to-blue-600/5 border-2 border-blue-500/20 p-8 transition-all hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/10 active:scale-[0.97] cursor-pointer"
+                      className="group flex flex-col items-center gap-3 rounded-3xl bg-linear-to-br from-blue-500/10 to-blue-600/5 border-2 border-blue-500/20 p-6 transition-all hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/10 active:scale-[0.97] cursor-pointer"
                     >
-                      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/30 transition-transform group-hover:scale-105">
-                        <Camera className="h-9 w-9" />
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/30 transition-transform group-hover:scale-105">
+                        <Camera className="h-7 w-7" />
                       </div>
-                      <span className="text-sm font-bold">Foto / Video</span>
+                      <span className="text-xs font-bold">Kamera</span>
+                    </button>
+
+                    <button
+                      onClick={() => localFileInputRef.current?.click()}
+                      className="group flex flex-col items-center gap-3 rounded-3xl bg-linear-to-br from-emerald-500/10 to-emerald-600/5 border-2 border-emerald-500/20 p-6 transition-all hover:border-emerald-500/40 hover:shadow-lg hover:shadow-emerald-500/10 active:scale-[0.97] cursor-pointer"
+                    >
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/30 transition-transform group-hover:scale-105">
+                        <Upload className="h-7 w-7" />
+                      </div>
+                      <span className="text-xs font-bold">Hochladen</span>
                     </button>
                   </motion.div>
                 )}
@@ -354,6 +380,16 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
                               alt=""
                               className="h-full w-full object-cover"
                             />
+                          ) : f.type.startsWith("video/") ? (
+                            <div className="flex flex-col items-center gap-1">
+                              <Camera className="h-5 w-5 text-blue-500" />
+                              <span className="text-[8px] text-muted-foreground">Video</span>
+                            </div>
+                          ) : f.type.startsWith("audio/") ? (
+                            <div className="flex flex-col items-center gap-1">
+                              <Mic className="h-5 w-5 text-red-500" />
+                              <span className="text-[8px] text-muted-foreground">Audio</span>
+                            </div>
                           ) : (
                             <span className="text-[10px] text-muted-foreground px-1 text-center truncate">
                               {f.name}
@@ -372,10 +408,10 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
                         </div>
                       ))}
                       <button
-                        onClick={() => fileInputRef.current?.click()}
+                        onClick={() => localFileInputRef.current?.click()}
                         className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border-2 border-dashed border-border hover:border-amber-500/40 transition-colors cursor-pointer"
                       >
-                        <Camera className="h-6 w-6 text-muted-foreground" />
+                        <Plus className="h-6 w-6 text-muted-foreground" />
                       </button>
                     </div>
                   </div>

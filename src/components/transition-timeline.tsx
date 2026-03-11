@@ -55,6 +55,7 @@ const STATUS_KEYS: Record<string, string> = {
   offen: "status.offen",
   in_arbeit: "status.in_arbeit",
   erledigt: "status.erledigt",
+  problem: "status.problem",
 };
 
 const PHASE_KEYS: Record<string, string> = {
@@ -174,8 +175,8 @@ function TransitionCard({
   const toLabel = STATUS_KEYS[trans.to_status]
     ? translate(STATUS_KEYS[trans.to_status])
     : trans.to_status;
-  const fromEmoji = trans.from_status === "offen" ? "🔴" : trans.from_status === "in_arbeit" ? "🟡" : "🟢";
-  const toEmoji = trans.to_status === "offen" ? "🔴" : trans.to_status === "in_arbeit" ? "🟡" : "🟢";
+  const fromEmoji = trans.from_status === "offen" ? "🔴" : trans.from_status === "in_arbeit" ? "🟡" : trans.from_status === "problem" ? "🟣" : "🟢";
+  const toEmoji = trans.to_status === "offen" ? "🔴" : trans.to_status === "in_arbeit" ? "🟡" : trans.to_status === "problem" ? "🟣" : "🟢";
   const media = trans.transition_media ?? [];
 
   return (
@@ -183,7 +184,7 @@ function TransitionCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="rounded-2xl border border-border bg-card p-4 space-y-3"
+      className="rounded-2xl border border-border bg-card p-4 space-y-3 card-elevated"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm">
@@ -230,7 +231,7 @@ function PhaseUpdateCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="rounded-2xl border border-dashed border-border bg-card/50 p-4 space-y-3"
+      className="rounded-2xl border border-dashed border-border bg-card p-4 space-y-3"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm">

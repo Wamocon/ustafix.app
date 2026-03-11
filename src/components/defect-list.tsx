@@ -16,6 +16,7 @@ const STATUS_FILTERS: { value: DefectStatus | "alle"; labelKey: string; emoji?: 
   { value: "offen", labelKey: "status.offen", emoji: "🔴" },
   { value: "in_arbeit", labelKey: "status.in_arbeit", emoji: "🟡" },
   { value: "erledigt", labelKey: "status.erledigt", emoji: "🟢" },
+  { value: "problem", labelKey: "status.problem", emoji: "🟣" },
 ];
 
 export function DefectList({ defects, projectId }: DefectListProps) {
@@ -49,7 +50,7 @@ export function DefectList({ defects, projectId }: DefectListProps) {
           placeholder={t("defectList.search")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex h-12 w-full rounded-2xl border border-border bg-card pl-11 pr-4 text-sm outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
+          className="flex h-12 w-full rounded-2xl border border-border bg-card pl-11 pr-4 text-sm outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground shadow-sm"
         />
       </div>
 
@@ -72,7 +73,7 @@ export function DefectList({ defects, projectId }: DefectListProps) {
 
       {filtered.length === 0 ? (
         <div className="flex flex-col items-center gap-3 py-16 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-muted">
+          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-muted border border-border">
             <Inbox className="h-8 w-8 text-muted-foreground" />
           </div>
           <div>

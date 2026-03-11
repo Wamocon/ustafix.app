@@ -65,16 +65,18 @@ export function ProtocolSection({
   }
 
   return (
-    <section className="space-y-3">
+    <section className="section-card space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-muted-foreground flex items-center gap-2">
-          <ClipboardCheck className="h-4 w-4" />
+        <h2 className="text-sm font-bold text-foreground flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-green-50 border border-green-200">
+            <ClipboardCheck className="h-3.5 w-3.5 text-green-600" />
+          </span>
           {t("protocol.title")} ({protocols.length})
         </h2>
         {canCreate && (
           <button
             onClick={() => setFormOpen(true)}
-            className="flex items-center gap-1.5 rounded-xl bg-green-500/10 px-3 py-1.5 text-xs font-semibold text-green-600 dark:text-green-400 border border-green-500/20 transition-all hover:bg-green-500/20 cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl bg-green-50 px-3 py-1.5 text-xs font-semibold text-green-600 border border-green-200 transition-all hover:bg-green-100 cursor-pointer"
           >
             <ClipboardCheck className="h-3.5 w-3.5" />
             {t("protocol.new")}
@@ -83,7 +85,7 @@ export function ProtocolSection({
       </div>
 
       {protocols.length === 0 ? (
-        <p className="text-xs text-muted-foreground py-4 text-center">
+        <p className="text-xs text-muted-foreground py-4 text-center rounded-xl border border-border bg-muted/30">
           {t("protocol.empty")}
         </p>
       ) : (
@@ -91,10 +93,10 @@ export function ProtocolSection({
           {protocols.map((p) => (
             <div
               key={p.id}
-              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4"
+              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 card-elevated"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-green-500/10">
-                <FileText className="h-5 w-5 text-green-500" />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-green-50 border border-green-200">
+                <FileText className="h-5 w-5 text-green-600" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold truncate">{p.title}</p>

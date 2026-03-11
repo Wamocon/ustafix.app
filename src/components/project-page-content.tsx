@@ -15,7 +15,7 @@ interface ProjectPageContentProps {
   projectName: string;
   projectAddress: string | null;
   units: { id: string; name: string }[];
-  counts: { offen: number; in_arbeit: number; erledigt: number };
+  counts: { offen: number; in_arbeit: number; erledigt: number; problem: number };
   donePercent: number;
   total: number;
   defects: Array<Record<string, unknown>>;
@@ -38,7 +38,7 @@ function StatusBadge({
 }) {
   return (
     <div
-      className={`flex flex-col items-center gap-1 rounded-2xl px-3 py-3 text-center ${className}`}
+      className={`flex flex-col items-center gap-1.5 rounded-2xl px-3 py-3.5 text-center shadow-sm ${className}`}
     >
       <span className="text-lg">{emoji}</span>
       <span className="text-xl font-extrabold">{count}</span>
@@ -87,12 +87,12 @@ export function ProjectPageContent({
         )}
 
         {total > 0 && (
-          <div className="mt-4">
-            <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
-              <span>{t("project.progress")}</span>
-              <span className="font-semibold text-foreground">{donePercent}%</span>
+          <div className="mt-4 rounded-2xl border border-border bg-card p-4 card-elevated">
+            <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
+              <span className="font-medium">{t("project.progress")}</span>
+              <span className="font-bold text-foreground">{donePercent}%</span>
             </div>
-            <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
+            <div className="h-2.5 w-full rounded-full bg-muted overflow-hidden">
               <div
                 className="h-full rounded-full gradient-primary transition-all duration-700 ease-out"
                 style={{ width: `${donePercent}%` }}
@@ -101,50 +101,61 @@ export function ProjectPageContent({
           </div>
         )}
 
-        <div className="mt-4 grid grid-cols-3 gap-2">
+        <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2">
           <StatusBadge
             count={counts.offen}
             label={t("project.open")}
             emoji="🔴"
-            className="bg-status-open/8 text-status-open border border-status-open/15"
+            className="bg-red-50 text-status-open border border-red-200"
           />
           <StatusBadge
             count={counts.in_arbeit}
             label={t("project.inProgress")}
             emoji="🟡"
-            className="bg-status-progress/8 text-status-progress border border-status-progress/15"
+            className="bg-amber-50 text-status-progress border border-amber-200"
           />
           <StatusBadge
             count={counts.erledigt}
             label={t("project.done")}
             emoji="🟢"
-            className="bg-status-done/8 text-status-done border border-status-done/15"
+            className="bg-green-50 text-status-done border border-green-200"
+          />
+          <StatusBadge
+            count={counts.problem}
+            label={t("project.problem")}
+            emoji="🟣"
+            className="bg-purple-50 text-purple-600 border border-purple-200"
           />
         </div>
       </header>
 
       {isAdminOrManager && (
         <>
-          <section className="mb-6">
-            <h2 className="text-sm font-semibold text-muted-foreground mb-2">
-              {t("project.units")}
-            </h2>
-            <AddUnitForm projectId={projectId} />
-            {units.length > 0 && (
-              <ul className="mt-3 space-y-1.5">
-                {units.map((unit) => (
-                  <li
-                    key={unit.id}
-                    className="flex items-center gap-2 rounded-xl border border-border bg-card/50 px-3 py-2.5 text-sm"
-                  >
-                    <span className="h-2 w-2 shrink-0 rounded-full bg-amber-500/60" />
-                    {unit.name}
-                  </li>
-                ))}
-              </ul>
-            )}
+          <section className="mb-5">
+            <div className="section-card">
+              <h2 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-500/10">
+                  <span className="text-xs">📦</span>
+                </span>
+                {t("project.units")}
+              </h2>
+              <AddUnitForm projectId={projectId} />
+              {units.length > 0 && (
+                <ul className="mt-3 space-y-1.5">
+                  {units.map((unit) => (
+                    <li
+                      key={unit.id}
+                      className="flex items-center gap-2.5 rounded-xl border border-border bg-muted/30 px-3.5 py-2.5 text-sm font-medium"
+                    >
+                      <span className="h-2 w-2 shrink-0 rounded-full bg-amber-500" />
+                      {unit.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </section>
-          <section className="mb-6">
+          <section className="mb-5">
             <ProjectTeamSection
               projectId={projectId}
               members={members}

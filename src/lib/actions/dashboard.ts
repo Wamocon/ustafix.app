@@ -7,6 +7,7 @@ export interface DefectCounts {
   offen: number;
   in_arbeit: number;
   erledigt: number;
+  problem: number;
   total: number;
 }
 

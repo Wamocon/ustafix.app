@@ -176,10 +176,10 @@ export function ProjectTeamSection({
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
+    <div className="section-card space-y-4">
       <h2 className="font-bold flex items-center gap-2.5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/10">
-          <Users className="h-4 w-4 text-amber-500" />
+        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-50 border border-amber-200">
+          <Users className="h-4 w-4 text-amber-600" />
         </div>
         {t("team.title")}
       </h2>
@@ -287,7 +287,7 @@ export function ProjectTeamSection({
             key={m.id}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex items-center justify-between rounded-xl bg-muted/50 px-4 py-3 text-sm"
+            className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-sm"
           >
             <span className="font-medium text-muted-foreground">
               {m.user_id === currentUserId

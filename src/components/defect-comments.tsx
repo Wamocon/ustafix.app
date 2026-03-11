@@ -73,7 +73,7 @@ export function DefectComments({
 
       <div className="space-y-3 max-h-64 overflow-y-auto overflow-x-hidden scrollbar-none">
         {comments.length === 0 ? (
-          <p className="text-sm text-muted-foreground py-4 text-center rounded-2xl bg-muted/50">
+          <p className="text-sm text-muted-foreground py-4 text-center rounded-2xl border border-border bg-card">
             {t("comments.empty")}
           </p>
         ) : (
@@ -85,7 +85,7 @@ export function DefectComments({
                 key={c.id}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-2xl border border-border bg-card p-4 min-w-0 overflow-hidden"
+                className="rounded-2xl border border-border bg-card p-4 min-w-0 overflow-hidden card-elevated"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">

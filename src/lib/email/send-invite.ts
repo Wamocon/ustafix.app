@@ -63,21 +63,21 @@ function buildInviteHtml(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="margin:0;padding:0;background:#0a0a0a;font-family:'Arial Narrow',Arial,Helvetica,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:40px 20px;">
+<body style="margin:0;padding:0;background:#f5f5f4;font-family:'Arial Narrow',Arial,Helvetica,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f4;padding:40px 20px;">
     <tr>
       <td align="center">
-        <table width="480" cellpadding="0" cellspacing="0" style="background:#1a1a1a;border-radius:16px;border:1px solid #2a2a2a;overflow:hidden;">
+        <table width="480" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;border:1px solid #e7e5e4;overflow:hidden;">
           <!-- Header -->
           <tr>
             <td style="padding:32px 32px 24px;border-bottom:2px solid #f59e0b;">
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td>
-                    <span style="font-size:24px;font-weight:800;color:#fafafa;letter-spacing:-0.5px;">Ustafix</span>
+                    <span style="font-size:24px;font-weight:800;color:#1c1917;letter-spacing:-0.5px;">Ustafix</span>
                     <span style="font-size:24px;font-weight:800;color:#f59e0b;">.app</span>
                   </td>
-                  <td align="right" style="font-size:11px;color:#737373;text-transform:uppercase;letter-spacing:1px;">
+                  <td align="right" style="font-size:11px;color:#78716c;text-transform:uppercase;letter-spacing:1px;">
                     WAMOCON GmbH
                   </td>
                 </tr>
@@ -88,19 +88,19 @@ function buildInviteHtml(
           <!-- Body -->
           <tr>
             <td style="padding:32px;">
-              <h1 style="margin:0 0 8px;font-size:20px;font-weight:700;color:#fafafa;">
+              <h1 style="margin:0 0 8px;font-size:20px;font-weight:700;color:#1c1917;">
                 Projekteinladung
               </h1>
-              <p style="margin:0 0 24px;font-size:14px;color:#a3a3a3;line-height:1.6;">
-                <strong style="color:#fafafa;">${params.inviterName}</strong> hat Sie zum folgenden Projekt eingeladen:
+              <p style="margin:0 0 24px;font-size:14px;color:#78716c;line-height:1.6;">
+                <strong style="color:#1c1917;">${params.inviterName}</strong> hat Sie zum folgenden Projekt eingeladen:
               </p>
 
               <!-- Project card -->
-              <table width="100%" cellpadding="0" cellspacing="0" style="background:#262626;border-radius:12px;border:1px solid #333;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#fafaf9;border-radius:12px;border:1px solid #e7e5e4;">
                 <tr>
                   <td style="padding:20px;">
-                    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#fafafa;">${params.projectName}</p>
-                    <p style="margin:0;font-size:13px;color:#a3a3a3;">
+                    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#1c1917;">${params.projectName}</p>
+                    <p style="margin:0;font-size:13px;color:#78716c;">
                       Ihre Rolle: <strong style="color:#f59e0b;">${roleName}</strong>
                     </p>
                   </td>
@@ -118,7 +118,7 @@ function buildInviteHtml(
                 </tr>
               </table>
 
-              <p style="margin:24px 0 0;font-size:12px;color:#737373;line-height:1.5;">
+              <p style="margin:24px 0 0;font-size:12px;color:#a8a29e;line-height:1.5;">
                 Diese Einladung ist 7 Tage gültig. Falls Sie kein Konto haben,
                 können Sie sich über den Link registrieren.
               </p>
@@ -127,8 +127,8 @@ function buildInviteHtml(
 
           <!-- Footer -->
           <tr>
-            <td style="padding:20px 32px;border-top:1px solid #2a2a2a;background:#141414;">
-              <p style="margin:0;font-size:11px;color:#525252;line-height:1.5;">
+            <td style="padding:20px 32px;border-top:1px solid #e7e5e4;background:#f5f5f4;">
+              <p style="margin:0;font-size:11px;color:#a8a29e;line-height:1.5;">
                 WAMOCON GmbH &middot; Baumängel-Management<br>
                 Diese E-Mail wurde automatisch von Ustafix.app versendet.
               </p>

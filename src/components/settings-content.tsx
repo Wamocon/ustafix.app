@@ -77,15 +77,15 @@ export function SettingsContent({
       </header>
 
       <div className="space-y-4">
-        <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
+        <div className="section-card space-y-4">
           <h2 className="font-bold flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/10">
-              <User className="h-4 w-4 text-amber-500" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-50 border border-amber-200">
+              <User className="h-4 w-4 text-amber-600" />
             </div>
             {t("settings.profile")}
           </h2>
           <div className="space-y-3 text-sm">
-            <div className="flex items-center gap-3 rounded-xl bg-muted/50 px-4 py-3">
+            <div className="flex items-center gap-3 rounded-xl border border-border bg-muted/30 px-4 py-3">
               <Mail className="h-4 w-4 text-muted-foreground shrink-0" />
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
@@ -119,7 +119,7 @@ export function SettingsContent({
               {!showPasswordForm ? (
                 <button
                   onClick={() => setShowPasswordForm(true)}
-                  className="flex items-center gap-3 w-full rounded-xl bg-muted/50 px-4 py-3 text-left hover:bg-muted/70 transition-colors"
+                  className="flex items-center gap-3 w-full rounded-xl border border-border bg-card px-4 py-3 text-left hover:bg-muted/30 transition-colors"
                 >
                   <Lock className="h-4 w-4 text-muted-foreground shrink-0" />
                   <span className="font-medium">{t("settings.changePassword")}</span>
@@ -160,10 +160,10 @@ export function SettingsContent({
           </div>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card p-5 space-y-4">
+        <div className="section-card space-y-4">
           <h2 className="font-bold flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/10">
-              <Smartphone className="h-4 w-4 text-amber-500" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-50 border border-amber-200">
+              <Smartphone className="h-4 w-4 text-amber-600" />
             </div>
             {t("settings.appInfo")}
           </h2>
@@ -184,7 +184,7 @@ export function SettingsContent({
 
         <LanguageSelector />
 
-        <div className="rounded-2xl border border-border bg-card p-5">
+        <div className="section-card">
           <NotificationSettings preferences={notifPrefs} />
         </div>
 

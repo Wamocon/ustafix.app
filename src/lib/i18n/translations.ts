@@ -127,8 +127,9 @@ export const translations = {
     "project.progress": "Fortschritt",
     "project.units": "Einheiten",
     "project.open": "Offen",
-    "project.inProgress": "In Arbeit",
+    "project.inProgress": "In Bearbeitung",
     "project.done": "Erledigt",
+    "project.problem": "Problem",
     "project.backToList": "Zurück zur Liste",
 
     // Defect page
@@ -165,8 +166,9 @@ export const translations = {
 
     // Status
     "status.offen": "Offen",
-    "status.in_arbeit": "In Arbeit",
+    "status.in_arbeit": "In Bearbeitung",
     "status.erledigt": "Erledigt",
+    "status.problem": "Problem",
     "status.transitionNotAllowed": "Dieser Statuswechsel ist nicht möglich.",
     "status.onlyRoles": "Nur",
     "status.and": "und",
@@ -197,20 +199,30 @@ export const translations = {
     "statusModal.videoCompressing": "Video wird komprimiert...",
     "statusModal.placeholders.offen->in_arbeit": "z.B. Bin vor Ort, beginne mit der Reparatur...",
     "statusModal.placeholders.in_arbeit->erledigt":
-      "z.B. Reparatur abgeschlossen, Riss wurde verspachtelt und gestrichen...",
+      "z.B. Vor-Ort-Prüfung bestanden, Mangel ist behoben...",
+    "statusModal.placeholders.in_arbeit->problem":
+      "z.B. Kann nicht repariert werden, Material nicht verfügbar...",
+    "statusModal.placeholders.erledigt->problem":
+      "z.B. Bei der Kontrolle festgestellt: Reparatur unzureichend...",
+    "statusModal.placeholders.problem->in_arbeit":
+      "z.B. Neuer Ansatz, beginne erneut mit der Reparatur...",
+    "statusModal.placeholders.problem->offen":
+      "z.B. Muss komplett neu bewertet werden...",
     "statusModal.placeholders.erledigt->offen":
       "z.B. Mangel tritt erneut auf, muss nachgebessert werden...",
     "statusModal.placeholders.in_arbeit->offen":
       "z.B. Material fehlt, Arbeit wird unterbrochen...",
     "statusModal.placeholders.offen->erledigt":
       "z.B. War bereits behoben, Dokumentation nachgeholt...",
-    "statusModal.placeholders.erledigt->in_arbeit": "z.B. Nachbesserung erforderlich...",
     "statusModal.label.workBegin": "Arbeit beginnen",
     "statusModal.label.markDone": "Als erledigt markieren",
+    "statusModal.label.reportProblem": "Problem melden",
+    "statusModal.label.foundProblem": "Problem festgestellt",
+    "statusModal.label.rework": "Erneut bearbeiten",
+    "statusModal.label.backToOpen": "Zurück auf Offen",
     "statusModal.label.reopenDefect": "Mangel wiedereröffnen",
     "statusModal.label.stopWork": "Arbeit stoppen",
     "statusModal.label.directDone": "Direkt als erledigt markieren",
-    "statusModal.label.backToWork": "Zurück in Arbeit setzen",
 
     // Phase update modal
     "phaseModal.title": "Update hinzufügen",
@@ -236,6 +248,9 @@ export const translations = {
     "capture.title": "Mangel erfassen",
     "capture.speak": "Sprechen",
     "capture.photoVideo": "Foto / Video",
+    "capture.camera": "Kamera",
+    "capture.upload": "Hochladen",
+    "capture.audioTooBig": "Audiodatei zu groß. Maximal 50 MB erlaubt.",
     "capture.attachments": "Anhänge",
     "capture.titleRequired": "Titel *",
     "capture.titlePlaceholder": "z.B. Glasscheibe wackelt",
@@ -398,6 +413,38 @@ export const translations = {
       "Tippen Sie auf die Taste und sprechen Sie in beliebiger Sprache. Die KI transkribiert und übersetzt automatisch.",
     "audio.startLabel": "Aufnahme starten",
     "audio.stopLabel": "Aufnahme stoppen",
+
+    // Landing page
+    "landing.heroLine1": "Baustellenmängel.",
+    "landing.heroLine2": "Einfach digital.",
+    "landing.heroSubtitle": "Erfassen, verfolgen und beheben Sie Mängel auf der Baustelle — alles in einer App.",
+    "landing.ctaLogin": "Anmelden",
+    "landing.ctaRegister": "Kostenlos starten",
+    "landing.ctaDashboard": "Zum Dashboard",
+    "landing.featuresTitle": "Alles, was Sie brauchen",
+    "landing.featuresSubtitle": "Eine Plattform für Ihr gesamtes Mängelmanagement auf der Baustelle.",
+    "landing.feature1Title": "Mängel erfassen",
+    "landing.feature1Desc": "Foto, Video oder Sprachaufnahme — erfassen Sie Mängel in Sekunden, direkt vor Ort.",
+    "landing.feature2Title": "4-Stufen-Workflow",
+    "landing.feature2Desc": "Offen → In Bearbeitung → Erledigt oder Problem. Klare Verantwortung auf jeder Stufe.",
+    "landing.feature3Title": "Teamarbeit",
+    "landing.feature3Desc": "Admin, Bauleiter und Handwerker — alle arbeiten zusammen mit klaren Rollen und Berechtigungen.",
+    "landing.feature4Title": "Abnahmeprotokolle",
+    "landing.feature4Desc": "Erstellen Sie rechtssichere Abnahmeprotokolle mit digitaler Unterschrift und PDF-Export.",
+    "landing.feature5Title": "Offline-fähig",
+    "landing.feature5Desc": "Kein Internet? Kein Problem. Arbeiten Sie offline weiter — alles wird automatisch synchronisiert.",
+    "landing.feature6Title": "Mehrsprachig",
+    "landing.feature6Desc": "Deutsch, Russisch und Türkisch — damit jeder auf der Baustelle mitarbeiten kann.",
+    "landing.howTitle": "So funktioniert's",
+    "landing.howSubtitle": "In drei einfachen Schritten zum digitalen Mängelmanagement.",
+    "landing.step1Title": "Projekt erstellen",
+    "landing.step1Desc": "Legen Sie ein Bauprojekt an und laden Sie Ihr Team ein.",
+    "landing.step2Title": "Mängel erfassen",
+    "landing.step2Desc": "Fotografieren, sprechen oder tippen — erfassen Sie Mängel direkt vor Ort.",
+    "landing.step3Title": "Verfolgen & abschließen",
+    "landing.step3Desc": "Behalten Sie den Überblick und schließen Sie Mängel mit Nachweis ab.",
+    "landing.madeInGermany": "Made in Germany",
+    "landing.copyright": "Alle Rechte vorbehalten.",
   },
   ru: {
     // Navigation & common
@@ -515,7 +562,8 @@ export const translations = {
     "project.units": "Единицы",
     "project.open": "Открыт",
     "project.inProgress": "В работе",
-    "project.done": "Выполнено",
+    "project.done": "Завершено",
+    "project.problem": "Проблема",
     "project.backToList": "Назад к списку",
 
     // Defect page
@@ -553,7 +601,8 @@ export const translations = {
     // Status
     "status.offen": "Открыт",
     "status.in_arbeit": "В работе",
-    "status.erledigt": "Выполнено",
+    "status.erledigt": "Завершено",
+    "status.problem": "Проблема",
     "status.transitionNotAllowed": "Этот переход статуса невозможен.",
     "status.onlyRoles": "Только",
     "status.and": "и",
@@ -584,18 +633,28 @@ export const translations = {
     "statusModal.videoCompressing": "Сжатие видео...",
     "statusModal.placeholders.offen->in_arbeit": "Напр. На месте, начинаю ремонт...",
     "statusModal.placeholders.in_arbeit->erledigt":
-      "Напр. Ремонт завершён, трещина зашпаклёвана и покрашена...",
+      "Напр. Проверка на месте пройдена, дефект устранён...",
+    "statusModal.placeholders.in_arbeit->problem":
+      "Напр. Не могу исправить, материал недоступен...",
+    "statusModal.placeholders.erledigt->problem":
+      "Напр. При проверке обнаружено: ремонт недостаточный...",
+    "statusModal.placeholders.problem->in_arbeit":
+      "Напр. Новый подход, начинаю ремонт заново...",
+    "statusModal.placeholders.problem->offen":
+      "Напр. Требуется полная переоценка...",
     "statusModal.placeholders.erledigt->offen":
       "Напр. Дефект проявился снова, требуется доработка...",
     "statusModal.placeholders.in_arbeit->offen": "Напр. Нет материала, работа приостановлена...",
     "statusModal.placeholders.offen->erledigt": "Напр. Уже исправлено, документировано задним числом...",
-    "statusModal.placeholders.erledigt->in_arbeit": "Напр. Требуется доработка...",
     "statusModal.label.workBegin": "Начать работу",
-    "statusModal.label.markDone": "Отметить выполненным",
+    "statusModal.label.markDone": "Отметить завершённым",
+    "statusModal.label.reportProblem": "Сообщить о проблеме",
+    "statusModal.label.foundProblem": "Обнаружена проблема",
+    "statusModal.label.rework": "Переработать",
+    "statusModal.label.backToOpen": "Вернуть в Открыт",
     "statusModal.label.reopenDefect": "Повторно открыть",
     "statusModal.label.stopWork": "Остановить работу",
-    "statusModal.label.directDone": "Сразу отметить выполненным",
-    "statusModal.label.backToWork": "Вернуть в работу",
+    "statusModal.label.directDone": "Сразу отметить завершённым",
 
     // Phase update modal
     "phaseModal.title": "Добавить обновление",
@@ -621,6 +680,9 @@ export const translations = {
     "capture.title": "Зафиксировать дефект",
     "capture.speak": "Голос",
     "capture.photoVideo": "Фото / Видео",
+    "capture.camera": "Камера",
+    "capture.upload": "Загрузить",
+    "capture.audioTooBig": "Аудиофайл слишком большой. Максимум 50 МБ.",
     "capture.attachments": "Вложения",
     "capture.titleRequired": "Название *",
     "capture.titlePlaceholder": "Напр. Стекло шатается",
@@ -783,6 +845,38 @@ export const translations = {
       "Нажмите и говорите на любом языке. ИИ распознает и переведёт автоматически.",
     "audio.startLabel": "Начать запись",
     "audio.stopLabel": "Остановить запись",
+
+    // Landing page
+    "landing.heroLine1": "Строительные дефекты.",
+    "landing.heroLine2": "Просто в цифре.",
+    "landing.heroSubtitle": "Фиксируйте, отслеживайте и устраняйте дефекты на стройке — всё в одном приложении.",
+    "landing.ctaLogin": "Войти",
+    "landing.ctaRegister": "Начать бесплатно",
+    "landing.ctaDashboard": "К панели управления",
+    "landing.featuresTitle": "Всё, что вам нужно",
+    "landing.featuresSubtitle": "Единая платформа для управления дефектами на стройке.",
+    "landing.feature1Title": "Фиксация дефектов",
+    "landing.feature1Desc": "Фото, видео или голосовая запись — фиксируйте дефекты за секунды, прямо на месте.",
+    "landing.feature2Title": "4-этапный процесс",
+    "landing.feature2Desc": "Открыт → В работе → Завершено или Проблема. Чёткая ответственность на каждом этапе.",
+    "landing.feature3Title": "Командная работа",
+    "landing.feature3Desc": "Админ, руководитель и рабочий — все работают вместе с чёткими ролями и правами.",
+    "landing.feature4Title": "Протоколы приёмки",
+    "landing.feature4Desc": "Создавайте юридически значимые протоколы с цифровой подписью и экспортом в PDF.",
+    "landing.feature5Title": "Работа офлайн",
+    "landing.feature5Desc": "Нет интернета? Не проблема. Работайте офлайн — всё синхронизируется автоматически.",
+    "landing.feature6Title": "Многоязычность",
+    "landing.feature6Desc": "Немецкий, русский и турецкий — чтобы каждый на стройке мог участвовать.",
+    "landing.howTitle": "Как это работает",
+    "landing.howSubtitle": "Три простых шага к цифровому управлению дефектами.",
+    "landing.step1Title": "Создайте проект",
+    "landing.step1Desc": "Создайте строительный проект и пригласите свою команду.",
+    "landing.step2Title": "Зафиксируйте дефекты",
+    "landing.step2Desc": "Фотографируйте, говорите или печатайте — фиксируйте дефекты прямо на месте.",
+    "landing.step3Title": "Отслеживайте и завершайте",
+    "landing.step3Desc": "Следите за прогрессом и закрывайте дефекты с подтверждением.",
+    "landing.madeInGermany": "Сделано в Германии",
+    "landing.copyright": "Все права защищены.",
   },
   tr: {
     // Navigation & common
@@ -899,8 +993,9 @@ export const translations = {
     "project.progress": "İlerleme",
     "project.units": "Birimler",
     "project.open": "Açık",
-    "project.inProgress": "Devam ediyor",
+    "project.inProgress": "Devam Ediyor",
     "project.done": "Tamamlandı",
+    "project.problem": "Sorun",
     "project.backToList": "Listeye dön",
 
     // Defect page
@@ -937,8 +1032,9 @@ export const translations = {
 
     // Status
     "status.offen": "Açık",
-    "status.in_arbeit": "Devam ediyor",
+    "status.in_arbeit": "Devam Ediyor",
     "status.erledigt": "Tamamlandı",
+    "status.problem": "Sorun",
     "status.transitionNotAllowed": "Bu durum geçişi mümkün değil.",
     "status.onlyRoles": "Sadece",
     "status.and": "ve",
@@ -969,18 +1065,28 @@ export const translations = {
     "statusModal.videoCompressing": "Video sıkıştırılıyor...",
     "statusModal.placeholders.offen->in_arbeit": "Örn. Sahadayım, tadilata başlıyorum...",
     "statusModal.placeholders.in_arbeit->erledigt":
-      "Örn. Tadilat tamamlandı, çatlak sıva ve boya yapıldı...",
+      "Örn. Yerinde kontrol edildi, kusur giderildi...",
+    "statusModal.placeholders.in_arbeit->problem":
+      "Örn. Tamir edilemiyor, malzeme mevcut değil...",
+    "statusModal.placeholders.erledigt->problem":
+      "Örn. Kontrolde tespit edildi: onarım yetersiz...",
+    "statusModal.placeholders.problem->in_arbeit":
+      "Örn. Yeni yaklaşım, tamire yeniden başlıyorum...",
+    "statusModal.placeholders.problem->offen":
+      "Örn. Tamamen yeniden değerlendirilmeli...",
     "statusModal.placeholders.erledigt->offen":
       "Örn. Kusur tekrar ortaya çıktı, düzeltme gerekli...",
     "statusModal.placeholders.in_arbeit->offen": "Örn. Malzeme yok, iş durdu...",
     "statusModal.placeholders.offen->erledigt": "Örn. Zaten düzeltilmişti, dokümantasyon sonradan...",
-    "statusModal.placeholders.erledigt->in_arbeit": "Örn. Düzeltme gerekli...",
     "statusModal.label.workBegin": "İşe başla",
     "statusModal.label.markDone": "Tamamlandı işaretle",
+    "statusModal.label.reportProblem": "Sorun bildir",
+    "statusModal.label.foundProblem": "Sorun tespit edildi",
+    "statusModal.label.rework": "Yeniden işle",
+    "statusModal.label.backToOpen": "Açık'a geri dön",
     "statusModal.label.reopenDefect": "Kusuru yeniden aç",
     "statusModal.label.stopWork": "İşi durdur",
     "statusModal.label.directDone": "Direkt tamamlandı işaretle",
-    "statusModal.label.backToWork": "Tekrar işe al",
 
     // Phase update modal
     "phaseModal.title": "Güncelleme ekle",
@@ -1006,6 +1112,9 @@ export const translations = {
     "capture.title": "Kusur kaydet",
     "capture.speak": "Konuş",
     "capture.photoVideo": "Fotoğraf / Video",
+    "capture.camera": "Kamera",
+    "capture.upload": "Yükle",
+    "capture.audioTooBig": "Ses dosyası çok büyük. Maksimum 50 MB.",
     "capture.attachments": "Ekler",
     "capture.titleRequired": "Başlık *",
     "capture.titlePlaceholder": "Örn. Cam sallanıyor",
@@ -1167,6 +1276,38 @@ export const translations = {
       "Tuşa basın ve herhangi bir dilde konuşun. Yapay zeka otomatik tanır ve çevirir.",
     "audio.startLabel": "Kaydı başlat",
     "audio.stopLabel": "Kaydı durdur",
+
+    // Landing page
+    "landing.heroLine1": "Şantiye kusurları.",
+    "landing.heroLine2": "Basitçe dijital.",
+    "landing.heroSubtitle": "Şantiyedeki kusurları kaydedin, takip edin ve giderin — tek bir uygulamada.",
+    "landing.ctaLogin": "Giriş yap",
+    "landing.ctaRegister": "Ücretsiz başla",
+    "landing.ctaDashboard": "Panele git",
+    "landing.featuresTitle": "İhtiyacınız olan her şey",
+    "landing.featuresSubtitle": "Şantiye kusur yönetimi için tek platform.",
+    "landing.feature1Title": "Kusur kaydı",
+    "landing.feature1Desc": "Fotoğraf, video veya ses kaydı — kusurları saniyeler içinde, yerinde kaydedin.",
+    "landing.feature2Title": "4 aşamalı süreç",
+    "landing.feature2Desc": "Açık → Devam Ediyor → Tamamlandı veya Sorun. Her aşamada net sorumluluk.",
+    "landing.feature3Title": "Ekip çalışması",
+    "landing.feature3Desc": "Yönetici, şef ve işçi — herkes net roller ve yetkilerle birlikte çalışır.",
+    "landing.feature4Title": "Kabul protokolleri",
+    "landing.feature4Desc": "Dijital imza ve PDF dışa aktarma ile hukuken geçerli kabul protokolleri oluşturun.",
+    "landing.feature5Title": "Çevrimdışı çalışma",
+    "landing.feature5Desc": "İnternet yok mu? Sorun değil. Çevrimdışı çalışın — her şey otomatik senkronize edilir.",
+    "landing.feature6Title": "Çok dilli",
+    "landing.feature6Desc": "Almanca, Rusça ve Türkçe — şantiyedeki herkesin katılabilmesi için.",
+    "landing.howTitle": "Nasıl çalışır",
+    "landing.howSubtitle": "Üç basit adımda dijital kusur yönetimi.",
+    "landing.step1Title": "Proje oluşturun",
+    "landing.step1Desc": "Bir inşaat projesi oluşturun ve ekibinizi davet edin.",
+    "landing.step2Title": "Kusurları kaydedin",
+    "landing.step2Desc": "Fotoğraf çekin, konuşun veya yazın — kusurları yerinde kaydedin.",
+    "landing.step3Title": "Takip edin ve tamamlayın",
+    "landing.step3Desc": "İlerlemeyi izleyin ve kusurları kanıtla kapatın.",
+    "landing.madeInGermany": "Almanya'da üretilmiştir",
+    "landing.copyright": "Tüm hakları saklıdır.",
   },
 } as const;
 

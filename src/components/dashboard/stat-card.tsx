@@ -12,15 +12,16 @@ interface StatCardProps {
   delay?: number;
   subtitle?: string;
   href?: string;
+  onClick?: () => void;
 }
 
 const COLORS = {
-  amber: "bg-amber-500/10 text-amber-500",
-  red: "bg-red-500/10 text-red-500",
-  blue: "bg-blue-500/10 text-blue-500",
-  green: "bg-emerald-500/10 text-emerald-500",
-  purple: "bg-purple-500/10 text-purple-500",
-  slate: "bg-slate-500/10 text-slate-400",
+  amber: "bg-amber-50 text-amber-600 border border-amber-200",
+  red: "bg-red-50 text-red-600 border border-red-200",
+  blue: "bg-blue-50 text-blue-600 border border-blue-200",
+  green: "bg-emerald-50 text-emerald-600 border border-emerald-200",
+  purple: "bg-purple-50 text-purple-600 border border-purple-200",
+  slate: "bg-stone-100 text-stone-500 border border-stone-200",
 };
 
 export function StatCard({
@@ -31,6 +32,7 @@ export function StatCard({
   delay = 0,
   subtitle,
   href,
+  onClick,
 }: StatCardProps) {
   const content = (
     <>
@@ -54,7 +56,10 @@ export function StatCard({
   );
 
   const cardClass =
-    "rounded-2xl border border-border bg-card p-4 flex items-start gap-3";
+    "rounded-2xl border border-border bg-card p-4 flex items-start gap-3 card-elevated";
+
+  const interactiveClass =
+    "card-hover transition-colors hover:border-muted-foreground/20 cursor-pointer";
 
   const motionProps = {
     initial: { opacity: 0, y: 12 } as const,
@@ -67,11 +72,31 @@ export function StatCard({
       <Link href={href} className="block">
         <motion.div
           {...motionProps}
-          className={`${cardClass} card-hover transition-colors hover:border-muted-foreground/20`}
+          className={`${cardClass} ${interactiveClass}`}
         >
           {content}
         </motion.div>
       </Link>
+    );
+  }
+
+  if (onClick) {
+    return (
+      <motion.div
+        {...motionProps}
+        className={`${cardClass} ${interactiveClass}`}
+        onClick={onClick}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onClick();
+          }
+        }}
+      >
+        {content}
+      </motion.div>
     );
   }
 

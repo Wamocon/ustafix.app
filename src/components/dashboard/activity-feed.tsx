@@ -10,14 +10,16 @@ import type { RecentTransition } from "@/lib/actions/dashboard";
 
 const STATUS_LABELS: Record<string, string> = {
   offen: "Offen",
-  in_arbeit: "In Arbeit",
+  in_arbeit: "In Bearbeitung",
   erledigt: "Erledigt",
+  problem: "Problem",
 };
 
 const STATUS_COLORS: Record<string, string> = {
   offen: "text-red-500",
   in_arbeit: "text-amber-500",
   erledigt: "text-emerald-500",
+  problem: "text-purple-500",
 };
 
 interface ActivityFeedProps {
@@ -49,9 +51,9 @@ export function ActivityFeed({
           >
             <Link
               href={`/project/${projectId}/defect/${t.defect_id}`}
-              className="flex items-start gap-3 rounded-xl px-3 py-2.5 hover:bg-muted/50 transition-colors"
+              className="flex items-start gap-3 rounded-xl border border-border bg-card px-3 py-2.5 hover:bg-muted/30 transition-colors card-elevated"
             >
-              <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted">
+              <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted border border-border">
                 <ArrowRight className="h-3 w-3 text-muted-foreground" />
               </div>
               <div className="flex-1 min-w-0">

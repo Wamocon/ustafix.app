@@ -40,8 +40,8 @@ self.addEventListener("push", (event) => {
     const payload = event.data.json();
     const options: NotificationOptions = {
       body: payload.body ?? "",
-      icon: "/icons/icon-192x192.png",
-      badge: "/icons/icon-192x192.png",
+      icon: "/icons/icon-192.png",
+      badge: "/icons/icon-192.png",
       tag: payload.tag,
       data: payload.data,
       vibrate: [100, 50, 100],
