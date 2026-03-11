@@ -168,8 +168,9 @@ function AdminDashboard({
   t: (key: string) => string;
 }) {
   const isSingle = stats.projects.length === 1;
-  const projectHref = isSingle ? `/project/${stats.projects[0].id}` : undefined;
-  const scrollToProjects = isSingle ? undefined : () => scrollToId("admin-projects");
+  const projectHref = isSingle
+    ? `/project/${stats.projects[0].id}`
+    : undefined;
 
   return (
     <>
@@ -182,7 +183,7 @@ function AdminDashboard({
           color="amber"
           delay={0}
           href={projectHref}
-          onClick={scrollToProjects}
+          onClick={isSingle ? undefined : () => scrollToId("admin-projects")}
         />
         <StatCard
           label={t("dashboard.totalDefects")}
@@ -190,8 +191,7 @@ function AdminDashboard({
           icon={LayoutDashboard}
           color="blue"
           delay={0.05}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/defects"
         />
         <StatCard
           label={t("dashboard.openDefects")}
@@ -200,8 +200,7 @@ function AdminDashboard({
           color="red"
           delay={0.1}
           subtitle={`${totals.highPriority} ${t("dashboard.highPriority")}`}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/defects?filter=offen"
         />
         <StatCard
           label={t("dashboard.completionRate")}
@@ -210,8 +209,7 @@ function AdminDashboard({
           color="green"
           delay={0.15}
           subtitle={`${totals.done} ${t("dashboard.ofDone")} ${totals.defects} ${t("dashboard.done")}`}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/defects"
         />
         <StatCard
           label={t("dashboard.teamMembers")}
@@ -220,8 +218,7 @@ function AdminDashboard({
           color="purple"
           delay={0.2}
           subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} ${t("dashboard.pendingInvites")}` : undefined}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/team"
         />
         <StatCard
           label={t("dashboard.protocols")}
@@ -229,8 +226,7 @@ function AdminDashboard({
           icon={FileCheck}
           color="slate"
           delay={0.25}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/protocols"
         />
       </div>
 
@@ -283,8 +279,9 @@ function ManagerDashboard({
   t: (key: string) => string;
 }) {
   const isSingle = stats.projects.length === 1;
-  const projectHref = isSingle ? `/project/${stats.projects[0].id}` : undefined;
-  const scrollToProjects = isSingle ? undefined : () => scrollToId("manager-projects");
+  const projectHref = isSingle
+    ? `/project/${stats.projects[0].id}`
+    : undefined;
 
   return (
     <>
@@ -297,7 +294,7 @@ function ManagerDashboard({
           color="amber"
           delay={0}
           href={projectHref}
-          onClick={scrollToProjects}
+          onClick={isSingle ? undefined : () => scrollToId("manager-projects")}
         />
         <StatCard
           label={t("dashboard.openDefects")}
@@ -306,8 +303,7 @@ function ManagerDashboard({
           color="red"
           delay={0.05}
           subtitle={`${totals.highPriority} ${t("dashboard.highPriority")}`}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/defects?filter=offen"
         />
         <StatCard
           label={t("dashboard.completionRate")}
@@ -316,8 +312,7 @@ function ManagerDashboard({
           color="green"
           delay={0.1}
           subtitle={`${totals.done} ${t("dashboard.ofDone")} ${totals.defects} ${t("dashboard.done")}`}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/defects"
         />
         <StatCard
           label={t("dashboard.teamMembers")}
@@ -326,8 +321,7 @@ function ManagerDashboard({
           color="purple"
           delay={0.15}
           subtitle={totals.pendingInvites > 0 ? `${totals.pendingInvites} ${t("dashboard.invitesOpen")}` : undefined}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/team"
         />
       </div>
 
@@ -382,8 +376,9 @@ function WorkerDashboard({
     0
   );
   const isSingle = stats.projects.length === 1;
-  const projectHref = isSingle ? `/project/${stats.projects[0].id}` : undefined;
-  const scrollToProjects = isSingle ? undefined : () => scrollToId("worker-projects");
+  const projectHref = isSingle
+    ? `/project/${stats.projects[0].id}`
+    : undefined;
 
   return (
     <>
@@ -396,7 +391,7 @@ function WorkerDashboard({
           color="amber"
           delay={0}
           href={projectHref}
-          onClick={scrollToProjects}
+          onClick={isSingle ? undefined : () => scrollToId("worker-projects")}
         />
         <StatCard
           label={t("dashboard.myOpenDefects")}
@@ -404,8 +399,7 @@ function WorkerDashboard({
           icon={Hammer}
           color="red"
           delay={0.05}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/defects?filter=offen"
         />
         <StatCard
           label={t("dashboard.capturedByMe")}
@@ -413,8 +407,7 @@ function WorkerDashboard({
           icon={UserCheck}
           color="blue"
           delay={0.1}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/defects"
         />
         <StatCard
           label={t("dashboard.doneDefects")}
@@ -422,8 +415,7 @@ function WorkerDashboard({
           icon={CheckCircle2}
           color="green"
           delay={0.15}
-          href={projectHref}
-          onClick={scrollToProjects}
+          href="/dashboard/defects?filter=erledigt"
         />
       </div>
 
