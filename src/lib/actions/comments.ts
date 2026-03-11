@@ -10,7 +10,7 @@ export async function getDefectComments(defectId: string) {
     p_defect_id: defectId,
   });
 
-  const comments = data ?? [];
+  const comments = (data ?? []) as { created_at: string }[];
   return comments.sort(
     (a, b) =>
       new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
