@@ -28,8 +28,10 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  const isApiRoute = request.nextUrl.pathname.startsWith("/api/");
-  if (isApiRoute) {
+  const pathname = request.nextUrl.pathname;
+  const isApiRoute = pathname.startsWith("/api/");
+  const isSerwistRoute = pathname.startsWith("/serwist/");
+  if (isApiRoute || isSerwistRoute) {
     return supabaseResponse;
   }
 

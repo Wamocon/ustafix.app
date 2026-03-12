@@ -51,7 +51,12 @@ export default function LandingPage() {
   const { language, setLanguage } = useLanguageContext();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const supabase = createClient();
@@ -151,41 +156,62 @@ export default function LandingPage() {
         </div>
 
         <div className="relative mx-auto max-w-lg sm:max-w-2xl text-center">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 180, delay: 0.1 }}
-            className="mx-auto mb-6 h-20 w-20 sm:h-24 sm:w-24 overflow-hidden rounded-[1.5rem] sm:rounded-[1.75rem] shadow-xl shadow-amber-500/25"
-          >
-            <UstafixLogo className="h-full w-full" />
-          </motion.div>
+          {mounted ? (
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 180, delay: 0.1 }}
+              className="mx-auto mb-6 h-20 w-20 sm:h-24 sm:w-24 overflow-hidden rounded-[1.5rem] sm:rounded-[1.75rem] shadow-xl shadow-amber-500/25"
+            >
+              <UstafixLogo className="h-full w-full" />
+            </motion.div>
+          ) : (
+            <div className="mx-auto mb-6 h-20 w-20 sm:h-24 sm:w-24 overflow-hidden rounded-[1.5rem] sm:rounded-[1.75rem] shadow-xl shadow-amber-500/25">
+              <UstafixLogo className="h-full w-full" />
+            </div>
+          )}
 
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease, delay: 0.2 }}
-            className="text-3xl font-extrabold tracking-tight sm:text-5xl"
-          >
-            {t("landing.heroLine1")}
-            <br />
-            <span className="gradient-text">{t("landing.heroLine2")}</span>
-          </motion.h1>
+          {mounted ? (
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease, delay: 0.2 }}
+              className="text-3xl font-extrabold tracking-tight sm:text-5xl"
+            >
+              {t("landing.heroLine1")}
+              <br />
+              <span className="gradient-text">{t("landing.heroLine2")}</span>
+            </motion.h1>
+          ) : (
+            <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">
+              {t("landing.heroLine1")}
+              <br />
+              <span className="gradient-text">{t("landing.heroLine2")}</span>
+            </h1>
+          )}
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease, delay: 0.35 }}
-            className="mx-auto mt-4 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            {t("landing.heroSubtitle")}
-          </motion.p>
+          {mounted ? (
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease, delay: 0.35 }}
+              className="mx-auto mt-4 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg"
+            >
+              {t("landing.heroSubtitle")}
+            </motion.p>
+          ) : (
+            <p className="mx-auto mt-4 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
+              {t("landing.heroSubtitle")}
+            </p>
+          )}
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease, delay: 0.5 }}
-            className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4"
-          >
+          {mounted ? (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease, delay: 0.5 }}
+              className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4"
+            >
             {isLoggedIn ? (
               <Link
                 href="/dashboard"
@@ -211,7 +237,36 @@ export default function LandingPage() {
                 </Link>
               </>
             )}
-          </motion.div>
+            </motion.div>
+          ) : (
+            <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
+              {isLoggedIn ? (
+                <Link
+                  href="/dashboard"
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl gradient-primary px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-amber-500/25 transition-all hover:brightness-110 active:scale-[0.97] sm:w-auto"
+                >
+                  {t("landing.ctaDashboard")}
+                  <ArrowRight className="h-4.5 w-4.5" />
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/register"
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl gradient-primary px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-amber-500/25 transition-all hover:brightness-110 active:scale-[0.97] sm:w-auto"
+                  >
+                    {t("landing.ctaRegister")}
+                    <ArrowRight className="h-4.5 w-4.5" />
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card px-6 py-3.5 text-base font-semibold shadow-sm transition-all hover:border-stone-300 active:scale-[0.97] sm:w-auto"
+                  >
+                    {t("landing.ctaLogin")}
+                  </Link>
+                </>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
