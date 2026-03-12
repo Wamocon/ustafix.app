@@ -446,6 +446,9 @@ export const translations = {
     "landing.step3Title": "Verfolgen & abschließen",
     "landing.step3Desc": "Behalten Sie den Überblick und schließen Sie Mängel mit Nachweis ab.",
     "landing.madeInGermany": "Made in Germany",
+    "landing.stampTop": "ENTWICKELT IN",
+    "landing.stampBottom": "DEUTSCHLAND",
+    "landing.stampLabel": "Entwickelt in Deutschland",
     "landing.copyright": "Alle Rechte vorbehalten.",
   },
   ru: {
@@ -880,6 +883,9 @@ export const translations = {
     "landing.step3Title": "Отслеживайте и завершайте",
     "landing.step3Desc": "Следите за прогрессом и закрывайте дефекты с подтверждением.",
     "landing.madeInGermany": "Сделано в Германии",
+    "landing.stampTop": "РАЗРАБОТАНО В",
+    "landing.stampBottom": "ГЕРМАНИИ",
+    "landing.stampLabel": "Разработано в Германии",
     "landing.copyright": "Все права защищены.",
   },
   tr: {
@@ -1313,6 +1319,9 @@ export const translations = {
     "landing.step3Title": "Takip edin ve tamamlayın",
     "landing.step3Desc": "İlerlemeyi izleyin ve kusurları kanıtla kapatın.",
     "landing.madeInGermany": "Almanya'da üretilmiştir",
+    "landing.stampTop": "GELİŞTİRİLDİ",
+    "landing.stampBottom": "ALMANYA'DA",
+    "landing.stampLabel": "Almanya'da Geliştirildi",
     "landing.copyright": "Tüm hakları saklıdır.",
   },
 } as const;
