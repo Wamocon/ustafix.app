@@ -10,8 +10,11 @@ import {
   ImageIcon,
   FileText,
   ClipboardCheck,
+  Play,
+  Mic,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLightbox, type LightboxItem } from "./media-lightbox";
 
 interface MediaItem {
   id: string;
@@ -263,38 +266,75 @@ function MediaRow({
   mediaUrls: Record<string, string>;
   t: (key: string) => string;
 }) {
+  const lightboxItems: LightboxItem[] = useMemo(
+    () =>
+      media
+        .filter((m) => mediaUrls[m.id])
+        .map((m) => ({ id: m.id, type: m.type, url: mediaUrls[m.id] })),
+    [media, mediaUrls]
+  );
+
+  const { openLightbox, lightboxElement } = useLightbox(lightboxItems);
+
   if (media.length === 0) return null;
 
   return (
-    <div className="flex gap-2 overflow-x-auto scrollbar-none">
-      {media.map((m) => (
-        <div
-          key={m.id}
-          className="shrink-0 h-20 w-20 rounded-xl overflow-hidden border border-border bg-muted"
-        >
-          {m.type === "image" && mediaUrls[m.id] ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={mediaUrls[m.id]}
-              alt={t("timeline.proofAlt")}
-              className="h-full w-full object-cover"
-              loading="lazy"
-            />
-          ) : m.type === "video" && mediaUrls[m.id] ? (
-            <video
-              src={mediaUrls[m.id]}
-              className="h-full w-full object-cover"
-              preload="metadata"
-              controls
-              playsInline
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <ImageIcon className="h-5 w-5 text-muted-foreground" />
+    <>
+      <div className="flex gap-2 overflow-x-auto scrollbar-none">
+        {media.map((m) => {
+          const lbIdx = lightboxItems.findIndex((li) => li.id === m.id);
+          return (
+            <div
+              key={m.id}
+              className="shrink-0 h-20 w-20 rounded-xl overflow-hidden border border-border bg-muted cursor-pointer"
+              onClick={() => lbIdx >= 0 && openLightbox(lbIdx)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  if (lbIdx >= 0) openLightbox(lbIdx);
+                }
+              }}
+            >
+              {m.type === "image" && mediaUrls[m.id] ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={mediaUrls[m.id]}
+                  alt={t("timeline.proofAlt")}
+                  className="h-full w-full object-cover transition-transform hover:scale-105"
+                  loading="lazy"
+                />
+              ) : m.type === "video" && mediaUrls[m.id] ? (
+                <div className="relative h-full w-full">
+                  <video
+                    src={mediaUrls[m.id]}
+                    className="h-full w-full object-cover"
+                    preload="metadata"
+                    playsInline
+                    muted
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90">
+                      <Play className="h-3.5 w-3.5 text-foreground ml-0.5" />
+                    </div>
+                  </div>
+                </div>
+              ) : m.type === "audio" && mediaUrls[m.id] ? (
+                <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-linear-to-br from-amber-500/10 to-orange-500/5">
+                  <Mic className="h-5 w-5 text-amber-600" />
+                  <span className="text-[10px] text-muted-foreground">Audio</span>
+                </div>
+              ) : (
+                <div className="flex h-full w-full items-center justify-center">
+                  <ImageIcon className="h-5 w-5 text-muted-foreground" />
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      ))}
-    </div>
+          );
+        })}
+      </div>
+      {lightboxElement}
+    </>
   );
 }

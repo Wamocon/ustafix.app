@@ -2,10 +2,11 @@
 
 import { useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Trash2, Mic, ImageIcon } from "lucide-react";
+import { Trash2, Mic, ImageIcon, Play } from "lucide-react";
 import { deleteMedia } from "@/lib/actions/media";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { useLightbox, type LightboxItem } from "./media-lightbox";
 
 interface MediaItem {
   id: string;
@@ -20,7 +21,6 @@ interface MediaViewerProps {
   media: MediaItem[];
   projectId: string;
   defectId: string;
-  /** Admin/Manager dürfen alle löschen; Worker nur eigene (created_by = currentUserId). */
   currentUserId: string | null;
   canDeleteAll: boolean;
 }
@@ -44,13 +44,24 @@ export function MediaViewer({
     return result;
   }, [media]);
 
+  const lightboxItems: LightboxItem[] = useMemo(
+    () =>
+      media
+        .filter((item) => urls[item.id])
+        .map((item) => ({ id: item.id, type: item.type, url: urls[item.id] })),
+    [media, urls]
+  );
+
+  const { openLightbox, lightboxElement } = useLightbox(lightboxItems);
+
   function canDeleteItem(item: MediaItem): boolean {
     if (canDeleteAll) return true;
     if (!currentUserId) return false;
     return item.created_by === currentUserId;
   }
 
-  async function handleDelete(item: MediaItem) {
+  async function handleDelete(e: React.MouseEvent, item: MediaItem) {
+    e.stopPropagation();
     if (!canDeleteItem(item)) return;
     try {
       await deleteMedia(item.id, item.storage_path, defectId, projectId);
@@ -58,6 +69,10 @@ export function MediaViewer({
     } catch {
       toast.error("Fehler beim Löschen");
     }
+  }
+
+  function getLightboxIndex(item: MediaItem): number {
+    return lightboxItems.findIndex((li) => li.id === item.id);
   }
 
   return (
@@ -69,13 +84,24 @@ export function MediaViewer({
       <div className="grid grid-cols-2 gap-2">
         {media.map((item, i) => {
           const showDelete = canDeleteItem(item);
+          const lbIdx = getLightboxIndex(item);
+
           return (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.05 }}
-              className="group relative overflow-hidden rounded-2xl bg-muted aspect-square border border-border"
+              className="group relative overflow-hidden rounded-2xl bg-muted aspect-square border border-border cursor-pointer"
+              onClick={() => lbIdx >= 0 && openLightbox(lbIdx)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  if (lbIdx >= 0) openLightbox(lbIdx);
+                }
+              }}
             >
               {item.type === "image" && urls[item.id] && (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -88,13 +114,20 @@ export function MediaViewer({
               )}
 
               {item.type === "video" && urls[item.id] && (
-                <video
-                  src={urls[item.id]}
-                  className="h-full w-full object-cover"
-                  controls
-                  preload="metadata"
-                  playsInline
-                />
+                <div className="relative h-full w-full">
+                  <video
+                    src={urls[item.id]}
+                    className="h-full w-full object-cover"
+                    preload="metadata"
+                    playsInline
+                    muted
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors group-hover:bg-black/30">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/90 shadow-lg">
+                      <Play className="h-5 w-5 text-foreground ml-0.5" />
+                    </div>
+                  </div>
+                </div>
               )}
 
               {item.type === "audio" && urls[item.id] && (
@@ -102,18 +135,15 @@ export function MediaViewer({
                   <div className="flex h-12 w-12 items-center justify-center rounded-full gradient-primary">
                     <Mic className="h-6 w-6 text-white" />
                   </div>
-                  <audio
-                    src={urls[item.id]}
-                    controls
-                    preload="metadata"
-                    className="w-full"
-                  />
+                  <span className="text-xs font-medium text-muted-foreground">
+                    Audio
+                  </span>
                 </div>
               )}
 
               {showDelete && (
                 <button
-                  onClick={() => handleDelete(item)}
+                  onClick={(e) => handleDelete(e, item)}
                   className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white transition-all sm:opacity-0 sm:group-hover:opacity-100 hover:bg-destructive cursor-pointer"
                   aria-label="Datei löschen"
                 >
@@ -124,6 +154,7 @@ export function MediaViewer({
           );
         })}
       </div>
+      {lightboxElement}
     </div>
   );
 }
