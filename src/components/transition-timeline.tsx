@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { formatDate } from "@/lib/utils";
 import { useTranslation } from "@/hooks/use-translations";
@@ -10,8 +10,11 @@ import {
   ImageIcon,
   FileText,
   ClipboardCheck,
+  Play,
+  Mic,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLightbox, type LightboxItem } from "./media-lightbox";
 
 interface MediaItem {
   id: string;
@@ -57,6 +60,16 @@ const STATUS_KEYS: Record<string, string> = {
   erledigt: "status.erledigt",
   problem: "status.problem",
 };
+
+type HistoryFilter = "all" | "offen" | "in_arbeit" | "erledigt" | "problem";
+
+const HISTORY_FILTER_OPTIONS: { value: HistoryFilter; labelKey: string; emoji: string; activeClass: string }[] = [
+  { value: "all", labelKey: "timeline.filterAll", emoji: "", activeClass: "gradient-primary text-white border-amber-500/40 shadow-md shadow-amber-500/20" },
+  { value: "offen", labelKey: "status.offen", emoji: "🔴", activeClass: "bg-red-500/20 text-red-700 dark:text-red-300 border-red-500/40" },
+  { value: "in_arbeit", labelKey: "status.in_arbeit", emoji: "🟡", activeClass: "bg-amber-500/20 text-amber-800 dark:text-amber-300 border-amber-500/40" },
+  { value: "erledigt", labelKey: "status.erledigt", emoji: "🟢", activeClass: "bg-green-500/20 text-green-700 dark:text-green-300 border-green-500/40" },
+  { value: "problem", labelKey: "status.problem", emoji: "🟣", activeClass: "bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-500/40" },
+];
 
 const PHASE_KEYS: Record<string, string> = {
   erfassung: "timeline.phaseErfassung",
@@ -108,7 +121,7 @@ export function TransitionTimeline({
     return urls;
   }, [transitions, phaseUpdates]);
 
-  const entries: TimelineEntry[] = [
+  const allEntries: TimelineEntry[] = [
     ...transitions.map(
       (t) => ({ kind: "transition" as const, data: t })
     ),
@@ -121,17 +134,55 @@ export function TransitionTimeline({
       new Date(b.data.created_at).getTime()
   );
 
-  if (entries.length === 0) return null;
+  const [historyFilter, setHistoryFilter] = useState<HistoryFilter>("all");
+
+  const entries =
+    historyFilter === "all"
+      ? allEntries
+      : allEntries.filter(
+          (e) =>
+            e.kind === "transition" && (e.data as Transition).to_status === historyFilter
+        );
+
+  if (allEntries.length === 0) return null;
 
   return (
     <div className="mt-6 space-y-3 min-w-0 overflow-hidden">
       <h3 className="text-sm font-semibold text-muted-foreground flex items-center gap-2">
         <History className="h-4 w-4" />
-        {t("timeline.history")} ({entries.length})
+        {t("timeline.history")} ({allEntries.length})
       </h3>
 
+      <div className="flex flex-wrap gap-1.5">
+        {HISTORY_FILTER_OPTIONS.map((opt) => {
+          const isActive = historyFilter === opt.value;
+          return (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => setHistoryFilter(opt.value)}
+              className={`flex items-center gap-1 rounded-xl border px-2.5 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+                isActive
+                  ? opt.activeClass
+                  : "bg-card border-border text-muted-foreground hover:text-foreground hover:border-stone-300"
+              }`}
+              aria-pressed={isActive}
+              aria-label={t(opt.labelKey)}
+            >
+              <span className="text-sm leading-none">{opt.emoji}</span>
+              <span>{t(opt.labelKey)}</span>
+            </button>
+          );
+        })}
+      </div>
+
       <div className="space-y-3">
-        {entries.map((entry, i) => {
+        {entries.length === 0 ? (
+          <p className="text-sm text-muted-foreground py-4 text-center rounded-2xl bg-muted/50">
+            {t("timeline.noEntriesForFilter")}
+          </p>
+        ) : (
+        entries.map((entry, i) => {
           if (entry.kind === "transition") {
             return (
               <TransitionCard
@@ -152,7 +203,8 @@ export function TransitionTimeline({
               t={t}
             />
           );
-        })}
+        })
+        )}
       </div>
     </div>
   );
@@ -263,38 +315,75 @@ function MediaRow({
   mediaUrls: Record<string, string>;
   t: (key: string) => string;
 }) {
+  const lightboxItems: LightboxItem[] = useMemo(
+    () =>
+      media
+        .filter((m) => mediaUrls[m.id])
+        .map((m) => ({ id: m.id, type: m.type, url: mediaUrls[m.id] })),
+    [media, mediaUrls]
+  );
+
+  const { openLightbox, lightboxElement } = useLightbox(lightboxItems);
+
   if (media.length === 0) return null;
 
   return (
-    <div className="flex gap-2 overflow-x-auto scrollbar-none">
-      {media.map((m) => (
-        <div
-          key={m.id}
-          className="shrink-0 h-20 w-20 rounded-xl overflow-hidden border border-border bg-muted"
-        >
-          {m.type === "image" && mediaUrls[m.id] ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={mediaUrls[m.id]}
-              alt={t("timeline.proofAlt")}
-              className="h-full w-full object-cover"
-              loading="lazy"
-            />
-          ) : m.type === "video" && mediaUrls[m.id] ? (
-            <video
-              src={mediaUrls[m.id]}
-              className="h-full w-full object-cover"
-              preload="metadata"
-              controls
-              playsInline
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <ImageIcon className="h-5 w-5 text-muted-foreground" />
+    <>
+      <div className="flex gap-2 overflow-x-auto scrollbar-none">
+        {media.map((m) => {
+          const lbIdx = lightboxItems.findIndex((li) => li.id === m.id);
+          return (
+            <div
+              key={m.id}
+              className="shrink-0 h-20 w-20 rounded-xl overflow-hidden border border-border bg-muted cursor-pointer"
+              onClick={() => lbIdx >= 0 && openLightbox(lbIdx)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  if (lbIdx >= 0) openLightbox(lbIdx);
+                }
+              }}
+            >
+              {m.type === "image" && mediaUrls[m.id] ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={mediaUrls[m.id]}
+                  alt={t("timeline.proofAlt")}
+                  className="h-full w-full object-cover transition-transform hover:scale-105"
+                  loading="lazy"
+                />
+              ) : m.type === "video" && mediaUrls[m.id] ? (
+                <div className="relative h-full w-full">
+                  <video
+                    src={mediaUrls[m.id]}
+                    className="h-full w-full object-cover"
+                    preload="metadata"
+                    playsInline
+                    muted
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90">
+                      <Play className="h-3.5 w-3.5 text-foreground ml-0.5" />
+                    </div>
+                  </div>
+                </div>
+              ) : m.type === "audio" && mediaUrls[m.id] ? (
+                <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-linear-to-br from-amber-500/10 to-orange-500/5">
+                  <Mic className="h-5 w-5 text-amber-600" />
+                  <span className="text-[10px] text-muted-foreground">Audio</span>
+                </div>
+              ) : (
+                <div className="flex h-full w-full items-center justify-center">
+                  <ImageIcon className="h-5 w-5 text-muted-foreground" />
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      ))}
-    </div>
+          );
+        })}
+      </div>
+      {lightboxElement}
+    </>
   );
 }

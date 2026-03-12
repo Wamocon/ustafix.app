@@ -394,6 +394,8 @@ export const translations = {
 
     // Timeline / history
     "timeline.history": "Verlauf",
+    "timeline.filterAll": "Alle",
+    "timeline.noEntriesForFilter": "Keine Einträge für diesen Filter.",
     "timeline.phaseErfassung": "Erfassung",
     "timeline.phaseFortschritt": "Fortschritt",
     "timeline.phaseAbnahme": "Abnahme",
@@ -444,6 +446,9 @@ export const translations = {
     "landing.step3Title": "Verfolgen & abschließen",
     "landing.step3Desc": "Behalten Sie den Überblick und schließen Sie Mängel mit Nachweis ab.",
     "landing.madeInGermany": "Made in Germany",
+    "landing.stampTop": "ENTWICKELT IN",
+    "landing.stampBottom": "DEUTSCHLAND",
+    "landing.stampLabel": "Entwickelt in Deutschland",
     "landing.copyright": "Alle Rechte vorbehalten.",
   },
   ru: {
@@ -826,6 +831,8 @@ export const translations = {
 
     // Timeline / history
     "timeline.history": "История",
+    "timeline.filterAll": "Все",
+    "timeline.noEntriesForFilter": "Нет записей для этого фильтра.",
     "timeline.phaseErfassung": "Фиксация",
     "timeline.phaseFortschritt": "Прогресс",
     "timeline.phaseAbnahme": "Приёмка",
@@ -876,6 +883,9 @@ export const translations = {
     "landing.step3Title": "Отслеживайте и завершайте",
     "landing.step3Desc": "Следите за прогрессом и закрывайте дефекты с подтверждением.",
     "landing.madeInGermany": "Сделано в Германии",
+    "landing.stampTop": "РАЗРАБОТАНО В",
+    "landing.stampBottom": "ГЕРМАНИИ",
+    "landing.stampLabel": "Разработано в Германии",
     "landing.copyright": "Все права защищены.",
   },
   tr: {
@@ -1257,6 +1267,8 @@ export const translations = {
 
     // Timeline / history
     "timeline.history": "Geçmiş",
+    "timeline.filterAll": "Tümü",
+    "timeline.noEntriesForFilter": "Bu filtre için kayıt yok.",
     "timeline.phaseErfassung": "Kayıt",
     "timeline.phaseFortschritt": "İlerleme",
     "timeline.phaseAbnahme": "Kabul",
@@ -1307,6 +1319,9 @@ export const translations = {
     "landing.step3Title": "Takip edin ve tamamlayın",
     "landing.step3Desc": "İlerlemeyi izleyin ve kusurları kanıtla kapatın.",
     "landing.madeInGermany": "Almanya'da üretilmiştir",
+    "landing.stampTop": "GELİŞTİRİLDİ",
+    "landing.stampBottom": "ALMANYA'DA",
+    "landing.stampLabel": "Almanya'da Geliştirildi",
     "landing.copyright": "Tüm hakları saklıdır.",
   },
 } as const;

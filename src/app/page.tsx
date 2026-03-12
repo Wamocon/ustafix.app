@@ -17,6 +17,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { UstafixLogo } from "@/components/ustafix-logo";
+import { GermanyStamp } from "@/components/germany-stamp";
 import { useTranslation } from "@/hooks/use-translations";
 import { useLanguageContext } from "@/contexts/language-context";
 import type { Locale } from "@/lib/i18n/translations";
@@ -353,10 +354,7 @@ export default function LandingPage() {
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5 text-sm font-semibold text-muted-foreground">
-              <span>🇩🇪</span>
-              <span>{t("landing.madeInGermany")}</span>
-            </div>
+            <GermanyStamp size={44} showLabel />
 
             <span className="text-xs text-muted-foreground/70">
               &copy; {new Date().getFullYear()} Ustafix. {t("landing.copyright")}

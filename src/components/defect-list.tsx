@@ -54,12 +54,12 @@ export function DefectList({ defects, projectId }: DefectListProps) {
         />
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+      <div className="flex flex-wrap gap-2 min-w-0">
         {STATUS_FILTERS.map((f) => (
           <button
             key={f.value}
             onClick={() => setStatusFilter(f.value)}
-            className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold transition-all cursor-pointer ${
+            className={`shrink-0 inline-flex items-center gap-1 rounded-full px-2.5 py-1.5 text-[11px] font-semibold transition-all cursor-pointer ${
               statusFilter === f.value
                 ? "gradient-primary text-white shadow-md shadow-amber-500/20"
                 : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-foreground/20"
