@@ -394,6 +394,8 @@ export const translations = {
 
     // Timeline / history
     "timeline.history": "Verlauf",
+    "timeline.filterAll": "Alle",
+    "timeline.noEntriesForFilter": "Keine Einträge für diesen Filter.",
     "timeline.phaseErfassung": "Erfassung",
     "timeline.phaseFortschritt": "Fortschritt",
     "timeline.phaseAbnahme": "Abnahme",
@@ -826,6 +828,8 @@ export const translations = {
 
     // Timeline / history
     "timeline.history": "История",
+    "timeline.filterAll": "Все",
+    "timeline.noEntriesForFilter": "Нет записей для этого фильтра.",
     "timeline.phaseErfassung": "Фиксация",
     "timeline.phaseFortschritt": "Прогресс",
     "timeline.phaseAbnahme": "Приёмка",
@@ -1257,6 +1261,8 @@ export const translations = {
 
     // Timeline / history
     "timeline.history": "Geçmiş",
+    "timeline.filterAll": "Tümü",
+    "timeline.noEntriesForFilter": "Bu filtre için kayıt yok.",
     "timeline.phaseErfassung": "Kayıt",
     "timeline.phaseFortschritt": "İlerleme",
     "timeline.phaseAbnahme": "Kabul",
