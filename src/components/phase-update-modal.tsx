@@ -4,6 +4,7 @@ import { useState, useTransition, useRef, useEffect } from "react";
 import {
   X,
   Camera,
+  Images,
   Loader2,
   FileText,
   ClipboardCheck,
@@ -76,6 +77,7 @@ export function PhaseUpdateModal({
   const [isPending, startTransition] = useTransition();
   const [uploadProgress, setUploadProgress] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const urls: Record<number, string> = {};
@@ -299,15 +301,26 @@ export function PhaseUpdateModal({
                 </div>
 
                 {files.length === 0 ? (
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="flex w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-border p-6 transition-all hover:border-amber-500/40 cursor-pointer"
-                  >
-                    <Camera className="h-6 w-6 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">
-                      Foto oder Video hinzufuegen
-                    </span>
-                  </button>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border p-5 transition-all hover:border-amber-500/40 cursor-pointer"
+                    >
+                      <Camera className="h-6 w-6 text-muted-foreground" />
+                      <span className="text-xs text-muted-foreground font-medium">
+                        Kamera
+                      </span>
+                    </button>
+                    <button
+                      onClick={() => galleryInputRef.current?.click()}
+                      className="flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border p-5 transition-all hover:border-amber-500/40 cursor-pointer"
+                    >
+                      <Images className="h-6 w-6 text-muted-foreground" />
+                      <span className="text-xs text-muted-foreground font-medium">
+                        Galerie
+                      </span>
+                    </button>
+                  </div>
                 ) : (
                   <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
                     {files.map((f, i) => (
@@ -347,12 +360,20 @@ export function PhaseUpdateModal({
                       </div>
                     ))}
                     {files.length < 5 && (
-                      <button
-                        onClick={() => fileInputRef.current?.click()}
-                        className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl border-2 border-dashed border-border hover:border-amber-500/40 transition-colors cursor-pointer"
-                      >
-                        <Camera className="h-6 w-6 text-muted-foreground" />
-                      </button>
+                      <div className="flex shrink-0 h-24 flex-col gap-1">
+                        <button
+                          onClick={() => fileInputRef.current?.click()}
+                          className="flex flex-1 w-20 items-center justify-center rounded-t-2xl border-2 border-dashed border-border hover:border-amber-500/40 transition-colors cursor-pointer"
+                        >
+                          <Camera className="h-4 w-4 text-muted-foreground" />
+                        </button>
+                        <button
+                          onClick={() => galleryInputRef.current?.click()}
+                          className="flex flex-1 w-20 items-center justify-center rounded-b-2xl border-2 border-dashed border-border hover:border-amber-500/40 transition-colors cursor-pointer"
+                        >
+                          <Images className="h-4 w-4 text-muted-foreground" />
+                        </button>
+                      </div>
                     )}
                   </div>
                 )}
@@ -385,6 +406,14 @@ export function PhaseUpdateModal({
               type="file"
               accept="image/*,video/*"
               capture="environment"
+              multiple
+              onChange={handleFileChange}
+              className="hidden"
+            />
+            <input
+              ref={galleryInputRef}
+              type="file"
+              accept="image/*,video/*"
               multiple
               onChange={handleFileChange}
               className="hidden"
