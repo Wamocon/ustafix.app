@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/use-translations";
 
 export default function AppError({
+  error: _error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
   const t = useTranslation();
+  void _error;
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}

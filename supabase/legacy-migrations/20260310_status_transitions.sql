@@ -13,10 +13,8 @@ CREATE TABLE defect_status_transitions (
   changed_by UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
-
 CREATE INDEX idx_transitions_defect ON defect_status_transitions(defect_id);
 CREATE INDEX idx_transitions_created ON defect_status_transitions(defect_id, created_at);
-
 -- ============================================================
 -- 2. Transition Media (proof photos/videos)
 -- ============================================================
@@ -29,27 +27,22 @@ CREATE TABLE transition_media (
   mime_type TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
-
 CREATE INDEX idx_transition_media ON transition_media(transition_id);
-
 -- ============================================================
 -- 3. RLS
 -- ============================================================
 ALTER TABLE defect_status_transitions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE transition_media ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY "transitions_select" ON defect_status_transitions
   FOR SELECT USING (
     defect_id IN (SELECT d.id FROM defects d WHERE is_project_member(d.project_id))
   );
-
 CREATE POLICY "transitions_insert" ON defect_status_transitions
   FOR INSERT WITH CHECK (
     auth.uid() IS NOT NULL
     AND changed_by = auth.uid()
     AND defect_id IN (SELECT d.id FROM defects d WHERE is_project_member(d.project_id))
   );
-
 CREATE POLICY "transition_media_select" ON transition_media
   FOR SELECT USING (
     transition_id IN (
@@ -58,7 +51,6 @@ CREATE POLICY "transition_media_select" ON transition_media
       WHERE is_project_member(d.project_id)
     )
   );
-
 CREATE POLICY "transition_media_insert" ON transition_media
   FOR INSERT WITH CHECK (
     auth.uid() IS NOT NULL
@@ -67,12 +59,10 @@ CREATE POLICY "transition_media_insert" ON transition_media
       WHERE t.changed_by = auth.uid()
     )
   );
-
 -- ============================================================
 -- 4. Realtime
 -- ============================================================
 ALTER PUBLICATION supabase_realtime ADD TABLE defect_status_transitions;
-
 -- ============================================================
 -- 5. Reduce storage bucket file size limit to 15MB
 -- ============================================================

@@ -48,6 +48,8 @@ const STATUS_KEYS: Record<DefectStatus, string> = {
   problem: "status.problem",
 };
 
+const DELETE_CONFIRM_MESSAGE = "Bist du sicher, dass du das löschen willst?";
+
 export function StatusTransitionModal({
   open,
   onClose,
@@ -159,6 +161,7 @@ export function StatusTransitionModal({
   }
 
   function removeFile(index: number) {
+    if (!window.confirm(DELETE_CONFIRM_MESSAGE)) return;
     setFiles((prev) => prev.filter((_, i) => i !== index));
   }
 

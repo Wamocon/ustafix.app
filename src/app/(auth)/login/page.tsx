@@ -21,21 +21,25 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
 
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) {
+      if (error) {
+        setError(t("auth.loginError"));
+        return;
+      }
+      await claimPendingInvitations();
+
+      window.location.href = "/dashboard";
+    } catch {
       setError(t("auth.loginError"));
+    } finally {
       setLoading(false);
-      return;
     }
-
-    await claimPendingInvitations();
-
-    window.location.href = "/dashboard";
   }
 
   return (

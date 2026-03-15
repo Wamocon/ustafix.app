@@ -134,6 +134,34 @@ export async function createUnit(projectId: string, name: string) {
   return data;
 }
 
+export async function deleteProject(projectId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Nicht authentifiziert");
+
+  const { data: myMembership } = await supabase
+    .from("project_members")
+    .select("role")
+    .eq("project_id", projectId)
+    .eq("user_id", user.id)
+    .single();
+
+  const myRole = myMembership?.role as MemberRole | undefined;
+  if (myRole !== "admin") {
+    throw new Error("Nur Admin darf das Projekt löschen.");
+  }
+
+  const { error } = await supabase
+    .from("projects")
+    .delete()
+    .eq("id", projectId);
+
+  if (error) throw new Error("Fehler beim Löschen des Projekts");
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/project/${projectId}`);
+}
+
 export async function getProjectMembers(projectId: string) {
   const supabase = await createClient();
   const { data } = await supabase.rpc("get_project_members_with_info", {

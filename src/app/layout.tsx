@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import { SerwistProvider } from "./serwist";
 import { LanguageContextProvider } from "@/contexts/language-context";
+import { MadeInGermanyFooter } from "@/components/made-in-germany-footer";
 import "./globals.css";
 
 const font = Plus_Jakarta_Sans({
@@ -46,7 +47,8 @@ export default function RootLayout({
       <body className={`${font.className} antialiased`}>
         <LanguageContextProvider>
         <SerwistProvider swUrl="/serwist/sw.js">
-        {children}
+          {children}
+          <MadeInGermanyFooter />
         </SerwistProvider>
         </LanguageContextProvider>
         <Toaster

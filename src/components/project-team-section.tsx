@@ -6,6 +6,7 @@ import {
   UserPlus,
   Loader2,
   Mail,
+  Phone,
   Trash2,
   Link as LinkIcon,
   Clock,
@@ -57,12 +58,15 @@ interface ProjectTeamSectionProps {
   currentUserId: string;
 }
 
+const DELETE_CONFIRM_MESSAGE = "Bist du sicher, dass du das löschen willst?";
+
 export function ProjectTeamSection({
   projectId,
   members,
   currentUserId,
 }: ProjectTeamSectionProps) {
-  const [email, setEmail] = useState("");
+  const [contactType, setContactType] = useState<"email" | "phone">("email");
+  const [contact, setContact] = useState("");
   const [role, setRole] = useState<"manager" | "worker">("worker");
   const [isPending, startTransition] = useTransition();
   const t = useTranslation();
@@ -80,9 +84,13 @@ export function ProjectTeamSection({
 
   function handleAdd(e: React.FormEvent) {
     e.preventDefault();
-    const trimmed = email.trim().toLowerCase();
+    const trimmed = contact.trim();
     if (!trimmed) {
-      toast.error(t("team.pleaseEmail"));
+      toast.error(
+        contactType === "email"
+          ? "Bitte E-Mail-Adresse angeben."
+          : "Bitte Handynummer angeben."
+      );
       return;
     }
 
@@ -90,7 +98,8 @@ export function ProjectTeamSection({
       const result: InviteResult = await inviteProjectMember(
         projectId,
         trimmed,
-        role
+        role,
+        contactType
       );
 
       if (result.error) {
@@ -99,8 +108,8 @@ export function ProjectTeamSection({
       }
 
       if (result.directlyAdded) {
-        toast.success(t("team.directlyAdded"));
-        setEmail("");
+        toast.success("Nutzer direkt zum Projekt hinzugefügt.");
+        setContact("");
         setInviteLink(null);
         return;
       }
@@ -112,7 +121,7 @@ export function ProjectTeamSection({
         } else {
           toast.success(t("team.inviteCreated"));
         }
-        setEmail("");
+        setContact("");
         loadInvitations();
       }
     });
@@ -140,6 +149,8 @@ export function ProjectTeamSection({
       toast.error(t("team.cannotRemoveSelf"));
       return;
     }
+    if (!window.confirm(DELETE_CONFIRM_MESSAGE)) return;
+
     startTransition(async () => {
       try {
         await removeProjectMember(projectId, userId);
@@ -151,6 +162,8 @@ export function ProjectTeamSection({
   }
 
   function handleRevoke(invitationId: string) {
+    if (!window.confirm(DELETE_CONFIRM_MESSAGE)) return;
+
     startTransition(async () => {
       const result = await revokeInvitation(invitationId, projectId);
       if (result.error) {
@@ -187,16 +200,49 @@ export function ProjectTeamSection({
       {/* Invite form */}
       <form onSubmit={handleAdd} className="space-y-3">
         <p className="text-sm text-muted-foreground">
-          {t("team.inviteDescription")}
+          Nutzer per E-Mail oder Handynummer einladen. Per Handynummer werden
+          registrierte Nutzer direkt hinzugefügt.
         </p>
+        <div className="inline-flex rounded-xl border border-border bg-background p-1">
+          <button
+            type="button"
+            onClick={() => setContactType("email")}
+            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors cursor-pointer ${
+              contactType === "email"
+                ? "gradient-primary text-white"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            E-Mail
+          </button>
+          <button
+            type="button"
+            onClick={() => setContactType("phone")}
+            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors cursor-pointer ${
+              contactType === "phone"
+                ? "gradient-primary text-white"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Handynummer
+          </button>
+        </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <div className="relative flex-1">
-            <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            {contactType === "email" ? (
+              <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            ) : (
+              <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            )}
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={t("team.emailPlaceholder")}
+              type={contactType === "email" ? "email" : "tel"}
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+              placeholder={
+                contactType === "email"
+                  ? "E-Mail-Adresse"
+                  : "+49 171 1234567"
+              }
               className="flex h-11 w-full rounded-xl border border-border bg-background pl-10 pr-4 text-sm outline-none ring-2 ring-transparent focus:ring-amber-500/40"
               disabled={isPending}
             />

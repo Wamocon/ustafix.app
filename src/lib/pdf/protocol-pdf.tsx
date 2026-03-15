@@ -487,6 +487,7 @@ function ProtocolPdfDocument({ data }: { data: ProtocolData }) {
               <Text style={s.signatureLabel}>Auftragnehmer</Text>
               {data.signature_contractor ? (
                 <>
+                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
                   <Image
                     style={s.signatureImage}
                     src={data.signature_contractor}
@@ -501,6 +502,7 @@ function ProtocolPdfDocument({ data }: { data: ProtocolData }) {
               <Text style={s.signatureLabel}>Auftraggeber</Text>
               {data.signature_client ? (
                 <>
+                  {/* eslint-disable-next-line jsx-a11y/alt-text */}
                   <Image
                     style={s.signatureImage}
                     src={data.signature_client}

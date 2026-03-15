@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { motion } from "framer-motion";
 import {
   Building2,
@@ -9,8 +11,12 @@ import {
   Users,
   FileCheck,
   Clock,
+  Trash2,
+  Loader2,
 } from "lucide-react";
 import type { ProjectStats } from "@/lib/actions/dashboard";
+import { deleteProject } from "@/lib/actions/projects";
+import { toast } from "sonner";
 
 interface ProjectHealthCardProps {
   project: ProjectStats;
@@ -18,14 +24,41 @@ interface ProjectHealthCardProps {
   showTeamDetails?: boolean;
 }
 
+const DELETE_CONFIRM_MESSAGE = "Bist du sicher, dass du das löschen willst?";
+
 export function ProjectHealthCard({
   project,
   index,
   showTeamDetails = false,
 }: ProjectHealthCardProps) {
+  const router = useRouter();
+  const [isDeleting, startDelete] = useTransition();
   const { defect_counts: dc, priority_counts: pc } = project;
   const completionRate =
     dc.total > 0 ? Math.round((dc.erledigt / dc.total) * 100) : 0;
+
+  function handleDeleteProject(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!window.confirm(DELETE_CONFIRM_MESSAGE)) {
+      return;
+    }
+
+    startDelete(async () => {
+      try {
+        await deleteProject(project.id);
+        toast.success("Projekt gelöscht");
+        router.refresh();
+      } catch (error) {
+        const message =
+          error instanceof Error
+            ? error.message
+            : "Projekt konnte nicht gelöscht werden.";
+        toast.error(message);
+      }
+    });
+  }
 
   return (
     <motion.div
@@ -36,6 +69,7 @@ export function ProjectHealthCard({
         delay: index * 0.06,
         ease: [0.16, 1, 0.3, 1],
       }}
+      className="relative"
     >
       <Link
         href={`/project/${project.id}`}
@@ -139,6 +173,23 @@ export function ProjectHealthCard({
           </div>
         )}
       </Link>
+
+      {project.my_role === "admin" && (
+        <button
+          type="button"
+          onClick={handleDeleteProject}
+          disabled={isDeleting}
+          className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full border border-destructive/30 bg-background/85 text-destructive transition-colors hover:bg-destructive/10 disabled:opacity-60 cursor-pointer"
+          aria-label="Projekt löschen"
+          title="Projekt löschen"
+        >
+          {isDeleting ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Trash2 className="h-4 w-4" />
+          )}
+        </button>
+      )}
     </motion.div>
   );
 }

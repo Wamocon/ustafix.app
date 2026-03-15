@@ -9,6 +9,8 @@ interface SignatureCanvasProps {
   value?: string;
 }
 
+const DELETE_CONFIRM_MESSAGE = "Bist du sicher, dass du das löschen willst?";
+
 export function SignatureCanvas({
   label,
   onSignature,
@@ -103,6 +105,8 @@ export function SignatureCanvas({
   }
 
   function handleClear() {
+    if (!window.confirm(DELETE_CONFIRM_MESSAGE)) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");

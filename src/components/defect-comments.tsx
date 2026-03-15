@@ -26,6 +26,8 @@ interface DefectCommentsProps {
   canDeleteAnyComment: boolean; // admin/manager
 }
 
+const DELETE_CONFIRM_MESSAGE = "Bist du sicher, dass du das löschen willst?";
+
 export function DefectComments({
   projectId,
   defectId,
@@ -54,6 +56,8 @@ export function DefectComments({
   }
 
   function handleDelete(commentId: string) {
+    if (!window.confirm(DELETE_CONFIRM_MESSAGE)) return;
+
     startTransition(async () => {
       try {
         await deleteDefectComment(projectId, commentId, defectId);
