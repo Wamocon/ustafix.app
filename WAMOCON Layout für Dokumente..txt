@@ -1,0 +1,2 @@
+WAMOCON Layout für Dokumente.
+Erstelle bitte den Umsetzungsplan als MS word Dokument Schriftart: Arial Narrow Schriftgröße: Text 12, Kapitel 2 14 und Kapitel 1 16. Inhaltsverzeichnis: von MS Word automatisch generiert mit Verweisen auf die Kapiteln Fußzeile: Beinhalten Seitenzahlen von x bis y. Kopfzeile: Logo + sonst Hinweis auf die WAMOCON GmbH auf Prof. Level

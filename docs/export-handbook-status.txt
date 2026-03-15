@@ -1,0 +1,2 @@
+﻿SUCCESS 2026-03-15T19:29:49
+OUTPUT=D:\01 Antigrafity Projekte\ustafix.app\docs\Produkthandbuch-Ustafix_FINAL.docx

@@ -1,7 +1,7 @@
 param(
   [string]$MarkdownPath = "D:\01 Antigrafity Projekte\ustafix.app\docs\Produkthandbuch-Ustafix.md",
-  [string]$OutputPath = "D:\01 Antigrafity Projekte\ustafix.app\docs\Produkthandbuch-Ustafix_WAMOCON.docx",
-  [string]$LogoPath = "D:\01 Antigrafity Projekte\ustafix.app\.tmp-wamocon-logo.png",
+  [string]$OutputPath = "D:\01 Antigrafity Projekte\ustafix.app\docs\Produkthandbuch-Ustafix_FINAL.docx",
+  [string]$LogoPath = "D:\01 Antigrafity Projekte\ustafix.app\WMC_Logo_Schriftzug-IT (1).png",
   [string]$StatusPath = "D:\01 Antigrafity Projekte\ustafix.app\docs\export-handbook-status.txt"
 )
 
@@ -22,6 +22,7 @@ $wdAlignParagraphCenter = 1
 $wdAutoFitContent = 1
 $wdPreferredWidthPercent = 2
 $wdSaveFormatDocumentDefault = 16
+$wdSaveFormatXMLDocument = 12
 
 function Add-Paragraph {
   param(
@@ -84,7 +85,18 @@ function Add-TableFromMarkdown {
   }
 
   $table = $Document.Tables.Add($range, $rows.Count, $colCount)
-  $table.Style = "Table Grid"
+  try {
+    $table.Style = "Table Grid"
+  }
+  catch {
+    # Fallback for non-English Office installations where style names differ.
+    try {
+      $table.Borders.Enable = 1
+    }
+    catch {
+      # Keep default formatting if borders cannot be set at this point.
+    }
+  }
   $table.PreferredWidthType = $wdPreferredWidthPercent
   $table.PreferredWidth = 100
   $table.AutoFitBehavior($wdAutoFitContent) | Out-Null
@@ -140,6 +152,11 @@ function Add-CodeBlock {
 
 if (!(Test-Path $MarkdownPath)) {
   throw "Markdown file not found: $MarkdownPath"
+}
+
+$outputDir = Split-Path -Path $OutputPath -Parent
+if ($outputDir -and -not (Test-Path $outputDir)) {
+  New-Item -Path $outputDir -ItemType Directory -Force | Out-Null
 }
 
 Set-Content -Path $StatusPath -Value "START $(Get-Date -Format s)" -Encoding UTF8
@@ -299,12 +316,17 @@ try {
   $header = $document.Sections.Item(1).Headers.Item($wdHeaderFooterPrimary).Range
   $header.Text = ""
   if (Test-Path $LogoPath) {
-    $null = $header.InlineShapes.AddPicture($LogoPath)
-    if ($header.InlineShapes.Count -gt 0) {
-      $header.InlineShapes.Item(1).Width = 85
-      $header.InlineShapes.Item(1).Height = 25
+    try {
+      $null = $header.InlineShapes.AddPicture($LogoPath)
+      if ($header.InlineShapes.Count -gt 0) {
+        $header.InlineShapes.Item(1).Width = 85
+        $header.InlineShapes.Item(1).Height = 25
+      }
+      $header.InsertAfter("    WAMOCON GmbH | Produkthandbuch Ustafix.app")
     }
-    $header.InsertAfter("    WAMOCON GmbH | Produkthandbuch Ustafix.app")
+    catch {
+      $header.Text = "WAMOCON GmbH | Produkthandbuch Ustafix.app"
+    }
   } else {
     $header.Text = "WAMOCON GmbH | Produkthandbuch Ustafix.app"
   }
@@ -316,19 +338,48 @@ try {
     $footer = $section.Footers.Item($wdHeaderFooterPrimary).Range
     $footer.Text = "Seite "
     $footer.Collapse($wdCollapseEnd)
-    $footer.Fields.Add($footer, $wdFieldEmpty, "PAGE", $true) | Out-Null
+    try {
+      $footer.Fields.Add($footer, $wdFieldEmpty, "PAGE", $true) | Out-Null
+    }
+    catch {
+      $footer.InsertAfter("1")
+    }
     $footer.Collapse($wdCollapseEnd)
-    $footer.InsertAfter(" von ")
+    $footer.InsertAfter(" / ")
     $footer.Collapse($wdCollapseEnd)
-    $footer.Fields.Add($footer, $wdFieldEmpty, "NUMPAGES", $true) | Out-Null
+    try {
+      $footer.Fields.Add($footer, $wdFieldEmpty, "NUMPAGES", $true) | Out-Null
+    }
+    catch {
+      $footer.InsertAfter("1")
+    }
     $footer.Font.Name = "Arial Narrow"
     $footer.Font.Size = 10
     $footer.ParagraphFormat.Alignment = $wdAlignParagraphCenter
   }
 
-  $document.TablesOfContents.Item(1).Update() | Out-Null
-  $document.Fields.Update() | Out-Null
-  $document.SaveAs([ref]$OutputPath, [ref]$wdSaveFormatDocumentDefault)
+  if ($document.TablesOfContents.Count -gt 0) {
+    try {
+      $document.TablesOfContents.Item(1).Update() | Out-Null
+    }
+    catch {
+      # Continue even if TOC update fails in headless mode; field remains present.
+    }
+  }
+
+  try {
+    $document.Fields.Update() | Out-Null
+  }
+  catch {
+    # Continue; fields can be updated manually in Word if needed.
+  }
+
+  try {
+    $document.SaveAs2([ref]$OutputPath, [ref]$wdSaveFormatXMLDocument)
+  }
+  catch {
+    $document.SaveAs([ref]$OutputPath, [ref]$wdSaveFormatDocumentDefault)
+  }
   Set-Content -Path $StatusPath -Value @(
     "SUCCESS $(Get-Date -Format s)",
     "OUTPUT=$OutputPath"

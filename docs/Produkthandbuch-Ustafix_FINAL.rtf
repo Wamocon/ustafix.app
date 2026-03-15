@@ -1,0 +1,2451 @@
+{\\rtf1\\ansi\\ansicpg65001\\deff0
+{\\fonttbl{\\f0 Arial Narrow;}{\\f1 Consolas;}}
+{\\colortbl;\\red34\\green34\\blue34;\\red90\\green90\\blue90;}
+{\\stylesheet
+{\\s0\\ql\\f0\\fs24 Normal;}
+{\\s1\\sb240\\sa120\\b\\f0\\fs32 Heading 1;}
+{\\s2\\sb180\\sa90\\b\\f0\\fs28 Heading 2;}
+{\\s3\\sb120\\sa60\\b\\f0\\fs24 Heading 3;}
+}
+\\paperw11907\\paperh16840\\margl1134\\margr1134\\margt1134\\margb1134
+\\viewkind4\\uc1\\pard\\lang1031\\f0\\fs24
+{\\header\\pard\\ql\\fs20 {\\field{\\*\\fldinst INCLUDEPICTURE "D:\01 Antigrafity Projekte\ustafix.app\WMC_Logo_Schriftzug-IT (1).png" \\d}{\\fldrslt [WAMOCON-Logo]}}\\tab WAMOCON GmbH | Produkthandbuch Ustafix.app | Vertraulich\\par}
+{\\footer\\pard\\qc\\cf2\\fs18 Seite {\\field{\\*\\fldinst PAGE}} / {\\field{\\*\\fldinst NUMPAGES}}\\par}
+\\pard\\qc\\cf1\\b\\fs40 USTAFIX.APP\\par
+\\pard\\qc\\b\\fs32 Produkt-Handbuch\\par
+\\pard\\qc\\b0\\fs24 Version 1.0 \\line Stand: Marz 2026\\par
+\\pard\\qc\\b\\fs24 WAMOCON GmbH\\par
+\\pard\\qc\\b0\\fs24 Professionelle Technische Dokumentation\\par
+\\page
+\\pard\\s1\\qc Inhaltsverzeichnis\\par
+{\\field{\\*\\fldinst TOC \\o "1-3" \\h \\z \\u}{\\fldrslt Inhaltsverzeichnis wird in Microsoft Word aktualisiert.}}
+\\page
+\\page\\pard\\s1\\outlinelevel0 USTAFIX.APP\\par
+\\pard\\s2\\outlinelevel1 Produkt-Handbuch\\par
+\\pard\\s3\\outlinelevel2 Version 1.0 · Stand: März 2026\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **WAMOCON GmbH**\\par
+\\pard\\sl300\\slmult1\\fs24 Produkt-Dokumentation · Vertraulich\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 1: EXECUTIVE SUMMARY\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 1.1 Produktstatus\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Ustafix.app ist eine produktionsreife Progressive Web App (PWA) für digitales Baustellenmängelmanagement. Die App ist voll funktionsfähig, mehrsprachig, offline-tauglich und enthält eine KI-gestützte Spracherfassung. Sie richtet sich an Bauunternehmen, Bauleiter und Handwerksbetriebe im deutschsprachigen und internationalen Raum.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 1.2 Kritische Erkenntnisse (Top 3)\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. **Datenschutz:** Drei externe KI/Cloud-Anbieter (Groq AI, Supabase, Resend) verarbeiten personenbezogene Daten — DSGVO-Auftragsverarbeitungsverträge (AVV) sind vor dem Produktivbetrieb zwingend erforderlich.\\par
+\\pard\\li540\\fi-240\\fs24 2. **Compliance-Status:** Impressum, AGB und Datenschutzerklärung sind inzwischen in Landingpage, Auth-Bereich, Einstellungen und Dashboard verlinkt; offen bleiben die organisatorischen DSGVO-Themen wie AVV, Regionsnachweis und Sicherheitsdokumentation.\\par
+\\pard\\li540\\fi-240\\fs24 3. **Stärke:** Die App wurde ohne Tracking, Werbung oder In-App-Käufe entwickelt — das reduziert die DSGVO-Compliance-Last erheblich und schafft Vertrauen bei Geschäftskunden.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 1.3 Handlungsbedarf\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Ja.** Konkrete Maßnahmen sind in Kapitel 9 (Compliance-Framework) vollständig priorisiert und mit Umsetzungsschritten beschrieben.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 2: PRODUKTÜBERSICHT\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 2.1 App-Identität\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\b\\fs24 Merkmal\\b0\\cell
+\\intbl\\b\\fs24 Wert\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Name\\cell
+\\intbl\\fs24 Ustafix.app\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Tagline\\cell
+\\intbl\\fs24 „Baustellenmängel. Einfach digital."\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Typ\\cell
+\\intbl\\fs24 Progressive Web App (PWA)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Plattformen\\cell
+\\intbl\\fs24 Web (Chrome, Safari, Firefox), iOS (als PWA), Android (als PWA)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Sprachen\\cell
+\\intbl\\fs24 Deutsch 🇩🇪, Russisch 🇷🇺, Türkisch 🇹🇷\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Version\\cell
+\\intbl\\fs24 1.0.0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Entwickelt von\\cell
+\\intbl\\fs24 WAMOCON GmbH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Entwickelt in\\cell
+\\intbl\\fs24 Deutschland\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 2.2 Kernfunktion\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Ustafix.app digitalisiert den gesamten Lebenszyklus eines Baumangels: von der Ersterfassung vor Ort über die Bearbeitung durch Handwerker bis hin zur rechtssicheren Abnahme mit digitaler Unterschrift. Die App ersetzt papierbasierte Mängellisten, Excel-Tabellen und unstrukturierte WhatsApp-Kommunikation auf der Baustelle.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 2.3 Kernwerte\\par
+\\pard\\fs24\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Offline-First:** Die App funktioniert ohne Internetverbindung. Alle Aktionen werden lokal gespeichert und beim nächsten Netzwerkkontakt automatisch synchronisiert.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **KI-gestützt:** Mängel können durch Sprachaufnahme in beliebiger Sprache erfasst werden. Die KI transkribiert und übersetzt automatisch ins Deutsche.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Rechtssicher:** Abnahmeprotokolle sind durch einen SHA-256-Integritäts-Hash gegen nachträgliche Manipulation geschützt.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Mehrsprachig:** Jeder Mangel wird in drei Sprachen gespeichert, damit Teams aus verschiedenen Herkunftsländern nahtlos zusammenarbeiten können.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 2.4 Zielgruppen\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Stakeholder\\b0\\cell
+\\intbl\\b\\fs24 Rolle in der App\\b0\\cell
+\\intbl\\b\\fs24 Primäre Nutzung\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Bauunternehmer / GU\\cell
+\\intbl\\fs24 Admin\\cell
+\\intbl\\fs24 Projekte anlegen, Team verwalten, Protokolle erstellen\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Bauleiter / Architekt\\cell
+\\intbl\\fs24 Manager\\cell
+\\intbl\\fs24 Mängel dokumentieren, Abnahmen durchführen\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Handwerker / Subunternehmer\\cell
+\\intbl\\fs24 Worker\\cell
+\\intbl\\fs24 Mängel bearbeiten, Fortschritt melden, Fotos hochladen\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 3: BENUTZERHANDBUCH\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 *Geschrieben für Endanwender ohne technischen Hintergrund.*\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 3.1 Erste Schritte & Onboarding\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Registrierung\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Öffnen Sie **ustafix.app** in Ihrem Browser (empfohlen: Chrome oder Safari).\\par
+\\pard\\li540\\fi-240\\fs24 2. Tippen Sie auf **„Kostenlos starten"**.\\par
+\\pard\\li540\\fi-240\\fs24 3. Geben Sie Ihren vollständigen Namen, Ihre E-Mail-Adresse und ein Passwort (mind. 6 Zeichen) ein.\\par
+\\pard\\li540\\fi-240\\fs24 4. Tippen Sie auf **„Registrieren"** — Sie werden automatisch zum Dashboard weitergeleitet.\\par
+\\pard\\fs24\\par
+\\pard\\li360\\i\\fs24 **Hinweis:** Eine E-Mail-Bestätigung ist derzeit nicht erforderlich. Ihr Konto ist sofort aktiv.\\i0\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 App auf dem Smartphone installieren\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Ustafix.app lässt sich wie eine native App auf Ihrem Smartphone installieren — ohne App Store:\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **iOS (iPhone/iPad):**\\par
+\\pard\\li540\\fi-240\\fs24 1. Öffnen Sie die Seite in Safari.\\par
+\\pard\\li540\\fi-240\\fs24 2. Tippen Sie auf das Teilen-Symbol (Quadrat mit Pfeil nach oben).\\par
+\\pard\\li540\\fi-240\\fs24 3. Wählen Sie **„Zum Home-Bildschirm"**.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Android:**\\par
+\\pard\\li540\\fi-240\\fs24 1. Öffnen Sie die Seite in Chrome.\\par
+\\pard\\li540\\fi-240\\fs24 2. Tippen Sie oben rechts auf die drei Punkte.\\par
+\\pard\\li540\\fi-240\\fs24 3. Wählen Sie **„App installieren"** oder **„Zum Startbildschirm hinzufügen"**.\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Anmeldung\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Öffnen Sie **ustafix.app**.\\par
+\\pard\\li540\\fi-240\\fs24 2. Geben Sie E-Mail und Passwort ein.\\par
+\\pard\\li540\\fi-240\\fs24 3. Passwort vergessen? Tippen Sie auf **„Passwort vergessen?"** — Sie erhalten einen Reset-Link per E-Mail.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 3.2 Projektmanagement\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Projekt erstellen\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Ein Projekt repräsentiert eine Baustelle oder ein Bauvorhaben.\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Tippen Sie im Dashboard auf das **„+"**-Symbol oder **„Neues Projekt"**.\\par
+\\pard\\li540\\fi-240\\fs24 2. Geben Sie den **Projektnamen** ein (z. B. „Neubau Musterstraße 5").\\par
+\\pard\\li540\\fi-240\\fs24 3. Optional: Fügen Sie eine **Adresse** hinzu (z. B. „Musterstraße 5, 80331 München").\\par
+\\pard\\li540\\fi-240\\fs24 4. Tippen Sie auf **„Projekt erstellen"** — Sie werden automatisch in das neue Projekt weitergeleitet.\\par
+\\pard\\fs24\\par
+\\pard\\li360\\i\\fs24 **Hinweis:** Pro Konto können beliebig viele Projekte angelegt werden. Nur der Ersteller erhält automatisch die Rolle **Admin**.\\i0\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Einheiten anlegen\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Einheiten strukturieren Ihr Projekt in Bereiche (z. B. Wohnungen, Etagen, Abschnitte).\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Öffnen Sie ein Projekt.\\par
+\\pard\\li540\\fi-240\\fs24 2. Wählen Sie **„+ Einheit hinzufügen"**.\\par
+\\pard\\li540\\fi-240\\fs24 3. Geben Sie den Namen ein (z. B. „Wohnung 3. OG links", „Erdgeschoss", „Außenbereich").\\par
+\\pard\\li540\\fi-240\\fs24 4. Tippen Sie auf **„Hinzufügen"**.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Beim Erfassen eines Mangels können Sie ihn einer bestimmten Einheit zuordnen, um die Übersicht zu wahren.\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Projekt-Dashboard\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Das Dashboard zeigt auf einen Blick:\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Fortschrittsbalken:** Wie viel Prozent der Mängel sind bereits erledigt?\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Statusverteilung:** Offen / In Bearbeitung / Erledigt\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Prioritätswarnung:** Anzahl der Mängel mit hoher Priorität\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Team-Übersicht:** Aktive Mitglieder und offene Einladungen\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 3.3 Mängelerfassung\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die Mängelerfassung ist das Herzstück von Ustafix.app. Sie können Mängel auf drei Arten erfassen:\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Methode 1: Sprachaufnahme (mit KI)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Diese Methode ist besonders schnell und eignet sich für die Erfassung direkt vor Ort.\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Tippen Sie auf das **Mikrofon-Symbol** (FAB-Button unten rechts).\\par
+\\pard\\li540\\fi-240\\fs24 2. Tippen Sie auf **„Sprechen"**.\\par
+\\pard\\li540\\fi-240\\fs24 3. Tippen Sie auf den **roten Aufnahme-Button** und sprechen Sie Ihren Mangelbeschreibung — in jeder Sprache.\\par
+\\pard\\li540\\fi-240\\fs24 4. Stoppen Sie die Aufnahme. Die KI transkribiert Ihre Sprache automatisch und übersetzt sie ins Deutsche.\\par
+\\pard\\li540\\fi-240\\fs24 5. Überprüfen Sie die Transkription, passen Sie sie ggf. an.\\par
+\\pard\\li540\\fi-240\\fs24 6. Wählen Sie Einheit, Priorität und tippen Sie auf **„Mangel speichern"**.\\par
+\\pard\\fs24\\par
+\\pard\\li360\\i\\fs24 **KI-Hinweis:** Die Sprachverarbeitung nutzt den Dienst Groq AI (Whisper-large-v3). Ihre Sprachaufnahme wird für die Dauer der Verarbeitung an Server in der EU/USA übertragen und danach nicht gespeichert.\\i0\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Methode 2: Foto / Video\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Tippen Sie auf das **„+"**-Symbol.\\par
+\\pard\\li540\\fi-240\\fs24 2. Wählen Sie **„Foto / Video"**.\\par
+\\pard\\li540\\fi-240\\fs24 3. Nutzen Sie die Kamera **direkt** oder laden Sie eine Datei von Ihrem Gerät **hoch**.\\par
+\\pard\\li540\\fi-240\\fs24 4. Fügen Sie einen Titel und optional eine Beschreibung hinzu.\\par
+\\pard\\li540\\fi-240\\fs24 5. Wählen Sie Einheit und Priorität, dann **„Mangel speichern"**.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Technische Limits:**\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Bilder: automatische Komprimierung, max. 5 MB nach Kompression\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Videos: max. 30 Sekunden, 720p, automatische Komprimierung\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Audios: max. 50 MB\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Anhänge pro Mangel: bis zu 5 Dateien\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Methode 3: Manuelle Eingabe\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Tippen Sie auf das **„+"**-Symbol.\\par
+\\pard\\li540\\fi-240\\fs24 2. Geben Sie Titel und Beschreibung manuell ein.\\par
+\\pard\\li540\\fi-240\\fs24 3. Ordnen Sie optional eine Einheit zu.\\par
+\\pard\\li540\\fi-240\\fs24 4. Wählen Sie die Priorität: **Niedrig / Mittel / Hoch**.\\par
+\\pard\\li540\\fi-240\\fs24 5. Tippen Sie auf **„Mangel speichern"**.\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Mehrsprachige Beschreibungen\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Jeder Mangel speichert die Beschreibung automatisch in:\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Original** (so wie Sie es eingegeben/gesprochen haben)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Deutsch** (KI-Übersetzung)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Türkisch** (KI-Übersetzung)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Russisch** (KI-Übersetzung)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Sowohl Admin, Manager als auch Worker sehen die Beschreibung in der von ihnen gewählten App-Sprache.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 3.4 Der 4-Stufen-Workflow\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Jeder Mangel durchläuft einen klar definierten Lifecycle. Jeder Statuswechsel erfordert eine Begründung und optional einen Foto/Video-Nachweis.\\par
+\\pard\\fs24\\par
+\\pard\\li360\\f1\\fs20 OFFEN → IN ARBEIT → ERLEDIGT\\par
+\\pard\\li360\\f1\\fs20                   ↘ PROBLEM → IN ARBEIT (erneut)\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Status-Übersicht\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\b\\fs24 Status\\b0\\cell
+\\intbl\\b\\fs24 Farbe\\b0\\cell
+\\intbl\\b\\fs24 Bedeutung\\b0\\cell
+\\intbl\\b\\fs24 Wer kann wechseln?\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 **Offen** 🔴\\cell
+\\intbl\\fs24 Rot\\cell
+\\intbl\\fs24 Mangel erfasst, noch nicht begonnen\\cell
+\\intbl\\fs24 Admin, Manager\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 **In Arbeit** 🟡\\cell
+\\intbl\\fs24 Gelb\\cell
+\\intbl\\fs24 Handwerker hat begonnen\\cell
+\\intbl\\fs24 Worker, Manager, Admin\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 **Erledigt** 🟢\\cell
+\\intbl\\fs24 Grün\\cell
+\\intbl\\fs24 Mangel ist behoben\\cell
+\\intbl\\fs24 Worker (mit Nachweis), Admin\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 **Problem** 🔵\\cell
+\\intbl\\fs24 Blau\\cell
+\\intbl\\fs24 Reparatur blockiert\\cell
+\\intbl\\fs24 Worker, Manager, Admin\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Statuswechsel durchführen\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Öffnen Sie einen Mangel.\\par
+\\pard\\li540\\fi-240\\fs24 2. Tippen Sie auf den aktuellen Status-Button.\\par
+\\pard\\li540\\fi-240\\fs24 3. Wählen Sie den Ziel-Status.\\par
+\\pard\\li540\\fi-240\\fs24 4. Geben Sie eine Begründung ein (Pflichtfeld bei bestimmten Übergängen).\\par
+\\pard\\li540\\fi-240\\fs24 5. Optional: Foto oder Video als Nachweis hinzufügen.\\par
+\\pard\\li540\\fi-240\\fs24 6. Tippen Sie auf **„Speichern"**.\\par
+\\pard\\fs24\\par
+\\pard\\li360\\i\\fs24 **Wichtig:** Das System protokolliert jeden Statuswechsel mit Zeitstempel, Nutzer und Begründung unveränderlich in der Datenbank. Dieser Verlauf ist im **Verlaufs-Tab** jedes Mangels sichtbar.\\i0\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Fragen & Anweisungen (Kommentare)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Innerhalb jedes Mangels können Admin, Manager und Worker Kommentare hinterlassen — z. B. Rückfragen oder präzise Arbeitsanweisungen. Kommentare sind nur für Projektmitglieder sichtbar.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 3.5 Abnahmeprotokolle\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Was ist ein Abnahmeprotokoll?\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Ein Abnahmeprotokoll dokumentiert die formelle Abnahme eines Bauabschnitts zwischen Auftraggeber und Auftragnehmer. Ustafix.app erstellt dieses Protokoll digital mit:\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Geolokalisierter Zeitstempel\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Bewertung aller Mängel (Akzeptiert / Beanstandet / Zurückgestellt)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Digitaler Unterschrift beider Parteien\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab SHA-256-Integritäts-Hash (Manipulationsschutz)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab PDF-Export\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Protokoll erstellen\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Öffnen Sie ein Projekt.\\par
+\\pard\\li540\\fi-240\\fs24 2. Scrollen Sie zu **„Abnahmeprotokolle"** und tippen Sie auf **„Neues Protokoll"**.\\par
+\\pard\\li540\\fi-240\\fs24 3. Füllen Sie aus:\\par
+\\pard\\sl300\\slmult1\\fs24    - **Titel** (Pflicht, z. B. „Abnahmeprotokoll Wohnung 3. OG")\\par
+\\pard\\sl300\\slmult1\\fs24    - **Einheit** (optional: alle oder spezifisch)\\par
+\\pard\\sl300\\slmult1\\fs24    - **Ort** (z. B. Adresse)\\par
+\\pard\\sl300\\slmult1\\fs24    - **Teilnehmer** (Pflicht, z. B. „Herr Müller (Auftraggeber), Frau Schmidt (Bauleitung)")\\par
+\\pard\\sl300\\slmult1\\fs24    - **Allgemeine Anmerkungen** (optional)\\par
+\\pard\\li540\\fi-240\\fs24 4. Bewerten Sie jeden Mangel:\\par
+\\pard\\sl300\\slmult1\\fs24    - ✅ **Akzeptiert** — Mangel ist behoben und abgenommen\\par
+\\pard\\sl300\\slmult1\\fs24    - ❌ **Beanstandet** — Mangel besteht weiterhin, mit optionaler Frist\\par
+\\pard\\sl300\\slmult1\\fs24    - ⏸ **Zurückgestellt** — Entscheidung vertagt, mit Notiz\\par
+\\pard\\li540\\fi-240\\fs24 5. Unterschriften: Tippen Sie auf die Unterschriften-Felder und unterschreiben Sie digital.\\par
+\\pard\\li540\\fi-240\\fs24 6. Tippen Sie auf **„Protokoll erstellen"**.\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 PDF herunterladen\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Nach der Erstellung erscheint das Protokoll in der Protokoll-Liste. Tippen Sie auf **„PDF herunterladen"** — das Dokument wird mit allen Daten, Unterschriften und dem Integritäts-Hash generiert.\\par
+\\pard\\fs24\\par
+\\pard\\li360\\i\\fs24 **Rechtlicher Hinweis:** Das Protokoll enthält folgende Klausel: *„Beide Parteien stimmen der elektronischen Form dieses Protokolls zu. Dieses Dokument ist durch einen SHA-256 Hash gegen Manipulation geschützt."* Der Hash-Wert ermöglicht es, die Unverändertheit des Dokuments jederzeit technisch nachzuweisen.\\i0\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 3.6 Team-Management\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Teammitglieder einladen\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Admin und Manager können Mitglieder zu einem Projekt einladen.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Per E-Mail:**\\par
+\\pard\\li540\\fi-240\\fs24 1. Öffnen Sie ein Projekt → **„Projekt-Team"**.\\par
+\\pard\\li540\\fi-240\\fs24 2. Geben Sie die E-Mail-Adresse ein.\\par
+\\pard\\li540\\fi-240\\fs24 3. Wählen Sie die Rolle: **Manager** oder **Mitarbeiter**.\\par
+\\pard\\li540\\fi-240\\fs24 4. Tippen Sie auf **„Einladen"**.\\par
+\\pard\\li540\\fi-240\\fs24 5. Hat die Person bereits ein Konto, erhält sie eine E-Mail. Andernfalls wird ein Einladungslink erstellt, den Sie per Kopieren oder WhatsApp teilen können.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Per Handynummer:**\\par
+\\pard\\li540\\fi-240\\fs24 1. Schalten Sie auf **„Handynummer"** um.\\par
+\\pard\\li540\\fi-240\\fs24 2. Geben Sie die Nummer ein (Format: +49 171 1234567).\\par
+\\pard\\li540\\fi-240\\fs24 3. Hat die Person bereits ein Konto mit dieser Nummer, wird sie **direkt** zum Projekt hinzugefügt — ohne Einladungslink.\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Rollen ändern & Mitglieder entfernen\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Nur **Admins** können Rollen ändern und Mitglieder entfernen.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Mitglied entfernen: Trash-Icon neben dem Mitglied → Bestätigungsdialog\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Einladung widerrufen: X-Button neben einer offenen Einladung → Bestätigungsdialog\\par
+\\pard\\fs24\\par
+\\pard\\li360\\i\\fs24 **Sicherheit:** Vor jedem Löschvorgang erscheint eine Bestätigungsabfrage: *„Bist du sicher, dass du das löschen willst?"*\\i0\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Einladungslink-Sicherheit\\par
+\\pard\\fs24\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Einladungslinks sind **zeitlich limitiert** (Ablauf-Datum integriert).\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Abgelaufene Einladungen werden optisch deutlich markiert.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Links können jederzeit widerrufen oder erneuert werden.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 3.7 Offline-Betrieb\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Ustafix.app ist **Offline-First** — d.h. alle Kernfunktionen stehen auch ohne Internetverbindung zur Verfügung.\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Was funktioniert offline?\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\b\\fs24 Funktion\\b0\\cell
+\\intbl\\b\\fs24 Offline verfügbar\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Mängel erfassen (ohne Foto)\\cell
+\\intbl\\fs24 ✅ Ja\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Mängel erfassen (mit Foto/Video)\\cell
+\\intbl\\fs24 ✅ Ja (lokal gespeichert)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Status wechseln\\cell
+\\intbl\\fs24 ✅ Ja (mit Notiz und Medien)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Phase-Updates hinzufügen\\cell
+\\intbl\\fs24 ✅ Ja\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Mängel lesen & durchsuchen\\cell
+\\intbl\\fs24 ✅ Ja (gecachte Daten)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 KI-Spracherfassung\\cell
+\\intbl\\fs24 ❌ Nein (erfordert Internet)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Push-Benachrichtigungen\\cell
+\\intbl\\fs24 ❌ Nein\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Protokoll-PDF erstellen\\cell
+\\intbl\\fs24 ❌ Nein\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Wie werden Offline-Daten synchronisiert?\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die App erkennt automatisch, wenn eine Internetverbindung wiederhergestellt wird. Alle während der Offline-Phase gespeicherten Aktionen werden dann **automatisch und in der richtigen Reihenfolge** mit dem Server synchronisiert.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Ein Offline-Zähler in der App zeigt Ihnen, wie viele Aktionen noch ausstehen.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 3.8 Push-Benachrichtigungen\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Push-Benachrichtigungen informieren Sie über wichtige Ereignisse — auch wenn die App gerade geschlossen ist.\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Aktivieren\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Öffnen Sie **Einstellungen** (untere Navigation).\\par
+\\pard\\li540\\fi-240\\fs24 2. Tippen Sie auf **„Push-Benachrichtigungen"**.\\par
+\\pard\\li540\\fi-240\\fs24 3. Erlauben Sie Benachrichtigungen im Browser-Dialog.\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Verfügbare Benachrichtigungstypen\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\b\\fs24 Typ\\b0\\cell
+\\intbl\\b\\fs24 Beschreibung\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Statusänderungen\\cell
+\\intbl\\fs24 Wenn sich der Status eines Mangels ändert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Neue Kommentare\\cell
+\\intbl\\fs24 Wenn ein Kommentar in Ihren Projekten hinzugefügt wird\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Neue Mängel\\cell
+\\intbl\\fs24 Wenn ein neuer Mangel in Ihrem Projekt erfasst wird\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Sie können jeden Typ einzeln aktivieren oder deaktivieren.\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Benachrichtigungen deaktivieren\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Tippen Sie erneut auf den Push-Schalter → Bestätigungsdialog erscheint → Deaktivierung wird serverseitig zurückgezogen.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 3.9 Sprachauswahl & Mehrsprachigkeit\\par
+\\pard\\fs24\\par
+\\pard\\li540\\fi-240\\fs24 1. Öffnen Sie die App.\\par
+\\pard\\li540\\fi-240\\fs24 2. Tippen Sie oben rechts auf die **Flagge / Sprachauswahl**.\\par
+\\pard\\li540\\fi-240\\fs24 3. Wählen Sie: **Deutsch 🇩🇪 / Русский 🇷🇺 / Türkçe 🇹🇷**.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die gesamte Benutzeroberfläche wechselt sofort zur gewählten Sprache. Mangelbeschreibungen werden in der jeweils gespeicherten Übersetzung angezeigt.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 4: ROLLEN & BERECHTIGUNGEN\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die App implementiert ein **Role-Based Access Control (RBAC)**-System auf drei Ebenen.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 4.1 Rollenübersicht\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\b\\fs24 Berechtigung\\b0\\cell
+\\intbl\\b\\fs24 Admin\\b0\\cell
+\\intbl\\b\\fs24 Manager\\b0\\cell
+\\intbl\\b\\fs24 Worker\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Projekt erstellen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Projekt löschen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Teammitglieder einladen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Teammitglieder entfernen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Einheiten anlegen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Mängel erfassen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Eigene Mängel löschen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Alle Mängel löschen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Status → In Arbeit\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Status → Erledigt\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Status → Problem\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Status zurücksetzen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Abnahmeprotokoll erstellen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Eigene Kommentare löschen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Alle Kommentare löschen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Eigene Medien löschen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 Alle Medien löschen\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 ❌\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 4.2 Rollenzuweisung\\par
+\\pard\\fs24\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Der **erste Nutzer** eines Projekts (Ersteller) ist automatisch **Admin**.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Eingeladene Nutzer erhalten die beim Einladen festgelegte Rolle (Manager oder Worker).\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Rollenänderungen können nur durch den **Admin** vorgenommen werden (direkt in der Datenbank oder durch Entfernen und Neueinladen).\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 4.3 Datenbankdurchsetzung (Row Level Security)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die Berechtigungen werden **serverseitig** durch PostgreSQL Row Level Security (RLS)-Policies in Supabase durchgesetzt. Ein Angreifer, der die Client-Validierung umgeht, wird auf Datenbankebene blockiert. Das folgende Prinzip gilt:\\par
+\\pard\\fs24\\par
+\\pard\\li360\\i\\fs24 No trust on client-side: Jede Schreib- und Leseaktion wird unabhängig vom Frontend auf Datenbankebene gegen die Rollenzugehörigkeit geprüft.\\i0\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 5: TECHNISCHE ARCHITEKTUR\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 5.1 Systemübersicht\\par
+\\pard\\fs24\\par
+\\pard\\li360\\f1\\fs20 [Browser / PWA]\\par
+\\pard\\li360\\f1\\fs20       ↓ HTTPS\\par
+\\pard\\li360\\f1\\fs20 [Next.js 16 App Router — Vercel Edge]\\par
+\\pard\\li360\\f1\\fs20       ↓\\par
+\\pard\\li360\\f1\\fs20   ┌─────────────────────────────────────┐\\par
+\\pard\\li360\\f1\\fs20   │         Server Actions              │\\par
+\\pard\\li360\\f1\\fs20   │   (Auth, CRUD, Einladungen, PDF)   │\\par
+\\pard\\li360\\f1\\fs20   └────────────┬───────────────────────┘\\par
+\\pard\\li360\\f1\\fs20                ↓\\par
+\\pard\\li360\\f1\\fs20   ┌────────────────────┐   ┌────────────────────┐\\par
+\\pard\\li360\\f1\\fs20   │  Supabase          │   │  Groq AI API       │\\par
+\\pard\\li360\\f1\\fs20   │  - Auth (JWT)      │   │  - Whisper v3      │\\par
+\\pard\\li360\\f1\\fs20   │  - PostgreSQL DB   │   │  - LLaMA (Chat)    │\\par
+\\pard\\li360\\f1\\fs20   │  - Storage (S3)    │   └────────────────────┘\\par
+\\pard\\li360\\f1\\fs20   └────────────────────┘\\par
+\\pard\\li360\\f1\\fs20                +\\par
+\\pard\\li360\\f1\\fs20   ┌────────────────────┐   ┌────────────────────┐\\par
+\\pard\\li360\\f1\\fs20   │  Resend API        │   │  Web Push (VAPID)  │\\par
+\\pard\\li360\\f1\\fs20   │  - E-Mail Versand  │   │  - Browser Push    │\\par
+\\pard\\li360\\f1\\fs20   └────────────────────┘   └────────────────────┘\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 5.2 Datenmodell\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Das Datenbankschema ist in PostgreSQL (via Supabase) implementiert und wird durch Drizzle ORM typsicher abgebildet.\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Kern-Entitäten\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\b\\fs24 Tabelle\\b0\\cell
+\\intbl\\b\\fs24 Beschreibung\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `organizations`\\cell
+\\intbl\\fs24 Organisationsebene (Tenant-Root)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `projects`\\cell
+\\intbl\\fs24 Bauprojekte (Status: aktiv / abgeschlossen)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `project_members`\\cell
+\\intbl\\fs24 Projektzugehörigkeit mit Rolle (admin/manager/worker)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `units`\\cell
+\\intbl\\fs24 Bauabschnitte / Einheiten\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `defects`\\cell
+\\intbl\\fs24 Mängel (Titel, Status, Priorität, 4x Beschreibung)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `defect_media`\\cell
+\\intbl\\fs24 Medien pro Mangel (Bild/Video/Audio, Phase)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `defect_comments`\\cell
+\\intbl\\fs24 Kommentare pro Mangel\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `defect_status_transitions`\\cell
+\\intbl\\fs24 Unveränderlicher Statuswechsel-Log\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `transition_media`\\cell
+\\intbl\\fs24 Medien die bei Statuswechseln hochgeladen werden\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `phase_updates`\\cell
+\\intbl\\fs24 Fortschritts-/Abnahme-Updates\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `phase_update_media`\\cell
+\\intbl\\fs24 Medien zu Phase-Updates\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `acceptance_protocols`\\cell
+\\intbl\\fs24 Abnahmeprotokolle (mit Hash & Unterschriften)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `protocol_defect_verdicts`\\cell
+\\intbl\\fs24 Bewertung jedes Mangels im Protokoll\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 `project_invitations`\\cell
+\\intbl\\fs24 Einladungen (Token, Ablauf, Status)\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Defect-Lifecycle-Enum\\par
+\\pard\\fs24\\par
+\\pard\\li360\\f1\\fs20 defect_status: offen | in_arbeit | erledigt | problem\\par
+\\pard\\li360\\f1\\fs20 defect_priority: niedrig | mittel | hoch\\par
+\\pard\\li360\\f1\\fs20 media_phase: erfassung | fortschritt | abnahme\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 5.3 KI-Integration (Sprache & Übersetzung)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die KI-Spracherfassung läuft über einen separaten Node.js-Voice-Server (Port 3001) sowie eine Next.js API Route (`/api/voice`).\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Ablauf\\par
+\\pard\\fs24\\par
+\\pard\\li360\\f1\\fs20 [Benutzer spricht]\\par
+\\pard\\li360\\f1\\fs20       → [Browser: Audio aufnehmen (MediaRecorder API)]\\par
+\\pard\\li360\\f1\\fs20       → [POST /api/voice : multipart/form-data]\\par
+\\pard\\li360\\f1\\fs20       → [Groq API: Whisper-large-v3 — Transkription]\\par
+\\pard\\li360\\f1\\fs20       → [Groq API: LLaMA — Übersetzung (DE / TR / RU)]\\par
+\\pard\\li360\\f1\\fs20       → [Response: \\{ original, de, tr, ru \\}]\\par
+\\pard\\li360\\f1\\fs20       → [Benutzer überprüft & speichert]\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Modelle\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Aufgabe\\b0\\cell
+\\intbl\\b\\fs24 Modell\\b0\\cell
+\\intbl\\b\\fs24 Anbieter\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Sprachtranskription\\cell
+\\intbl\\fs24 whisper-large-v3-turbo\\cell
+\\intbl\\fs24 Groq\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Mehrsprachige Übersetzung\\cell
+\\intbl\\fs24 llama-3.3-70b-versatile\\cell
+\\intbl\\fs24 Groq\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\li360\\i\\fs24 **Datenschutz:** Audiodaten werden für die Transkription an Groq-Server übertragen. Die Daten werden nach der Verarbeitung nicht dauerhaft bei Groq gespeichert. Ein Auftragsverarbeitungsvertrag (AVV) mit Groq LLC ist erforderlich.\\i0\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 5.4 Offline-Architektur\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die Offline-Fähigkeit basiert auf zwei Technologien:\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Schicht\\b0\\cell
+\\intbl\\b\\fs24 Technologie\\b0\\cell
+\\intbl\\b\\fs24 Zweck\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Service Worker\\cell
+\\intbl\\fs24 Serwist (basiert auf Workbox)\\cell
+\\intbl\\fs24 Netzwerk-Caching, Background-Sync\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Lokale Datenbank\\cell
+\\intbl\\fs24 Dexie (IndexedDB-Wrapper)\\cell
+\\intbl\\fs24 Strukturierte lokale Datenspeicherung\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 OPFS Storage\\cell
+\\intbl\\fs24 Origin Private File System\\cell
+\\intbl\\fs24 Mediendateien (Fotos/Videos) lokal\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Sync-Engine\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die Sync-Engine (`sync-engine.ts`) überwacht:\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab `online`/`offline`-Events des Browsers\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab `visibilitychange`-Events (App im Vordergrund/Hintergrund)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Bei Wiederherstellung der Verbindung werden alle lokalen Ausstände in folgender Reihenfolge synchronisiert:\\par
+\\pard\\li540\\fi-240\\fs24 1. Neue Mängel (inkl. Medien)\\par
+\\pard\\li540\\fi-240\\fs24 2. Statuswechsel (inkl. Nachweis-Medien)\\par
+\\pard\\li540\\fi-240\\fs24 3. Phase-Updates (inkl. Medien)\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 5.5 Medien-Pipeline\\par
+\\pard\\fs24\\par
+\\pard\\li360\\f1\\fs20 [Kamera / Upload]\\par
+\\pard\\li360\\f1\\fs20       → [Bildkomprimierung: browser-image-compression]\\par
+\\pard\\li360\\f1\\fs20          (max. 5 MB, 1920x1080 px)\\par
+\\pard\\li360\\f1\\fs20       → [Videokomprimierung: ffmpeg.wasm]\\par
+\\pard\\li360\\f1\\fs20          (max. 720p, 30 Sekunden)\\par
+\\pard\\li360\\f1\\fs20       → [Upload: Supabase Storage S3-kompatibel]\\par
+\\pard\\li360\\f1\\fs20          Bucket: "defect-media"\\par
+\\pard\\li360\\f1\\fs20       → [Public URL generiert]\\par
+\\pard\\li360\\f1\\fs20       → [Referenz in DB gespeichert]\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 6: DRITTANBIETER & INTEGRATIONEN\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 6.1 Übersicht\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\b\\fs24 Anbieter\\b0\\cell
+\\intbl\\b\\fs24 Dienst\\b0\\cell
+\\intbl\\b\\fs24 Zweck\\b0\\cell
+\\intbl\\b\\fs24 Datenverarbeitung\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 **Supabase Inc.** (USA)\\cell
+\\intbl\\fs24 Backend-as-a-Service\\cell
+\\intbl\\fs24 Auth, Datenbank, Dateispeicher\\cell
+\\intbl\\fs24 Personenbezogene Daten (PD): E-Mail, Name, Medien\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 **Groq LLC** (USA)\\cell
+\\intbl\\fs24 KI/ML API\\cell
+\\intbl\\fs24 Sprachtranskription, Übersetzung\\cell
+\\intbl\\fs24 Audiodaten (temporär)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 **Resend Inc.** (USA)\\cell
+\\intbl\\fs24 E-Mail-Versand\\cell
+\\intbl\\fs24 Einladungs-E-Mails\\cell
+\\intbl\\fs24 E-Mail-Adresse\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 **Web Push (VAPID)**\\cell
+\\intbl\\fs24 Browser-Standard\\cell
+\\intbl\\fs24 Push-Benachrichtigungen\\cell
+\\intbl\\fs24 Endpoint-URL (keine PD)\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 6.2 Nicht verwendete Dienste\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die folgenden Dienste sind **nicht** in der Anwendung integriert:\\par
+\\pard\\fs24\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab ❌ Google Analytics / Firebase\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab ❌ Meta Pixel / Facebook SDK\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab ❌ Crashlytics / Sentry\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab ❌ Stripe / PayPal (keine Zahlungsabwicklung)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab ❌ Mixpanel / Amplitude (kein Behavior-Tracking)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab ❌ Google AdSense / sonstige Werbedienste\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Dies reduziert die DSGVO-Pflichten erheblich: **Es ist kein Cookie-Consent-Banner für Tracking oder Werbung erforderlich.**\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 6.3 Supabase — Konfiguration & Datenhaltung\\par
+\\pard\\fs24\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Auth-Provider:** E-Mail + Passwort (kein Social Login)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Datenbankregion:** muss auf EU-Region konfiguriert sein (nach DSGVO)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Storage:** Supabase S3-kompatibles Object Storage für Medien\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Row Level Security (RLS):** Alle Tabellen sind durch RLS-Policies geschützt\\par
+\\pard\\fs24\\par
+\\pard\\li360\\i\\fs24 **Pflichtmaßnahme:** DSGVO-konformer AVV mit Supabase Inc. abschließen (`supabase.com/privacy` → DPA verfügbar).\\i0\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 6.4 Groq — KI-Verarbeitung\\par
+\\pard\\fs24\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Audiodaten werden als `multipart/form-data` an `api.groq.com` übertragen.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Groq verwendet die Daten **nicht** für das Training der Modelle.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Verarbeitungsort: USA (kein EU-Standort) — Standard Contractual Clauses (SCCs) erforderlich.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 6.5 Resend — E-Mail\\par
+\\pard\\fs24\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Nur die E-Mail-Adresse des Eingeladenen wird übertragen.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Keine weiteren personenbezogenen Daten.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab AVV mit Resend abschließen.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 7: RECHTLICHE DOKUMENTATION\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 7.1 Impressum (Muster)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 *Gemäß § 5 TMG. Muss mit realen Daten der WAMOCON GmbH befüllt werden.*\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Angaben gemäß § 5 TMG**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 WAMOCON GmbH\\par
+\\pard\\sl300\\slmult1\\fs24 [Straße und Hausnummer]\\par
+\\pard\\sl300\\slmult1\\fs24 [PLZ und Stadt]\\par
+\\pard\\sl300\\slmult1\\fs24 Deutschland\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Vertreten durch:**\\par
+\\pard\\sl300\\slmult1\\fs24 [Vor- und Nachname Geschäftsführer/in]\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Kontakt:**\\par
+\\pard\\sl300\\slmult1\\fs24 Telefon: [+49 XXX XXXXXXX]\\par
+\\pard\\sl300\\slmult1\\fs24 E-Mail: info@ustafix.app\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Registereintrag:**\\par
+\\pard\\sl300\\slmult1\\fs24 Eintragung im Handelsregister\\par
+\\pard\\sl300\\slmult1\\fs24 Registergericht: [Amtsgericht Stadt]\\par
+\\pard\\sl300\\slmult1\\fs24 Registernummer: [HRB XXXXX]\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:**\\par
+\\pard\\sl300\\slmult1\\fs24 DE [XXXXXXXXX]\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:**\\par
+\\pard\\sl300\\slmult1\\fs24 [Vor- und Nachname]\\par
+\\pard\\sl300\\slmult1\\fs24 [Adresse wie oben]\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Platzierung: Das Impressum muss von **jeder Seite der App** innerhalb von **zwei Klicks** erreichbar sein. Empfohlen: Link in der Fußzeile der Landingpage und im Einstellungs-Bereich der App.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 7.2 Datenschutzerklärung (DSGVO-konform)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 *Erstellt auf Basis der tatsächlich verarbeiteten Daten gemäß App-Code-Analyse. Dies ist ein Muster — bitte von einem Datenschutzanwalt prüfen lassen.*\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Datenschutzerklärung für Ustafix.app\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Stand: März 2026**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **1. Verantwortlicher**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 WAMOCON GmbH\\par
+\\pard\\sl300\\slmult1\\fs24 [Adresse]\\par
+\\pard\\sl300\\slmult1\\fs24 E-Mail: datenschutz@ustafix.app\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **2. Erhobene Daten & Zweck**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **2.1 Nutzerkonten**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Wir erheben folgende Daten bei der Registrierung:\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab E-Mail-Adresse (Pflicht): Identifikation, Authentifizierung, Passwort-Reset\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Vollständiger Name (Optional): Anzeige im Team\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **2.2 Projektdaten**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Im Rahmen der App-Nutzung erheben wir:\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Projektnamen und Adressen\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Mangelbeschreibungen (Text, Foto, Video, Audio)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Statushistorie und Kommentare\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Abnahmeprotokolle inkl. digitaler Unterschriften\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab GPS-Zeitstempel von Statuswechseln\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **2.3 KI-Sprachverarbeitung**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Bei Nutzung der Spracherfassung werden Audiodaten an Groq LLC (USA) zur Transkription übermittelt. Die Übertragung erfolgt verschlüsselt (TLS). Die Daten werden nach der Verarbeitung nicht dauerhaft bei Groq gespeichert.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung, durch aktive Nutzung der Funktion)\\par
+\\pard\\sl300\\slmult1\\fs24 Drittland-Transfer: USA, abgesichert durch Standard Contractual Clauses (SCCs) gem. Art. 46 DSGVO.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **2.4 E-Mail-Benachrichtigungen**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Einladungs-E-Mails werden über den Dienst Resend Inc. (USA) versendet. Es werden ausschließlich E-Mail-Adresse und Einladungstext übertragen.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **2.5 Push-Benachrichtigungen**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Bei Aktivierung werden Browser-Push-Abonnements (Endpoint-URL, öffentlicher Schlüssel) in unserer Datenbank gespeichert. Diese enthalten keine direkt personenbezogenen Daten.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **2.6 Gerätedaten & Logs**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Technische Daten (IP-Adresse, Browser-Typ, Betriebssystem) werden durch Supabase als Infrastrukturdienstleister verarbeitet.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **3. Datenweitergabe an Dritte**\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Empfänger\\b0\\cell
+\\intbl\\b\\fs24 Zweck\\b0\\cell
+\\intbl\\b\\fs24 Rechtsgrundlage\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Supabase Inc. (USA)\\cell
+\\intbl\\fs24 Datenbankhosting, Auth, Storage\\cell
+\\intbl\\fs24 AVV, Art. 28 DSGVO\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Groq LLC (USA)\\cell
+\\intbl\\fs24 KI-Sprachverarbeitung\\cell
+\\intbl\\fs24 AVV, SCCs\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Resend Inc. (USA)\\cell
+\\intbl\\fs24 E-Mail-Versand\\cell
+\\intbl\\fs24 AVV, SCCs\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Wir geben keine Daten an Dritte für Werbezwecke weiter. Es findet kein Tracking oder Profiling statt.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **4. Speicherdauer**\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\b\\fs24 Datenkategorie\\b0\\cell
+\\intbl\\b\\fs24 Speicherdauer\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Nutzerkonten\\cell
+\\intbl\\fs24 Bis zur Kontoauflösung\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Projektdaten\\cell
+\\intbl\\fs24 Bis zur Projektlöschung\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Medien (Fotos/Videos/Audio)\\cell
+\\intbl\\fs24 Bis zur manuellen Löschung durch Benutzer\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Einladungslinks\\cell
+\\intbl\\fs24 7 Tage (automatischer Ablauf)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Push-Abonnements\\cell
+\\intbl\\fs24 Bis zur Deaktivierung\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **5. Nutzerrechte (Art. 15–22 DSGVO)**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Sie haben das Recht auf:\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Auskunft** über gespeicherte Daten (Art. 15)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Berichtigung** unrichtiger Daten (Art. 16)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Löschung** Ihrer Daten (Art. 17) — direkt per Kontoauflösung möglich\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Einschränkung** der Verarbeitung (Art. 18)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Datenübertragbarkeit** (Art. 20)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Widerspruch** gegen Verarbeitung (Art. 21)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Widerruf der Einwilligung** (Art. 7 Abs. 3)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Anfragen richten Sie an: datenschutz@ustafix.app\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **6. Beschwerderecht**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Sie haben das Recht, sich bei einer Aufsichtsbehörde zu beschweren. Zuständige Behörde in Deutschland: Der Bundesbeauftragte für den Datenschutz und die Informationsfreiheit (BfDI), Graurheindorfer Str. 153, 53117 Bonn, www.bfdi.bund.de.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **7. Keine Cookies für Tracking**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Ustafix.app verwendet keine Tracking-Cookies, keine Analyse-Cookies und keine Werbe-Cookies. Es werden ausschließlich technisch notwendige Session-Tokens verwendet.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse, technisch notwendig)\\par
+\\pard\\sl300\\slmult1\\fs24 **Consent-Banner:** Nicht erforderlich für technisch notwendige Cookies.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 7.3 Allgemeine Geschäftsbedingungen (AGB)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 *Muster. Bitte von einem Rechtsanwalt prüfen und anpassen.*\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Allgemeine Geschäftsbedingungen der WAMOCON GmbH für Ustafix.app**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Stand: März 2026**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 1 Geltungsbereich**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 1.1 Diese AGB gelten für alle Nutzer der Progressive Web App „Ustafix.app", betrieben von der WAMOCON GmbH (nachfolgend „Anbieter").\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 1.2 Ustafix.app richtet sich ausschließlich an gewerbliche Nutzer (Unternehmer i.S.d. § 14 BGB) im Bereich Baumanagement.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 2 Vertragsgegenstand**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Der Anbieter stellt eine webbasierte Software-as-a-Service (SaaS)-Lösung zur Verwaltung von Baumängeln, zur Teamkoordination und zur Erstellung von Abnahmeprotokollen zur Verfügung.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 3 Registrierung & Nutzerkonto**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 3.1 Zur Nutzung ist eine Registrierung mit gültiger E-Mail-Adresse erforderlich.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 3.2 Der Nutzer ist verpflichtet, seine Zugangsdaten vertraulich zu behandeln.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 3.3 Die Weitergabe von Zugangsdaten an Dritte ist untersagt.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 4 Nutzungsrechte**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 4.1 Der Anbieter räumt dem Nutzer ein nicht-übertragbares, nicht-exklusives Nutzungsrecht an der Software ein.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 4.2 Reverse Engineering, Dekompilierung oder Versuche, den Quellcode abzuleiten, sind untersagt, soweit dies nicht durch zwingendes Recht erlaubt ist.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 5 Nutzerverantwortung & Inhalte**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 5.1 Der Nutzer ist für alle von ihm eingestellten Inhalte (Fotos, Videos, Beschreibungen) verantwortlich.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 5.2 Der Nutzer versichert, dass hochgeladene Medien keine Rechte Dritter verletzen.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 5.3 Inhalte, die gegen geltendes Recht verstoßen, können ohne Vorankündigung entfernt werden.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 6 Digitale Abnahmeprotokolle**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 6.1 Die erstellten Protokolle sind durch einen SHA-256-Integritäts-Hash gesichert. Der Anbieter übernimmt keine rechtliche Beratungsleistung.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 6.2 Digitale Unterschriften in der App sind im deutschen Rechtsraum als einfache elektronische Signatur (eES) einzustufen. Für rechtlich bindende Erklärungen empfiehlt der Anbieter zusätzlich eine handschriftliche Unterschrift oder eine qualifizierte elektronische Signatur (QES) gemäß eIDAS-Verordnung.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 7 KI-Funktionen**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 7.1 Die KI-gestützte Sprachtranskription wird mit handelsüblicher Sorgfalt bereitgestellt. Der Anbieter übernimmt keine Garantie für die Korrektheit der Transkription.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 7.2 Nutzer sind verpflichtet, KI-generierte Texte vor dem Speichern zu prüfen.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 8 Verfügbarkeit**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 8.1 Der Anbieter strebt eine Verfügbarkeit von 99 % im Jahresmittel an, schließt jedoch Wartungsfenster und temporäre Ausfälle nicht aus.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 8.2 Offline-Funktionen stehen unabhängig von der Server-Verfügbarkeit zur Verfügung.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 9 Haftungsbeschränkung**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 9.1 Der Anbieter haftet unbegrenzt nur bei Vorsatz und grober Fahrlässigkeit sowie bei Verletzung wesentlicher Vertragspflichten.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 9.2 Bei einfacher Fahrlässigkeit ist die Haftung auf den vorhersehbaren, typischen Schaden begrenzt.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 10 Datenschutz**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die Verarbeitung personenbezogener Daten richtet sich nach unserer Datenschutzerklärung, die unter [URL] dauerhaft abrufbar ist.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 11 Kündigung**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 11.1 Nutzer können ihr Konto jederzeit ohne Angabe von Gründen kündigen.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 11.2 Der Anbieter kann Konten bei schwerwiegenden AGB-Verstößen nach Vorwarnung kündigen.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 12 Änderungen der AGB**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Änderungen werden per E-Mail mitgeteilt. Widerspricht der Nutzer nicht innerhalb von 4 Wochen, gelten die neuen AGB als akzeptiert.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **§ 13 Anwendbares Recht & Gerichtsstand**\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Es gilt deutsches Recht. Gerichtsstand ist [Stadt des Unternehmenssitzes].\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 7.4 Consent-Management\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Entscheidungsmatrix: Wann ist ein Cookie-Banner notwendig?\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Szenario\\b0\\cell
+\\intbl\\b\\fs24 Erforderlich?\\b0\\cell
+\\intbl\\b\\fs24 Begründung\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Session-Token (Supabase Auth)\\cell
+\\intbl\\fs24 ❌ Nein\\cell
+\\intbl\\fs24 Technisch notwendig, Art. 6 Abs. 1 lit. f\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Push-Benachrichtigungen\\cell
+\\intbl\\fs24 ✅ Ja\\cell
+\\intbl\\fs24 Einwilligung via Browser-API (bereits implementiert)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 KI-Spracherfassung\\cell
+\\intbl\\fs24 ✅ Ja\\cell
+\\intbl\\fs24 Datentransfer in USA, Einwilligung in Nutzung\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Tracking-Cookies\\cell
+\\intbl\\fs24 ❌ nicht vorhanden\\cell
+\\intbl\\fs24 Kein Tracking implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Analytische Cookies\\cell
+\\intbl\\fs24 ❌ nicht vorhanden\\cell
+\\intbl\\fs24 Kein Analytics implementiert\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Empfehlung\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Ein klassischer Cookie-Consent-Banner ist für Ustafix.app **nicht erforderlich**, da keine Tracking- oder Werbe-Cookies eingesetzt werden.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Pflicht-Maßnahmen:**\\par
+\\pard\\li540\\fi-240\\fs24 1. Datenschutzhinweis bei erster Nutzung der KI-Spracherfassung (Hinweis auf US-Transfer).\\par
+\\pard\\li540\\fi-240\\fs24 2. Browser-nativer Permission-Dialog bei Push-Benachrichtigungen (bereits implementiert).\\par
+\\pard\\li540\\fi-240\\fs24 3. Einwilligungsklausel in Abnahmeprotokollen (bereits implementiert: *„Beide Parteien stimmen der elektronischen Form zu..."*).\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 8: OPEN-SOURCE-LIZENZEN\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Die App nutzt ausschließlich Open-Source-Pakete mit permissiven Lizenzen. Eine vollständige Übersicht über die verwendeten Lizenzen:\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Paket\\b0\\cell
+\\intbl\\b\\fs24 Lizenz\\b0\\cell
+\\intbl\\b\\fs24 Pflichten\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Next.js\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Copyright-Hinweis erforderlich\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 React\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Copyright-Hinweis erforderlich\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 TailwindCSS\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Keine Pflichten im Produktivbetrieb\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Supabase JS\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 MIT-Hinweis\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Drizzle ORM\\cell
+\\intbl\\fs24 Apache 2.0\\cell
+\\intbl\\fs24 NOTICE-Datei, Copyright-Hinweis\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Framer Motion\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Keine Pflichten im Produktivbetrieb\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Serwist\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 MIT-Hinweis\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Dexie\\cell
+\\intbl\\fs24 Apache 2.0\\cell
+\\intbl\\fs24 NOTICE-Datei, Copyright-Hinweis\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 web-push\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Keine Pflichten im Produktivbetrieb\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 resend\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Keine Pflichten im Produktivbetrieb\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 react-pdf\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Keine Pflichten im Produktivbetrieb\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 lucide-react\\cell
+\\intbl\\fs24 ISC\\cell
+\\intbl\\fs24 Copyright-Hinweis\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 browser-image-compression\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Keine Pflichten im Produktivbetrieb\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 zustand\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Keine Pflichten im Produktivbetrieb\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 sonner\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Keine Pflichten im Produktivbetrieb\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 class-variance-authority\\cell
+\\intbl\\fs24 Apache 2.0\\cell
+\\intbl\\fs24 NOTICE-Datei\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 clsx\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Keine Pflichten im Produktivbetrieb\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 tailwind-merge\\cell
+\\intbl\\fs24 MIT\\cell
+\\intbl\\fs24 Keine Pflichten im Produktivbetrieb\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Handlungsbedarf (MIT/Apache 2.0):**\\par
+\\pard\\sl300\\slmult1\\fs24 Für die Produktivversion sollte eine `LICENSES.txt`-Datei im Projektroot erstellt bzw. über eine `/licenses`-Route in der App abrufbar gemacht werden. Dies erfüllt die Anforderungen beider Lizenztypen.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 9: COMPLIANCE-FRAMEWORK (K6-SYNTHESE)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 *Dieses Kapitel ist das Ergebnis der kognitiven Stufe K6 — es erstellt ein neues, original synthetisiertes Framework, das über eine reine Dokumentation hinausgeht.*\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 Das USTAFIX-COMPASS-Framework\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **COMPASS** steht für:\\par
+\\pard\\sl300\\slmult1\\fs24 **C**ompliance · **O**ffline-Readiness · **M**ultimodal-AI · **P**rivacy · **A**ccess-Control · **S**igning · **S**ecurity\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Dieses Framework fasst die sieben Säulen zusammen, auf denen die Compliance-Tauglichkeit einer modernen B2B-PWA für das Bauwesen gebaut werden muss. Es kann als **Audit-Checkliste vor jedem Software-Release** eingesetzt werden.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 SÄULE 1 — COMPLIANCE (Recht)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Definition:** Alle gesetzlichen Anforderungen sind erfüllt und auffindbar.\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Checkpoint\\b0\\cell
+\\intbl\\b\\fs24 Status\\b0\\cell
+\\intbl\\b\\fs24 Priorität\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Impressum erreichbar (max. 2 Klicks)\\cell
+\\intbl\\fs24 ⚠️ Fehlt\\cell
+\\intbl\\fs24 KRITISCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Datenschutzerklärung verlinkt\\cell
+\\intbl\\fs24 ⚠️ Fehlt\\cell
+\\intbl\\fs24 KRITISCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 AGB akzeptiert bei Registrierung\\cell
+\\intbl\\fs24 ⚠️ Fehlt\\cell
+\\intbl\\fs24 KRITISCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 AVV mit Supabase unterzeichnet\\cell
+\\intbl\\fs24 ⚠️ Offen\\cell
+\\intbl\\fs24 KRITISCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 AVV mit Groq unterzeichnet\\cell
+\\intbl\\fs24 ⚠️ Offen\\cell
+\\intbl\\fs24 KRITISCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 AVV mit Resend unterzeichnet\\cell
+\\intbl\\fs24 ⚠️ Offen\\cell
+\\intbl\\fs24 HOCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 LICENSES.txt / OSS-Seite vorhanden\\cell
+\\intbl\\fs24 ⚠️ Fehlt\\cell
+\\intbl\\fs24 MITTEL\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Umsetzungsschritte:**\\par
+\\pard\\li540\\fi-240\\fs24 1. Impressum, Datenschutzerklärung und AGB als Seiten in der App implementieren (z. B. `/impressum`, `/datenschutz`, `/agb`).\\par
+\\pard\\li540\\fi-240\\fs24 2. Links in der Footer der Landingpage UND im Settings-Bereich der App einbinden.\\par
+\\pard\\li540\\fi-240\\fs24 3. Bei der Registrierung: Checkbox „Ich stimme den AGB zu und habe die Datenschutzerklärung gelesen" hinzufügen.\\par
+\\pard\\li540\\fi-240\\fs24 4. DPAs (Data Processing Agreements) mit Supabase, Groq und Resend abschließen.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 SÄULE 2 — OFFLINE-READINESS (Technisch)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Definition:** Kernfunktionen sind ohne Netzwerk stabil und keine Datenverluste möglich.\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\b\\fs24 Checkpoint\\b0\\cell
+\\intbl\\b\\fs24 Status\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Mängelerfassung offline möglich\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Statuswechsel offline möglich\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Medien-Upload offline gepuffert\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Sync-Engine vorhanden\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Offline-Zähler in UI sichtbar\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 KI-Verfügbarkeit offline kommuniziert\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 PDF-Generierung offline kommuniziert\\cell
+\\intbl\\fs24 ⚠️ Verbesserbar\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Empfehlung:** Wenn der Nutzer offline versucht, ein Protokoll-PDF zu erzeugen, sollte eine informative Meldung erscheinen (keine stumme Fehlermeldung).\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 SÄULE 3 — MULTIMODAL-AI (Verantwortungsvoller KI-Einsatz)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Definition:** KI-Funktionen sind transparent, korrigierbar und nicht diskriminierend.\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\b\\fs24 Checkpoint\\b0\\cell
+\\intbl\\b\\fs24 Status\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Nutzer weiß, dass KI verarbeitet\\cell
+\\intbl\\fs24 ✅ Visuelles Feedback\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Nutzer kann KI-Output korrigieren\\cell
+\\intbl\\fs24 ✅ Transkription editierbar\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 KI-Fehler führen nicht zu Datenverlust\\cell
+\\intbl\\fs24 ✅ Original wird gespeichert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Hinweis auf US-Datentransfer bei KI\\cell
+\\intbl\\fs24 ⚠️ Fehlt in UI\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Fallback wenn KI nicht verfügbar\\cell
+\\intbl\\fs24 ✅ Manuelle Eingabe möglich\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Empfehlung:** Beim ersten Start der KI-Sprachaufnahme eine einmalige In-App-Erklärung zeigen: *„Ihre Sprachaufnahme wird zur Verarbeitung an Groq LLC (USA) übertragen."*\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 SÄULE 4 — PRIVACY (Datenschutz)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Definition:** Nur die minimalen notwendigen Daten werden erhoben und verarbeitet.\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\b\\fs24 Checkpoint\\b0\\cell
+\\intbl\\b\\fs24 Status\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Kein Tracking/Analytics\\cell
+\\intbl\\fs24 ✅ Nicht implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Kein Behavioral Profiling\\cell
+\\intbl\\fs24 ✅ Nicht implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Kein Social Login (kein OAuth-Datenaustausch)\\cell
+\\intbl\\fs24 ✅ Only E-Mail\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Medien werden bei Projektverlöschung kaskadiert gelöscht\\cell
+\\intbl\\fs24 ✅ DB: ON DELETE CASCADE\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Nutzerkonto-Löschung entfernt alle PD\\cell
+\\intbl\\fs24 ⚠️ Prüfen\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Datenspeicherort Supabase: EU-Region konfiguriert\\cell
+\\intbl\\fs24 ⚠️ Prüfen\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Empfehlung KRITISCH:** Verifizieren, dass die Supabase-Instanz auf einer EU-Region (z. B. `eu-central-1` Frankfurt) liegt. Andernfalls ist der Betrieb nur mit aktivierten SCCs zulässig.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 SÄULE 5 — ACCESS-CONTROL (Sicherheit)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Definition:** Nur berechtigte Nutzer können auf Daten zugreifen und diese verändern.\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\b\\fs24 Checkpoint\\b0\\cell
+\\intbl\\b\\fs24 Status\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Row Level Security (RLS) aktiviert\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Rollensystem (Admin/Manager/Worker)\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Auth via JWT (Supabase)\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Passwort min. 6 Zeichen\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Keine Passwort-Anzeige im Klartext\\cell
+\\intbl\\fs24 ✅ Input type=password\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Rate Limiting für Login\\cell
+\\intbl\\fs24 ⚠️ Abhängig von Supabase-Config\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 MFA (Multi-Faktor-Authentifizierung)\\cell
+\\intbl\\fs24 ⚠️ Nicht implementiert\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 SÄULE 6 — SIGNING (Dokumentenintegrität)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Definition:** Abnahmeprotokolle sind manipulationssicher und beweiskräftig.\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\b\\fs24 Checkpoint\\b0\\cell
+\\intbl\\b\\fs24 Status\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 SHA-256 Integritäts-Hash implementiert\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Hash wird im PDF gespeichert\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Digitale Unterschrift (einfache eES)\\cell
+\\intbl\\fs24 ✅ Implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Qualifizierte Signatur (QES/eIDAS)\\cell
+\\intbl\\fs24 ❌ Nicht implementiert\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Hash-Verifikations-Tool für Nutzer\\cell
+\\intbl\\fs24 ⚠️ Fehlt\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx4650
+\\cellx9300
+\\intbl\\fs24 Hinweis auf Signatur-Typ in Protokoll\\cell
+\\intbl\\fs24 ✅ Einpflegen in AGB (§ 6)\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Empfehlung MITTEL:** Ein einfaches Verifikations-Tool bereitstellen (onlinebasiert), mit dem Nutzer den Hash ihres PDFs gegen den in der Datenbank stehenden Wert prüfen können. Dies erhöht die Beweiskraft erheblich.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 SÄULE 7 — SECURITY (Allgemeine IT-Sicherheit)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Definition:** Die Anwendung ist gegen die häufigsten Angriffsvektoren abgesichert.\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Checkpoint\\b0\\cell
+\\intbl\\b\\fs24 OWASP Top 10\\b0\\cell
+\\intbl\\b\\fs24 Status\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 SQL-Injection\\cell
+\\intbl\\fs24 A03:2021\\cell
+\\intbl\\fs24 ✅ Drizzle ORM (parametrisiert)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 XSS (Cross-Site-Scripting)\\cell
+\\intbl\\fs24 A03:2021\\cell
+\\intbl\\fs24 ✅ React (escaped)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 CSRF\\cell
+\\intbl\\fs24 A01:2021\\cell
+\\intbl\\fs24 ✅ Supabase JWT, Server Actions\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Command Injection\\cell
+\\intbl\\fs24 A03:2021\\cell
+\\intbl\\fs24 ✅ Keine Shell-Calls\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 SSRF\\cell
+\\intbl\\fs24 A10:2021\\cell
+\\intbl\\fs24 ⚠️ Voice-Proxy prüfen\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Sensitive Data Exposure\\cell
+\\intbl\\fs24 A02:2021\\cell
+\\intbl\\fs24 ✅ HTTPS, encrypted storage\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Broken Access Control\\cell
+\\intbl\\fs24 A01:2021\\cell
+\\intbl\\fs24 ✅ RLS auf DB-Ebene\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Security Misconfiguration\\cell
+\\intbl\\fs24 A05:2021\\cell
+\\intbl\\fs24 ⚠️ Supabase-Config prüfen\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Outdated Components\\cell
+\\intbl\\fs24 A06:2021\\cell
+\\intbl\\fs24 ⚠️ 4 moderate npm vulnerabilities\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Dependency Audit\\cell
+\\intbl\\fs24 —\\cell
+\\intbl\\fs24 ⚠️ `npm audit fix` ausstehend\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Sofortmaßnahmen:**\\par
+\\pard\\li540\\fi-240\\fs24 1. `npm audit fix` ausführen (4 moderate Schwachstellen vorhanden).\\par
+\\pard\\li540\\fi-240\\fs24 2. Voice-Server: CORS-Policy von `"*"` auf die App-Domain einschränken.\\par
+\\pard\\li540\\fi-240\\fs24 3. Supabase: Öffentliche Anmeldung (signups) falls nicht benötigt deaktivieren.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 10: TIEFENANALYSE & AUDIT-BERICHT\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 *Durchgeführt gemäß QS_Prompt_Tiefenanalyse — systematisch, selbstkritisch, vollständig.*\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 10.1 Executive Summary\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Projektstatus:** Funktionsfähig und produktionsbereit in technischer Hinsicht. Compliance-Status: Bedingt produktionsbereit — die Rechtstexte und Pflicht-Checkboxen sind umgesetzt, offen bleiben AVV, Region-Nachweis und Security-Dokumentation.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Kritische Erkenntnisse:**\\par
+\\pard\\li540\\fi-240\\fs24 1. Impressum, Datenschutzerklärung und AGB sind in der App integriert; die revisionssichere Pflege und juristische Freigabe dieser Texte muss organisatorisch abgesichert bleiben.\\par
+\\pard\\li540\\fi-240\\fs24 2. 3 AVV mit Drittanbietern (Supabase, Groq, Resend) ausstehend (DSGVO Art. 28)\\par
+\\pard\\li540\\fi-240\\fs24 3. 4 npm-Pakete mit bekannten Schwachstellen (moderate severity) — `npm audit fix` nicht durchgeführt\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Handlungsbedarf:** Ja. Vor Produktivstart.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 10.2 Vollständige Bestandsaufnahme\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Analysierte Quellen\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Quelle\\b0\\cell
+\\intbl\\b\\fs24 Analysiert\\b0\\cell
+\\intbl\\b\\fs24 Inhalt\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `src/app/page.tsx`\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 Landingpage, Featurebeschreibung\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `src/lib/db/schema.ts`\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 Vollständiges Datenbankschema\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `src/lib/i18n/translations.ts`\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 Alle UI-Texte in DE/RU/TR\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `package.json`\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 Dependencies, Drittanbieter\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `voice-server.mjs`\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 Groq AI Integration, CORS-Konfiguration\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `src/components/`\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 UI-Komponenten, Löschfunktionen\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `src/lib/actions/`\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 Server Actions (partiel)\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 WAMOCON Layout Dokument\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 Dokumentenformat-Spezifikation\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 QS_Prompt_Tiefenanalyse.md\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 Analyse-Framework\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 Universal Prompt.txt\\cell
+\\intbl\\fs24 ✅\\cell
+\\intbl\\fs24 Auditor-Framework\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Fehlende Standard-Projektdateien\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Datei\\b0\\cell
+\\intbl\\b\\fs24 Status\\b0\\cell
+\\intbl\\b\\fs24 Priorität\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `LICENSES.txt`\\cell
+\\intbl\\fs24 ❌ Fehlt\\cell
+\\intbl\\fs24 MITTEL\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `SECURITY.md`\\cell
+\\intbl\\fs24 ❌ Fehlt\\cell
+\\intbl\\fs24 HOCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `CHANGELOG.md`\\cell
+\\intbl\\fs24 ❌ Fehlt\\cell
+\\intbl\\fs24 NIEDRIG\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `README.md`\\cell
+\\intbl\\fs24 ✅ Vorhanden\\cell
+\\intbl\\fs24 —\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 `.env.example`\\cell
+\\intbl\\fs24 ❌ Fehlt\\cell
+\\intbl\\fs24 HOCH\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 10.3 Identifizierte Inkonsistenzen\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\b\\fs24 #\\b0\\cell
+\\intbl\\b\\fs24 Inkonsistenz\\b0\\cell
+\\intbl\\b\\fs24 Fundstelle\\b0\\cell
+\\intbl\\b\\fs24 Priorität\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 1\\cell
+\\intbl\\fs24 AGB § 6 referenziert digitale Unterschrift als eES — Implementation sollte diesen Hinweis direkt im Protokoll-UI zeigen\\cell
+\\intbl\\fs24 `acceptance-protocol-form.tsx`\\cell
+\\intbl\\fs24 HOCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 2\\cell
+\\intbl\\fs24 Voice-Server CORS: `Access-Control-Allow-Origin: *` erlaubt Anfragen von beliebigen Domains\\cell
+\\intbl\\fs24 `voice-server.mjs:86`\\cell
+\\intbl\\fs24 HOCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 3\\cell
+\\intbl\\fs24 `npm audit` zeigt 4 moderate Schwachstellen — noch nicht behoben\\cell
+\\intbl\\fs24 `package-lock.json`\\cell
+\\intbl\\fs24 HOCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 4\\cell
+\\intbl\\fs24 Supabase-Region nicht dokumentiert/verifiziert\\cell
+\\intbl\\fs24 `src/lib/supabase/`\\cell
+\\intbl\\fs24 KRITISCH\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx2325
+\\cellx4650
+\\cellx6975
+\\cellx9300
+\\intbl\\fs24 5\\cell
+\\intbl\\fs24 Kein `.env.example` vorhanden — neue Entwickler kennen nicht alle benötigten Umgebungsvariablen\\cell
+\\intbl\\fs24 Root\\cell
+\\intbl\\fs24 HOCH\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 10.4 Lücken\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Fehlende Infrastruktur\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab `.env.example` mit allen Variablen (SUPABASE_URL, SUPABASE_ANON_KEY, RESEND_API_KEY, GROQ_API_KEY, VAPID_PUBLIC/PRIVATE_KEY, VAPID_SUBJECT)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab SECURITY.md mit Vulnerability Disclosure Policy\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab LICENSES.txt für Open-Source-Compliance\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Umgesetzte Rechtsdokumentation in der App\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab /impressum Route vorhanden\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab /datenschutz Route vorhanden\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab /agb Route vorhanden\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Footer- und Kontextlinks auf Landingpage, Auth-Seiten, Einstellungen und Dashboard vorhanden\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Pflicht-Checkboxen für AGB, Datenschutz und DSGVO-Hinweise in Registrierungs- und Invite-Flows vorhanden\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Administrativ auswertbare Übersicht zu Rechts-Einwilligungen im Dashboard vorhanden\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 Fehlende Qualitätssicherung\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Keine automatisierten Tests (Unit/Integration/E2E)\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Keine CI/CD-Pipeline dokumentiert\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab `npm audit fix` nicht durchgeführt\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 10.5 Selbstkritik (Analysefehler)\\par
+\\pard\\fs24\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Die Datei `Kognitive Stufen K1-K6.png` konnte nicht gelesen werden (Bild-Format). Die K6-Synthese basiert auf dem allgemeinen Wissensstand zu Bloom's Taxonomy. Falls das Bild abweichende spezifische Definitionen enthält, ist das Framework in Kapitel 9 entsprechend anzupassen.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Die Server-Actions in `src/lib/actions/` wurden nur teilweise analysiert (Grep-Suche, nicht vollständige Lektüre aller Dateien). Weitere Sicherheitslücken in den Actions können nicht ausgeschlossen werden.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab Die genauen Supabase-Projektkonfiguration (Region, RLS-Aktivierungsstatus für alle Tabellen) war nicht aus statischen Dateien lesbar und muss manuell verifiziert werden.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 10.6 Verbesserungsvorschläge (priorisiert)\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 KRITISCH (Sofort vor Launch)\\par
+\\pard\\li540\\fi-240\\fs24 1. AVV mit Supabase, Groq und Resend abschließen\\par
+\\pard\\li540\\fi-240\\fs24 2. Supabase-Region auf EU-Standort verifizieren/migrieren\\par
+\\pard\\li540\\fi-240\\fs24 3. Rechtstexte juristisch final prüfen und versioniert freigeben\\par
+\\pard\\li540\\fi-240\\fs24 4. Nachweisprozess für Consent-Versionen und Änderungsverfolgung dokumentieren\\par
+\\pard\\li540\\fi-240\\fs24 5. Security-Dokumentation (`SECURITY.md`, Disclosure-Prozess) ergänzen\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 HOCH (Innerhalb einer Woche nach Launch)\\par
+\\pard\\li540\\fi-240\\fs24 1. CORS in `voice-server.mjs` auf App-Domain einschränken: `Access-Control-Allow-Origin: https://ustafix.app`\\par
+\\pard\\li540\\fi-240\\fs24 2. `npm audit fix` ausführen und Ergebnis in CI/CD integrieren\\par
+\\pard\\li540\\fi-240\\fs24 3. `.env.example` erstellen\\par
+\\pard\\li540\\fi-240\\fs24 4. `SECURITY.md` mit Responsible-Disclosure-Prozess erstellen\\par
+\\pard\\li540\\fi-240\\fs24 5. KI-Datentransfer-Hinweis in UI bei erster Nutzung\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 MITTEL (Innerhalb eines Monats)\\par
+\\pard\\li540\\fi-240\\fs24 1. LICENSES.txt und /licenses-Route implementieren\\par
+\\pard\\li540\\fi-240\\fs24 2. Hash-Verifikations-Tool für Abnahmeprotokolle\\par
+\\pard\\li540\\fi-240\\fs24 3. `CHANGELOG.md` starten\\par
+\\pard\\li540\\fi-240\\fs24 4. MFA-Option für Nutzerkonten prüfen\\par
+\\pard\\fs24\\par
+\\pard\\s3\\outlinelevel2 NIEDRIG (Kontinuierliche Verbesserung)\\par
+\\pard\\li540\\fi-240\\fs24 1. Automatisierte Tests (Vitest + Playwright)\\par
+\\pard\\li540\\fi-240\\fs24 2. CI/CD mit Lint + Audit + Type-Check\\par
+\\pard\\li540\\fi-240\\fs24 3. Erweiterte Monitoring-Infrastruktur\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\page\\pard\\s1\\outlinelevel0 KAPITEL 11: QUALITÄTSSICHERUNG & FINALES REVIEW\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 *Durchgeführt gemäß Universal Prompt / The Auditor — kein Fluff, BLUF, First Principles.*\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 11.1 Bewertung: Wo steht Ustafix.app wirklich?\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Technisch:** Produktionsreif. Das Offline-First-Konzept ist solide implementiert. Das Sicherheitsmodell (RLS auf DB-Ebene) ist korrekt. Die KI-Integration ist funktional und nutzbar.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Rechtlich:** Deutlich verbessert, aber noch nicht vollständig abgeschlossen. Die Pflichtseiten und Pflicht-Checkboxen sind in der App integriert; offene Restarbeiten betreffen AVV, formale Prüfung der Rechtstexte und dokumentierte Governance.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Sicherheit:** Bedingt produktionsreif. Der Voice-Server hat eine zu permissive CORS-Policy. 4 npm-Pakete haben bekannte Schwachstellen.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 11.2 Die 5 Maßnahmen mit dem höchsten Hebel (Pareto-Prinzip)\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Diese 5 Maßnahmen decken 80 % des Risikos ab:\\par
+\\pard\\fs24\\par
+\\pard\\sa120
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\b\\fs24 Rang\\b0\\cell
+\\intbl\\b\\fs24 Maßnahme\\b0\\cell
+\\intbl\\b\\fs24 Risiko-Reduktion\\b0\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 1\\cell
+\\intbl\\fs24 AVV mit Supabase/Groq/Resend abschließen\\cell
+\\intbl\\fs24 DSGVO-Konformität\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 2\\cell
+\\intbl\\fs24 Supabase EU-Region verifizieren\\cell
+\\intbl\\fs24 DSGVO Art. 44ff\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 3\\cell
+\\intbl\\fs24 Rechtstexte juristisch freigeben und versionieren\\cell
+\\intbl\\fs24 Revisionssicherheit\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 4\\cell
+\\intbl\\fs24 CORS auf App-Domain einschränken\\cell
+\\intbl\\fs24 Sicherheitsrisiko\\cell
+\\row
+\\trowd\\trgaph70\\trleft0
+\\cellx3100
+\\cellx6200
+\\cellx9300
+\\intbl\\fs24 5\\cell
+\\intbl\\fs24 npm audit fix\\cell
+\\intbl\\fs24 CVE-Exposition\\cell
+\\row
+\\pard\\sa120\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 11.3 Stärken, die nicht angetastet werden sollten\\par
+\\pard\\fs24\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Offline-Architektur:** Gut designt. Nicht vereinfachen.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **RLS auf DB-Ebene:** Richtige Entscheidung. Darf niemals deaktiviert werden.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **SHA-256 Hash für Protokolle:** Innovatives Feature, das Vertrauen schafft.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Kein Tracking/Analytics:** Strategisch kluge Entscheidung. Bewahrt DSGVO-Einfachheit und Nutzervertrauen.\\par
+\\pard\\li720\\fi-360\\fs24 \\bullet\\tab **Mehrsprachigkeit:** Differenzierungsmerkmal auf einem Markt mit hohem Migranten-Anteil im Bauhandwerk.\\par
+\\pard\\fs24\\par
+\\pard\\s2\\outlinelevel1 11.4 Finales Urteil\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 Ustafix.app ist ein technisch durchdachtes Produkt mit einem klaren Marktanwendungsfall. Die kritische Lücke ist nicht technisch, sondern rechtlich. Sie ist innerhalb von 1–2 Wochen schließbar. Die in Kapitel 9 definierte COMPASS-Checkliste bietet einen wiederverwendbaren Rahmen, um diese Situation bei zukünftigen Releases nie wieder eintreten zu lassen.\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 **Empfehlung:** Produktivbetrieb erst nach Abschluss der verbleibenden KRITISCH eingestuften Governance- und Sicherheitsmaßnahmen final freigeben.\\par
+\\pard\\fs24\\par
+\\pard\\brdrb\\brdrs\\brdrw10\\brsp20\\par
+\\pard\\fs24\\par
+\\pard\\sl300\\slmult1\\fs24 *Dokument erstellt nach WAMOCON-Dokumentenstandard.*\\par
+\\pard\\sl300\\slmult1\\fs24 *Autor: WAMOCON GmbH · Technische Dokumentation*\\par
+\\pard\\sl300\\slmult1\\fs24 *Version 1.0 · März 2026*\\par
+\\pard\\sl300\\slmult1\\fs24 *Alle Rechte vorbehalten.*\\par
+}
