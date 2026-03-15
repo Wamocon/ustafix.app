@@ -30,6 +30,7 @@ export const translations = {
     "common.priority": "Priorität",
     "common.version": "Version",
     "common.platform": "Plattform",
+    "common.legal": "Rechtliches",
 
     // Auth
     "auth.loginTitle": "Melden Sie sich an",
@@ -68,6 +69,11 @@ export const translations = {
     "auth.forgotPasswordError":
       "Fehler beim Senden der E-Mail. Bitte versuchen Sie es erneut.",
     "auth.passwordPlaceholderMin": "Mindestens 6 Zeichen",
+    "auth.legalConsentTitle": "Pflichtzustimmungen",
+    "auth.acceptTermsPrefix": "Ich akzeptiere die",
+    "auth.acceptPrivacyPrefix": "Ich habe die",
+    "auth.acceptDsgvoConsent": "Ich willige in die DSGVO-konforme Verarbeitung meiner Daten für die Nutzung der Plattform ein.",
+    "auth.legalRequired": "Bitte akzeptieren Sie AGB, Datenschutzerklärung und DSGVO-Einwilligung.",
 
     // Dashboard
     "dashboard.noProjects": "Noch keine Projekte",
@@ -98,6 +104,15 @@ export const translations = {
     "dashboard.bauleiter": "Bauleiter",
     "dashboard.worker": "Mitarbeiter",
     "dashboard.invitesOpen": "Einladungen offen",
+    "dashboard.legalAvailableAllRoles": "Impressum, Datenschutzerklärung und AGB sind für jede Rolle direkt erreichbar.",
+    "dashboard.legalConsentOverview": "Rechtszustimmungen",
+    "dashboard.legalAccepted": "Vollständig",
+    "dashboard.legalMissing": "Fehlend",
+    "dashboard.legalVersion": "Version",
+    "dashboard.legalAcceptedAt": "Akzeptiert am",
+    "dashboard.legalNoData": "Für die Admin-Auswertung liegen derzeit keine Zustimmungsdaten vor.",
+    "dashboard.legalStatusComplete": "vollständig",
+    "dashboard.legalStatusMissing": "unvollständig",
 
     // Settings
     "settings.title": "Einstellungen",
@@ -122,6 +137,11 @@ export const translations = {
     "settings.languageDe": "Deutsch",
     "settings.languageRu": "Русский",
     "settings.languageTr": "Türkçe",
+    "legal.sectionTitle": "Rechtliches",
+    "legal.sectionDescription": "Impressum, Datenschutzerklärung und Allgemeine Geschäftsbedingungen sind hier dauerhaft verfügbar.",
+    "legal.imprint": "Impressum",
+    "legal.privacy": "Datenschutzerklärung",
+    "legal.terms": "AGB",
 
     // Project page
     "project.progress": "Fortschritt",
@@ -471,6 +491,7 @@ export const translations = {
     "common.priority": "Приоритет",
     "common.version": "Версия",
     "common.platform": "Платформа",
+    "common.legal": "Правовая информация",
 
     // Auth
     "auth.loginTitle": "Войдите в систему",
@@ -506,6 +527,11 @@ export const translations = {
     "auth.backToLogin": "Назад к входу",
     "auth.forgotPasswordError": "Ошибка при отправке письма. Попробуйте снова.",
     "auth.passwordPlaceholderMin": "Не менее 6 символов",
+    "auth.legalConsentTitle": "Обязательные согласия",
+    "auth.acceptTermsPrefix": "Я принимаю",
+    "auth.acceptPrivacyPrefix": "Я ознакомился с",
+    "auth.acceptDsgvoConsent": "Я даю согласие на обработку моих данных в соответствии с DSGVO для использования платформы.",
+    "auth.legalRequired": "Пожалуйста, подтвердите условия, политику конфиденциальности и согласие по DSGVO.",
 
     // Dashboard
     "dashboard.noProjects": "Пока нет проектов",
@@ -534,6 +560,15 @@ export const translations = {
     "dashboard.bauleiter": "Руководитель",
     "dashboard.worker": "Сотрудник",
     "dashboard.invitesOpen": "приглашения открыты",
+    "dashboard.legalAvailableAllRoles": "Impressum, политика конфиденциальности и условия доступны для каждой роли напрямую.",
+    "dashboard.legalConsentOverview": "Правовые согласия",
+    "dashboard.legalAccepted": "Полностью",
+    "dashboard.legalMissing": "Отсутствует",
+    "dashboard.legalVersion": "Версия",
+    "dashboard.legalAcceptedAt": "Принято",
+    "dashboard.legalNoData": "Для административной оценки пока нет данных о согласиях.",
+    "dashboard.legalStatusComplete": "полностью",
+    "dashboard.legalStatusMissing": "неполностью",
 
     // Settings
     "settings.title": "Настройки",
@@ -557,6 +592,11 @@ export const translations = {
     "settings.languageDe": "Deutsch",
     "settings.languageRu": "Русский",
     "settings.languageTr": "Türkçe",
+    "legal.sectionTitle": "Правовая информация",
+    "legal.sectionDescription": "Impressum, политика конфиденциальности и условия использования доступны здесь постоянно.",
+    "legal.imprint": "Impressum",
+    "legal.privacy": "Политика конфиденциальности",
+    "legal.terms": "Условия использования",
 
     // Project page
     "project.progress": "Прогресс",
@@ -904,6 +944,7 @@ export const translations = {
     "common.priority": "Öncelik",
     "common.version": "Sürüm",
     "common.platform": "Platform",
+    "common.legal": "Yasal bilgiler",
 
     // Auth
     "auth.loginTitle": "Giriş yapın",
@@ -939,6 +980,11 @@ export const translations = {
     "auth.backToLogin": "Girişe dön",
     "auth.forgotPasswordError": "E-posta gönderilemedi. Tekrar deneyin.",
     "auth.passwordPlaceholderMin": "En az 6 karakter",
+    "auth.legalConsentTitle": "Zorunlu onaylar",
+    "auth.acceptTermsPrefix": "Şunları kabul ediyorum:",
+    "auth.acceptPrivacyPrefix": "Şunu okudum:",
+    "auth.acceptDsgvoConsent": "Platformu kullanmak için verilerimin DSGVO'ya uygun şekilde işlenmesine onay veriyorum.",
+    "auth.legalRequired": "Lütfen genel şartları, gizlilik politikasını ve DSGVO onayını kabul edin.",
 
     // Dashboard
     "dashboard.noProjects": "Henüz proje yok",
@@ -967,6 +1013,15 @@ export const translations = {
     "dashboard.bauleiter": "Şef",
     "dashboard.worker": "İşçi",
     "dashboard.invitesOpen": "açık davet",
+    "dashboard.legalAvailableAllRoles": "Künye, gizlilik politikası ve genel şartlar her rol için doğrudan erişilebilir.",
+    "dashboard.legalConsentOverview": "Yasal onaylar",
+    "dashboard.legalAccepted": "Tam",
+    "dashboard.legalMissing": "Eksik",
+    "dashboard.legalVersion": "Sürüm",
+    "dashboard.legalAcceptedAt": "Kabul zamanı",
+    "dashboard.legalNoData": "Yönetici görünümü için henüz onay verisi bulunmuyor.",
+    "dashboard.legalStatusComplete": "tam",
+    "dashboard.legalStatusMissing": "eksik",
 
     // Settings
     "settings.title": "Ayarlar",
@@ -990,6 +1045,11 @@ export const translations = {
     "settings.languageDe": "Deutsch",
     "settings.languageRu": "Русский",
     "settings.languageTr": "Türkçe",
+    "legal.sectionTitle": "Yasal bilgiler",
+    "legal.sectionDescription": "Künye, gizlilik politikası ve genel kullanım şartları burada kalıcı olarak erişilebilir.",
+    "legal.imprint": "Impressum",
+    "legal.privacy": "Gizlilik Politikası",
+    "legal.terms": "Genel Şartlar",
 
     // Project page
     "project.progress": "İlerleme",

@@ -1,0 +1,135 @@
+{\rtf1\ansi\ansicpg65001\deff0
+{\fonttbl{\f0 Arial Narrow;}}
+{\colortbl;\red34\green34\blue34;\red90\green90\blue90;}
+\paperw11907\paperh16840\margl1134\margr1134\margt1134\margb1134
+\viewkind4\uc1\pard\lang1031\f0\fs24
+{\header\pard\qr\cf1\b\fs20 WAMOCON GmbH\line\b0\fs18 Professionelle Technische Dokumentation\par}
+{\footer\pard\qc\cf2\fs18 Seite {\field{\*\fldinst PAGE}} bis {\field{\*\fldinst NUMPAGES}}\par}
+\pard\qc\cf1\b\fs40 Produkthandbuch Ustafix.app\par
+\pard\qc\b0\fs26 WAMOCON Layout\line Produkt-, Betriebs- und Compliance-Handbuch\line Stand Maerz 2026\par
+\pard\qc\fs22 Verfasser: WAMOCON GmbH\line Dokumenttyp: MS Word-kompatible RTF-Ausgabe\par
+\pard\qc\fs20 Diese Datei ist direkt in Microsoft Word oeffenbar und weiter bearbeitbar.\par
+\page
+\pard\sb240\sa120\b\fs32 Inhaltsverzeichnis\par
+{\field{\*\fldinst TOC \\o "1-2" \\h \\z \\u}{\fldrslt Inhaltsverzeichnis wird in Microsoft Word aktualisiert.}}
+\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 1: EXECUTIVE SUMMARY\par
+\pard\sb120\sa60\b\fs28 1.1 Produktstatus\par
+\pard\b0\fs24 Ustafix.app ist eine produktionsnahe Progressive Web App fuer digitales Baustellenmaengelmanagement. Die Anwendung verbindet mobile Erfassung, Offline-Betrieb, Medienanhaenge, statusgefuehrte Bearbeitung, Abnahmeprotokolle und KI-unterstuetzte Spracheingabe in einer gemeinsamen Plattform.\par
+\pard\b0\fs24 Die App richtet sich an Bauunternehmen, Bauleiter, Projektmanager und operative Teams, die Maengel strukturiert dokumentieren und bis zur Abnahme nachverfolgen muessen.\par
+\pard\sb120\sa60\b\fs28 1.2 Kritische Erkenntnisse\par
+\pard\li540\fi-240\fs24 1. Rechtstexte sind inzwischen in der Anwendung integriert. Offene Compliance-Risiken liegen jetzt vor allem bei AVV, Governance und dokumentierter Freigabe der Rechtstexte.\par
+\pard\li540\fi-240\fs24 2. Das Sicherheitsmodell auf Datenbankebene ist tragfaehig, aber Voice-Server-CORS und Dependency-Haertung muessen weiter abgesichert werden.\par
+\pard\li540\fi-240\fs24 3. Die Produktstaerke liegt in Offline-First, Mehrsprachigkeit und einem klaren Praxisfokus fuer den Baustellenalltag.\par
+\pard\sb120\sa60\b\fs28 1.3 Management-Fazit\par
+\pard\b0\fs24 Technisch ist Ustafix.app weit fortgeschritten. Fuer die finale Freigabe zum Produktivbetrieb sind noch organisatorische und sicherheitsrelevante Restarbeiten erforderlich, nicht jedoch mehr die grundlegende Verfuegbarkeit von Impressum, Datenschutz und AGB in der App.\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 2: PRODUKTUEBERSICHT\par
+\pard\sb120\sa60\b\fs28 2.1 Kernnutzen\par
+\pard\b0\fs24 Ustafix.app digitalisiert die Erfassung, Priorisierung, Bearbeitung und Abnahme von Baustellenmaengeln. Der Schwerpunkt liegt auf robuster Dokumentation unter realen Einsatzbedingungen, einschliesslich schwacher Netzabdeckung und mehrsprachiger Teams.\par
+\pard\sb120\sa60\b\fs28 2.2 Hauptfunktionen\par
+\pard\li720\fi-360\fs24 - Offline-erfassbare Maengel mit spaeterer Synchronisation\par
+\pard\li720\fi-360\fs24 - Foto-, Audio- und Medienanhaenge\par
+\pard\li720\fi-360\fs24 - Statuswechsel und Phasenmodell fuer die Maengelbearbeitung\par
+\pard\li720\fi-360\fs24 - Digitale Abnahmeprotokolle mit Signatur und Hash-Nachweis\par
+\pard\li720\fi-360\fs24 - Push-Benachrichtigungen und teambezogene Zusammenarbeit\par
+\pard\li720\fi-360\fs24 - KI-gestuetzte Sprachverarbeitung ueber Groq\par
+\pard\sb120\sa60\b\fs28 2.3 Zielgruppen\par
+\pard\b0\fs24 Das Produkt ist fuer Admins, Manager und Worker konzipiert. Admins steuern Organisation und Compliance, Manager verantworten Projekte und Teams, Worker dokumentieren operative Sachverhalte direkt auf der Baustelle.\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 3: BENUTZER- UND ROLLENMODELL\par
+\pard\sb120\sa60\b\fs28 3.1 Rollen\par
+\pard\li720\fi-360\fs24 - Admin: globale Steuerung, Uebersichten, rechtliche Auswertung, Nutzer- und Projektaufsicht\par
+\pard\li720\fi-360\fs24 - Manager: operative Projektsteuerung, Teamkoordination, Defect-Monitoring\par
+\pard\li720\fi-360\fs24 - Worker: mobile Erfassung, Statusrueckmeldungen, Medienaufnahme, Protokollmitwirkung\par
+\pard\sb120\sa60\b\fs28 3.2 Zugriffskonzept\par
+\pard\b0\fs24 Der Zugriff wird ueber Supabase Auth und datenbankseitige Row Level Security kontrolliert. Dadurch werden Berechtigungen nicht nur in der Oberflaeche, sondern direkt auf Datenebene durchgesetzt.\par
+\pard\sb120\sa60\b\fs28 3.3 Registrierungs- und Invite-Flows\par
+\pard\b0\fs24 Neue Nutzer muessen den rechtlichen Hinweisen zustimmen. Die Pflicht-Checkboxen fuer AGB, Datenschutz und DSGVO-Hinweise sind in Registrierungs- und Invite-Flows integriert. Zustimmung, Version und Zeitpunkt werden persistiert.\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 4: ARCHITEKTUR UND TECHNIK\par
+\pard\sb120\sa60\b\fs28 4.1 Technologie-Stack\par
+\pard\li720\fi-360\fs24 - Frontend: Next.js 16, React 19, TypeScript, App Router\par
+\pard\li720\fi-360\fs24 - Styling: globale CSS-Struktur, komponentenorientierte UI\par
+\pard\li720\fi-360\fs24 - Datenhaltung: Supabase PostgreSQL mit Drizzle ORM\par
+\pard\li720\fi-360\fs24 - Offline-Schicht: Serwist, lokale Speicherung und Sync-Mechanismen\par
+\pard\li720\fi-360\fs24 - Kommunikation: Server Actions, API-Routen, Push- und Mail-Dienste\par
+\pard\sb120\sa60\b\fs28 4.2 Offline-First\par
+\pard\b0\fs24 Die Anwendung wurde fuer instabile Netzbedingungen ausgelegt. Erfasste Daten und Medien koennen lokal vorbereitet und spaeter synchronisiert werden. Das ist fuer echte Baustellenszenarien ein zentraler Differenzierungsfaktor.\par
+\pard\sb120\sa60\b\fs28 4.3 Integrationen\par
+\pard\b0\fs24 Supabase uebernimmt Authentifizierung, Datenhaltung und Teile der Dateiverwaltung. Groq wird fuer Sprachtranskription und Sprachverarbeitung genutzt. Resend bedient E-Mail-bezogene Prozesse. Diese Integrationen sind funktional wertvoll, muessen aber datenschutzrechtlich vertraglich abgesichert werden.\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 5: ZENTRALE FUNKTIONSBEREICHE\par
+\pard\sb120\sa60\b\fs28 5.1 Defect Management\par
+\pard\b0\fs24 Maengel koennen angelegt, klassifiziert, kommentiert, mit Medien versehen und ueber definierte Statusstufen bearbeitet werden. Die Bedienung ist fuer mobile Nutzung optimiert.\par
+\pard\sb120\sa60\b\fs28 5.2 Protokolle und Abnahme\par
+\pard\b0\fs24 Abnahmeprotokolle bilden einen geschlossenen Nachweisfluss. Signaturen, strukturierte Abschnitte und Hash-basierte Integritaetsmerkmale verbessern Nachvollziehbarkeit und Beweissicherheit.\par
+\pard\sb120\sa60\b\fs28 5.3 Kommunikation und Zusammenarbeit\par
+\pard\b0\fs24 Kommentare, Teamzuordnung, Benachrichtigungen und rollenabhaengige Dashboards machen die Plattform zu einem operativen Arbeitswerkzeug und nicht nur zu einem Formularsystem.\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 6: RECHT, DATENSCHUTZ UND EINWILLIGUNG\par
+\pard\sb120\sa60\b\fs28 6.1 In-App-Rechtstexte\par
+\pard\b0\fs24 Die Seiten fuer Impressum, Datenschutzerklaerung und AGB sind implementiert und in den relevanten Produktbereichen verlinkt. Dazu gehoeren Landingpage, Auth-Seiten, Einstellungen und Dashboard-Kontexte.\par
+\pard\sb120\sa60\b\fs28 6.2 Consent-Erfassung\par
+\pard\b0\fs24 Bei neuen Konten und Invite-basierten Aktivierungen werden rechtliche Einwilligungen verpflichtend abgefragt. Die Anwendung speichert Zustimmungsstatus, Version und Zeitstempel. Dadurch ist eine administrative Nachvollziehbarkeit moeglich.\par
+\pard\sb120\sa60\b\fs28 6.3 Offene Restthemen\par
+\pard\li720\fi-360\fs24 - Abschluss der AVV mit Supabase, Groq und Resend\par
+\pard\li720\fi-360\fs24 - Dokumentation der Datenregionen und internationaler Datenfluesse\par
+\pard\li720\fi-360\fs24 - Juristische Finalpruefung und versionierte Pflege der Rechtstexte\par
+\pard\li720\fi-360\fs24 - Dokumentierter Prozess fuer Consent-Aenderungen und Revisionsnachweise\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 7: ADMIN- UND GOVERNANCE-FUNKTIONEN\par
+\pard\sb120\sa60\b\fs28 7.1 Dashboard-Sicht\par
+\pard\b0\fs24 Admins erhalten eine auswertbare Sicht auf rechtliche Zustimmungen. Damit kann nachvollzogen werden, welche Nutzer welche Version der Einwilligungsstrecke bestaetigt haben.\par
+\pard\sb120\sa60\b\fs28 7.2 Betriebsverantwortung\par
+\pard\b0\fs24 Die technische Implementierung der Rechtstexte ist nur ein Teil des Compliance-Modells. Fuer den Produktivbetrieb werden klare Verantwortlichkeiten fuer Textpflege, Freigabe, Incident-Kommunikation und Aenderungsdokumentation benoetigt.\par
+\pard\sb120\sa60\b\fs28 7.3 Empfohlene Governance-Artefakte\par
+\pard\li720\fi-360\fs24 - SECURITY.md mit Disclosure-Prozess\par
+\pard\li720\fi-360\fs24 - .env.example fuer Entwickler-Onboarding\par
+\pard\li720\fi-360\fs24 - dokumentierte Release- und Freigabe-Checks\par
+\pard\li720\fi-360\fs24 - juristisch freigegebene Rechtstext-Versionierung\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 8: SICHERHEIT UND QUALITAET\par
+\pard\sb120\sa60\b\fs28 8.1 Positive Befunde\par
+\pard\li720\fi-360\fs24 - Datenbankseitige Zugriffskontrolle ueber RLS\par
+\pard\li720\fi-360\fs24 - parametrisierte Datenzugriffe ueber Drizzle\par
+\pard\li720\fi-360\fs24 - keine Tracking- oder Werbeabhaengigkeiten im Kernprodukt\par
+\pard\li720\fi-360\fs24 - klares Rollenmodell fuer administrative und operative Nutzung\par
+\pard\sb120\sa60\b\fs28 8.2 Offene Sicherheitsarbeiten\par
+\pard\li720\fi-360\fs24 - Voice-Server-CORS auf die Produktivdomain begrenzen\par
+\pard\li720\fi-360\fs24 - bekannte npm-Schwachstellen ueberpruefen und mit audit fix oder gezielten Updates adressieren\par
+\pard\li720\fi-360\fs24 - Supabase-Konfiguration inklusive Region und Policies formal verifizieren\par
+\pard\sb120\sa60\b\fs28 8.3 Test- und QS-Lage\par
+\pard\b0\fs24 Produktionsbuilds wurden erfolgreich erstellt. Gleichzeitig besteht Nachholbedarf bei automatisierten Unit-, Integrations- und End-to-End-Tests sowie bei einer dokumentierten CI-Absicherung.\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 9: BETRIEBLICHE EMPFEHLUNGEN\par
+\pard\sb120\sa60\b\fs28 9.1 Vor dem Go-Live\par
+\pard\li540\fi-240\fs24 1. AVV mit allen relevanten Dienstleistern abschliessen.\par
+\pard\li540\fi-240\fs24 2. Rechtstexte juristisch freigeben und Versionsprozess definieren.\par
+\pard\li540\fi-240\fs24 3. CORS und Konfigurationshaertung fuer Sprachdienste abschliessen.\par
+\pard\li540\fi-240\fs24 4. Abhaengigkeiten pruefen und bekannte Sicherheitswarnungen bewerten.\par
+\pard\li540\fi-240\fs24 5. Release-Checkliste fuer Produktivfreigaben etablieren.\par
+\pard\sb120\sa60\b\fs28 9.2 Kurzfristig nach dem Go-Live\par
+\pard\li540\fi-240\fs24 1. Automatisierte Tests aufbauen.\par
+\pard\li540\fi-240\fs24 2. Security- und Betriebsdokumentation vervollstaendigen.\par
+\pard\li540\fi-240\fs24 3. Monitoring und Audit-Nachweise standardisieren.\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 10: AUDIT-ZUSAMMENFASSUNG\par
+\pard\sb120\sa60\b\fs28 10.1 Gesamtbewertung\par
+\pard\b0\fs24 Ustafix.app ist technisch schluessig, praxisnah und in zentralen Kernprozessen gut umgesetzt. Die fruehere Kernluecke bei den in der App fehlenden Pflichtseiten wurde geschlossen. Die verbleibenden Risiken sind in erster Linie organisatorisch, datenschutzrechtlich und sicherheitsbezogen.\par
+\pard\sb120\sa60\b\fs28 10.2 Wesentliche Staerken\par
+\pard\li720\fi-360\fs24 - starke Offline-Ausrichtung fuer reale Baustellensituationen\par
+\pard\li720\fi-360\fs24 - mehrsprachige Produktlogik fuer heterogene Teams\par
+\pard\li720\fi-360\fs24 - nachvollziehbare Rollen- und Berechtigungsstruktur\par
+\pard\li720\fi-360\fs24 - digitale Protokollierung mit Integritaetsfokus\par
+\pard\sb120\sa60\b\fs28 10.3 Wesentliche Risiken\par
+\pard\li720\fi-360\fs24 - AVV und Datenschutz-Governance noch nicht final abgeschlossen\par
+\pard\li720\fi-360\fs24 - Voice-Server-Haertung noch offen\par
+\pard\li720\fi-360\fs24 - begrenzte automatisierte Testabdeckung\par
+\page
+\pard\sb240\sa120\cf1\b\fs32 KAPITEL 11: FINALES URTEIL\par
+\pard\b0\fs24 Ustafix.app ist ein belastbares digitales Produkt fuer strukturiertes Maengelmanagement im Bauumfeld. Die technische Grundlage, das Rollenmodell und die Offline-Strategie sind markttauglich. Die App ist heute deutlich naeher an der Freigabe als zu Beginn der Analyse, weil die Rechtstexte, Consent-Strecken und administrative Uebersicht bereits integriert wurden.\par
+\pard\b0\fs24 Die finale Produktivfreigabe sollte an den Abschluss der verbleibenden Governance-, Datenschutz- und Sicherheitsmassnahmen gekoppelt werden. Aus Produktsicht ist die Richtung richtig; aus Betriebs- und Compliance-Sicht muss der letzte Abschnitt noch sauber abgeschlossen werden.\par
+\pard\sb240\sa120\i\fs22 Dokument erstellt nach WAMOCON-Dokumentenstandard.\line Quelle: aktualisierte Fassung des Handbuchs in docs/Produkthandbuch-Ustafix.md\line Format: Microsoft Word-kompatible RTF-Datei\i0\par
+}

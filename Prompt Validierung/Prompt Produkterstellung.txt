@@ -1,0 +1,291 @@
+AUFGABE
+Erstelle ein vollständiges, professionelles, aktuelles Produkthandbuch für Ustafix.app auf Basis des tatsächlich implementierten Stands der Anwendung.
+
+ROLLE
+Du arbeitest in der Rolle eines Senior Technical Writer mit Fokus auf:
+- Endkundenverständlichkeit
+- technische Präzision
+- Produkt- und Compliance-Dokumentation
+- strukturierte Management-taugliche Darstellung
+- kognitive Stufe K6
+
+ZIEL
+Erstelle ein belastbares Produkthandbuch für Ustafix.app, das:
+- den realen Ist-Zustand der App dokumentiert
+- alle inzwischen umgesetzten Funktionen und rechtlichen Ergänzungen berücksichtigt
+- zwischen implementiertem Stand, administrativer Nachvollziehbarkeit und juristisch noch zu prüfenden Punkten sauber unterscheidet
+- für Geschäftsführung, Endkunden, Projektleiter, Datenschutzprüfung und Produktdokumentation geeignet ist
+
+SPRACHE
+- Schreibe vollständig auf Deutsch.
+- Schreibe klar, sachlich, professionell.
+- Kein Marketing-Sprech.
+- Keine Floskeln.
+- Keine Spekulationen.
+- Nur zwischen belegtem Ist-Zustand und offenem Prüfbedarf unterscheiden.
+
+DENK- UND QUALITÄTSRAHMEN
+Arbeite mit folgender Methodik:
+- K6-Niveau: Nicht nur beschreiben, sondern strukturieren, synthetisieren, bewerten und in ein übergeordnetes Compliance- und Governance-Verständnis einordnen.
+- Tiefenanalyse: systematische Prüfung auf Konsistenz, Lücken, Risiken, Umsetzungsstand, offene Restpunkte.
+- Auditor-Logik: BLUF, keine Ausschmückung, klare Prioritäten, präzise Aussagen, saubere Trennung zwischen Fakt, Risiko und Empfehlung.
+- WAMOCON-Dokumentenstil:
+  - sachlich und formal
+  - gut gegliedert
+  - managementtauglich
+  - dokumentationsfähig
+  - geeignet zur späteren Übernahme in Word/PDF
+
+DOKUMENTENLAYOUT
+Bitte den Text so strukturieren, dass er direkt in ein formales Handbuch übernommen werden kann.
+Layoutlogik:
+- Kapitel 1. Ebene: groß und klar
+- Kapitel 2. Ebene: fachlich gegliedert
+- Fließtext plus Tabellen, wo sinnvoll
+- Listen nur dort, wo sie den Informationswert erhöhen
+- klare Trennung zwischen Benutzerhandbuch, Technik, Recht, Compliance, Audit
+- formuliere so, dass ein automatisches Inhaltsverzeichnis möglich ist
+
+PRODUKTKONTEXT
+App-Name:
+Ustafix.app
+
+Produktart:
+Progressive Web App (PWA) für digitales Baustellenmängelmanagement
+
+Kernnutzen:
+- Mängel digital erfassen
+- Status verfolgen
+- Teamkoordination
+- mehrsprachige Zusammenarbeit
+- KI-gestützte Spracheingabe
+- Foto/Video/Audio-Dokumentation
+- Offline-Nutzung
+- Abnahmeprotokolle mit digitaler Unterschrift und Hash-Schutz
+
+Zielgruppen:
+- Bauunternehmer
+- Generalunternehmer
+- Bauleiter
+- Projektleiter
+- Handwerksbetriebe
+- Subunternehmer
+- Ausführende Baustellenteams
+
+ROLLENMODELL
+Die App kennt folgende Rollen:
+- Admin
+- Manager
+- Worker
+
+Wichtige Anforderung:
+Das Produkthandbuch muss explizit darstellen, welche Inhalte und Funktionen für welche Rollen relevant und sichtbar sind.
+
+TECHNISCHER IST-STAND
+Berücksichtige als implementierten Stand mindestens folgende Bausteine:
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- Supabase
+- Drizzle ORM
+- Serwist Service Worker
+- Dexie / Offline-Speicherung
+- Web Push / VAPID
+- Resend für E-Mail
+- Groq AI für Sprachtranskription und Übersetzung
+- PDF-Generierung für Abnahmeprotokolle
+
+SPRACHEN
+Die App unterstützt:
+- Deutsch
+- Russisch
+- Türkisch
+
+RECHTLICHER IST-STAND, DER JETZT ALS IMPLEMENTIERT GELTEN MUSS
+WICHTIG:
+Die folgenden Punkte sind bereits umgesetzt und dürfen nicht mehr als bloße Empfehlung oder offene Lücke beschrieben werden:
+
+1. Integrierte Rechtsseiten
+Ustafix.app enthält eigenständige Seiten für:
+- Impressum
+- Datenschutzerklärung
+- AGB
+
+2. Sichtbarkeit der Rechtstexte
+Diese Inhalte sind erreichbar über:
+- Landingpage-Footer
+- Auth-Bereiche
+- Einstellungsbereich
+- Dashboard / Rechtsbereich
+Damit sind sie für alle Rollen präsent:
+- Admin
+- Manager
+- Worker
+
+3. Pflicht-Checkboxen bei neuer Registrierung
+Neue Nutzer müssen bei Registrierung zwingend zustimmen zu:
+- AGB
+- Datenschutzerklärung
+- DSGVO-konformer Datenverarbeitung / Einwilligung
+
+4. Pflicht-Checkboxen auch bei Einladungsregistrierung
+Auch bei Registrierung über Einladungstoken gelten dieselben verpflichtenden Zustimmungen.
+
+5. Speicherung der Zustimmungen
+Die Zustimmungen neuer Nutzer werden nachvollziehbar gespeichert mit:
+- Zustimmungsstatus
+- Versionsstand
+- Zeitstempel
+
+6. Admin-Auswertung
+Im Admin-Modus existiert eine auswertbare Anzeige zu den Rechtszustimmungen mit:
+- Status AGB
+- Status Datenschutz
+- Status DSGVO
+- Version
+- Akzeptanzzeitpunkt
+- vollständig / unvollständig
+
+7. Bestandsnutzer
+Bestandsnutzer wurden nicht rückwirkend migriert.
+Das bedeutet:
+- Die Pflichtzustimmung gilt für neue Registrierungen und neue Einladungsregistrierungen.
+- In der Admin-Auswertung können ältere Bestandskonten als unvollständig erscheinen.
+- Das ist als bewusste Rollout-Entscheidung zu dokumentieren, nicht als Fehler.
+
+WICHTIGE BEWERTUNGSREGEL
+Frühere Lücken wie:
+- Impressum fehlt
+- Datenschutzerklärung fehlt
+- AGB fehlen
+dürfen nicht mehr als offene Defizite formuliert werden.
+
+Stattdessen muss das Handbuch sauber unterscheiden zwischen:
+- technisch implementiert
+- administrativ nachvollziehbar
+- juristisch final noch zu prüfen
+- organisatorisch noch extern abzusichern, z. B. AVV/DPA mit Drittanbietern
+
+WAS WEITERHIN ALS OFFENER PRÜFBEDARF FORMULIERT WERDEN DARF
+Diese Punkte dürfen weiterhin als externe oder organisatorische Restpunkte bewertet werden, sofern sie nicht technisch bereits Bestandteil der App sind:
+- juristische Endprüfung der Texte durch Anwalt
+- Datenschutz-Endprüfung durch Datenschutzbeauftragte
+- AVV/DPA mit Drittanbietern
+- organisatorische Prozesse rund um Compliance und Nachweisführung
+- ggf. formale Corporate-Freigabe
+
+BENUTZERHANDBUCH: WAS BESCHRIEBEN WERDEN SOLL
+Erstelle ein verständliches Benutzerhandbuch für Endkunden und Geschäftsnutzer mit mindestens folgenden Bereichen:
+- Registrierung
+- Anmeldung
+- Pflichtzustimmung zu Rechtstexten
+- Projekt anlegen
+- Einheiten anlegen
+- Mängel erfassen
+- Mängel mit Foto, Video, Audio dokumentieren
+- Sprachaufnahme / KI-gestützte Erfassung
+- Statuswechsel
+- Teammitglieder einladen
+- Rollenverständnis
+- Kommentare / Kommunikation
+- Offline-Verhalten
+- Push-Benachrichtigungen
+- Abnahmeprotokolle
+- digitale Unterschriften
+- PDF-Erstellung
+- Zugriff auf Rechtstexte
+- Rechts- und Datenschutzhinweise für neue Nutzer
+
+TECHNISCHE DOKUMENTATION: WAS BESCHRIEBEN WERDEN SOLL
+Beschreibe die technische Architektur mindestens mit:
+- Systemübersicht
+- Frontend-Architektur
+- Backend-Architektur
+- Authentifizierung
+- Rollenmodell
+- Datenmodell
+- Offline-Konzept
+- Medienverarbeitung
+- KI-Verarbeitung
+- Push-System
+- PDF-/Protokolllogik
+- Speicherung und Nachvollziehbarkeit der Rechtszustimmungen
+- Admin-Auswertung der Zustimmungsdaten
+
+RECHT UND DATENSCHUTZ
+Bitte beschreibe die rechtliche Produktlage so, dass klar wird:
+- Rechtstexte sind jetzt produktiv integriert
+- neue Nutzer müssen aktiv zustimmen
+- Zustimmung ist technisch erzwungen
+- Zustimmung wird nachvollziehbar gespeichert
+- Admins können Zustimmungsstände auswerten
+- Bestandsnutzer können als Altbestand ohne vollständige Zustimmungsmetadaten erscheinen
+- juristische Endprüfung bleibt dennoch als organisatorischer nächster Schritt sinnvoll
+
+COMPLIANCE-SYNTHESE AUF K6-NIVEAU
+Erstelle ein eigenständiges, synthetisiertes Framework für Ustafix.app, das die neuen rechtlichen und administrativen Ergänzungen berücksichtigt.
+Dieses Framework soll nicht nur beschreiben, sondern bewerten und strukturieren:
+- Produkt-Compliance
+- Rollen-Transparenz
+- Zustimmungsgovernance
+- Nachweisbarkeit
+- Datenschutz-Operationalisierung
+- Admin-Kontrollfähigkeit
+- Plattform-Reifegrad
+
+Das Framework soll als eigenständiger Mehrwert im Produkthandbuch erscheinen.
+
+AUDIT-LOGIK
+Führe ein aktualisiertes Audit durch und passe frühere Bewertungen an den aktuellen Stand an.
+Die Audit-Analyse muss insbesondere beantworten:
+- Welche früheren Rechtslücken wurden geschlossen?
+- Welche Maßnahmen sind technisch bereits umgesetzt?
+- Welche Restpunkte liegen jetzt eher in Governance, Vertrag, Recht oder Organisation?
+- Wie ist die Einführung der Pflichtzustimmungen qualitativ zu bewerten?
+- Wie verbessert die Admin-Auswertung die Nachweisfähigkeit?
+- Welche Restrisiken bestehen weiterhin?
+
+WICHTIGE KLASSIFIZIERUNG IM DOKUMENT
+Bitte kennzeichne Inhalte gedanklich sauber nach:
+- Implementierter Ist-Zustand
+- Administrativ auswertbarer Ist-Zustand
+- Offener organisatorischer oder juristischer Prüfbedarf
+
+OUTPUT-STRUKTUR
+Erstelle das Handbuch mindestens in dieser Struktur:
+
+1. Executive Summary
+2. Produktübersicht
+3. Benutzerhandbuch
+4. Rollen- und Berechtigungskonzept
+5. Technische Architektur
+6. Datenverarbeitung und Datenschutz
+7. Rechtliche Dokumentation
+8. Zustimmungslogik und Registrierungs-Compliance
+9. Admin-Auswertung und Governance
+10. Open-Source- und Drittanbieter-Kontext
+11. K6-Synthese / Compliance-Framework
+12. Tiefenanalyse und Audit-Bericht
+13. Finales Review / Management-Fazit
+
+INHALTLICHE PFLICHTPUNKTE
+Bitte arbeite zwingend ein:
+- Rechtstexte sind jetzt vorhanden
+- Rechtstexte sind für alle Rollen erreichbar
+- neue Nutzer müssen zustimmen
+- Einladungsregistrierung ist ebenfalls abgesichert
+- Zustimmung wird versioniert und mit Zeitstempel gespeichert
+- Admins haben eine Auswertungsansicht
+- Bestandsnutzer sind nicht rückwirkend migriert
+- daraus resultierende Bewertung des Produktreifegrads
+
+FORMULIERUNGSREGELN
+- Keine offenen Empfehlungen für bereits implementierte Punkte
+- Keine widersprüchlichen Aussagen
+- Keine Formulierungen wie „fehlt noch“, wenn der Punkt bereits umgesetzt ist
+- Klare, belastbare Sprache
+- Deutlich trennen zwischen Funktion, rechtlicher Wirkung und organisatorischem Restbedarf
+
+ENDZIEL
+Das fertige Produkthandbuch soll den aktuellen realen Produktstand von Ustafix.app vollständig widerspiegeln und die inzwischen umgesetzten Ergänzungen zu Recht, Registrierung, Zustimmungsnachweis und Admin-Auswertung vollständig integrieren.

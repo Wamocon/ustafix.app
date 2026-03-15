@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { User, Mail, Smartphone, Lock } from "lucide-react";
+import { Scale } from "lucide-react";
 import { LogoutButton } from "@/components/logout-button";
 import { NotificationSettings } from "@/components/notification-settings";
 import { LanguageSelector } from "@/components/language-selector";
+import { LegalLinks } from "@/components/legal/legal-links";
 import { useTranslation } from "@/hooks/use-translations";
 import { updateProfileName, updatePassword } from "@/lib/actions/profile";
 import { toast } from "sonner";
@@ -186,6 +189,32 @@ export function SettingsContent({
 
         <div className="section-card">
           <NotificationSettings preferences={notifPrefs} />
+        </div>
+
+        <div className="section-card space-y-4">
+          <h2 className="font-bold flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-50 border border-amber-200">
+              <Scale className="h-4 w-4 text-amber-600" />
+            </div>
+            {t("legal.sectionTitle")}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {t("legal.sectionDescription")}
+          </p>
+          <LegalLinks variant="cards" />
+          <p className="text-xs text-muted-foreground">
+            <Link href="/impressum" className="font-medium text-amber-700 hover:underline">
+              {t("legal.imprint")}
+            </Link>{" "}
+            ·{" "}
+            <Link href="/datenschutz" className="font-medium text-amber-700 hover:underline">
+              {t("legal.privacy")}
+            </Link>{" "}
+            ·{" "}
+            <Link href="/agb" className="font-medium text-amber-700 hover:underline">
+              {t("legal.terms")}
+            </Link>
+          </p>
         </div>
 
         <LogoutButton />

@@ -14,13 +14,18 @@ import {
   UserCheck,
   Briefcase,
   Shield,
+  Scale,
+  ShieldCheck,
 } from "lucide-react";
 import { CreateProjectDialog } from "@/components/create-project-dialog";
 import { StatCard } from "./stat-card";
 import { ProjectHealthCard } from "./project-health-card";
 import { ActivityFeed } from "./activity-feed";
+import { LegalLinks } from "@/components/legal/legal-links";
+import { AdminLegalConsentPanel } from "@/components/dashboard/admin-legal-consent-panel";
 import { useTranslation } from "@/hooks/use-translations";
 import type { DashboardData } from "@/lib/actions/dashboard";
+import type { AdminLegalConsentOverview } from "@/lib/actions/legal";
 
 const ROLE_ICONS: Record<string, typeof Shield> = {
   admin: Shield,
@@ -30,9 +35,13 @@ const ROLE_ICONS: Record<string, typeof Shield> = {
 
 interface DashboardContentProps {
   stats: DashboardData;
+  adminLegalConsentOverview?: AdminLegalConsentOverview | null;
 }
 
-export function DashboardContent({ stats }: DashboardContentProps) {
+export function DashboardContent({
+  stats,
+  adminLegalConsentOverview,
+}: DashboardContentProps) {
   const { highest_role: role, projects } = stats;
   const t = useTranslation();
 
@@ -116,6 +125,7 @@ export function DashboardContent({ stats }: DashboardContentProps) {
       {role === "admin" && (
         <AdminDashboard
           stats={stats}
+          adminLegalConsentOverview={adminLegalConsentOverview ?? null}
           totals={totals}
           completionRate={completionRate}
           allTransitions={allTransitions}
@@ -159,12 +169,14 @@ interface DashTotals {
 
 function AdminDashboard({
   stats,
+  adminLegalConsentOverview,
   totals,
   completionRate,
   allTransitions,
   t,
 }: {
   stats: DashboardData;
+  adminLegalConsentOverview: AdminLegalConsentOverview | null;
   totals: DashTotals;
   completionRate: number;
   allTransitions: TransitionWithProject[];
@@ -262,6 +274,12 @@ function AdminDashboard({
           )}
         </Section>
       )}
+
+      <Section title={t("dashboard.legalConsentOverview")} icon={ShieldCheck}>
+        <AdminLegalConsentPanel overview={adminLegalConsentOverview} />
+      </Section>
+
+      <LegalLinksSection t={t} />
     </>
   );
 }
@@ -357,6 +375,8 @@ function ManagerDashboard({
           )}
         </Section>
       )}
+
+      <LegalLinksSection t={t} />
     </>
   );
 }
@@ -446,7 +466,22 @@ function WorkerDashboard({
           )}
         </Section>
       )}
+
+      <LegalLinksSection t={t} />
     </>
+  );
+}
+
+function LegalLinksSection({ t }: { t: (key: string) => string }) {
+  return (
+    <Section title={t("common.legal")} icon={Scale}>
+      <div className="rounded-2xl border border-border bg-card p-4 space-y-3">
+        <p className="text-sm text-muted-foreground">
+          {t("dashboard.legalAvailableAllRoles")}
+        </p>
+        <LegalLinks className="justify-start" />
+      </div>
+    </Section>
   );
 }
 
