@@ -7,7 +7,14 @@ import { Loader2, ArrowRight, CheckCircle2 } from "lucide-react";
 import { UstafixLogo } from "@/components/ustafix-logo";
 import { motion } from "framer-motion";
 import { claimPendingInvitations } from "@/lib/actions/invitations";
+import {
+  LegalConsentFields,
+  hasAcceptedAllLegalConsents,
+  type LegalConsentState,
+} from "@/components/legal/legal-consent-fields";
+import { LegalLinks } from "@/components/legal/legal-links";
 import { useTranslation } from "@/hooks/use-translations";
+import { createLegalConsentMetadata } from "@/lib/legal/consent";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -16,6 +23,11 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [legalConsent, setLegalConsent] = useState<LegalConsentState>({
+    termsAccepted: false,
+    privacyAccepted: false,
+    dsgvoAccepted: false,
+  });
   const t = useTranslation();
 
   async function handleRegister(e: React.FormEvent) {
@@ -29,11 +41,22 @@ export default function RegisterPage() {
       return;
     }
 
+    if (!hasAcceptedAllLegalConsents(legalConsent)) {
+      setError(t("auth.legalRequired"));
+      setLoading(false);
+      return;
+    }
+
     const supabase = createClient();
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: fullName } },
+      options: {
+        data: {
+          full_name: fullName,
+          ...createLegalConsentMetadata(legalConsent),
+        },
+      },
     });
 
     if (error) {
@@ -158,9 +181,15 @@ export default function RegisterPage() {
               />
             </div>
 
+            <LegalConsentFields
+              value={legalConsent}
+              onChange={setLegalConsent}
+              disabled={loading}
+            />
+
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !hasAcceptedAllLegalConsents(legalConsent)}
               className="flex h-13 w-full items-center justify-center gap-2 rounded-2xl gradient-primary font-bold text-white shadow-lg shadow-amber-500/25 transition-all hover:shadow-xl hover:shadow-amber-500/30 hover:brightness-110 active:scale-[0.98] disabled:opacity-50 disabled:shadow-none cursor-pointer"
             >
               {loading ? (
@@ -175,15 +204,18 @@ export default function RegisterPage() {
           </form>
         )}
 
-        <p className="text-center text-sm text-muted-foreground">
-          {t("auth.haveAccount")}{" "}
-          <Link
-            href="/login"
-            className="font-semibold text-amber-500 hover:text-amber-400 transition-colors"
-          >
-            {t("auth.loginLink")}
-          </Link>
-        </p>
+        <div className="space-y-3 text-center text-sm text-muted-foreground">
+          <p>
+            {t("auth.haveAccount")} {" "}
+            <Link
+              href="/login"
+              className="font-semibold text-amber-500 hover:text-amber-400 transition-colors"
+            >
+              {t("auth.loginLink")}
+            </Link>
+          </p>
+          <LegalLinks />
+        </div>
       </motion.div>
     </div>
   );

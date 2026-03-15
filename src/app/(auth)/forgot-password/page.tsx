@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Loader2, ArrowLeft, Mail, CheckCircle2 } from "lucide-react";
 import { UstafixLogo } from "@/components/ustafix-logo";
 import { motion } from "framer-motion";
+import { LegalLinks } from "@/components/legal/legal-links";
 import { useTranslation } from "@/hooks/use-translations";
 
 export default function ForgotPasswordPage() {
@@ -126,15 +127,18 @@ export default function ForgotPasswordPage() {
           </form>
         )}
 
-        <p className="text-center text-sm text-muted-foreground">
-          <Link
-            href="/login"
-            className="inline-flex items-center gap-1 font-semibold text-amber-500 hover:text-amber-400 transition-colors"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            {t("auth.backToLogin")}
-          </Link>
-        </p>
+        <div className="space-y-3 text-center text-sm text-muted-foreground">
+          <p>
+            <Link
+              href="/login"
+              className="inline-flex items-center gap-1 font-semibold text-amber-500 hover:text-amber-400 transition-colors"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              {t("auth.backToLogin")}
+            </Link>
+          </p>
+          <LegalLinks />
+        </div>
       </motion.div>
     </div>
   );

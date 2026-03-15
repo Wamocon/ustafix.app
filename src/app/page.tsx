@@ -17,6 +17,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { UstafixLogo } from "@/components/ustafix-logo";
+import { LegalLinks } from "@/components/legal/legal-links";
 import { useTranslation } from "@/hooks/use-translations";
 import { useLanguageContext } from "@/contexts/language-context";
 import type { Locale } from "@/lib/i18n/translations";
@@ -398,7 +399,7 @@ export default function LandingPage() {
       {/* ─── Footer ─── */}
       <footer className="border-t border-border px-4 py-8">
         <div className="mx-auto max-w-5xl">
-          <div className="flex flex-col items-center gap-5">
+          <div className="flex flex-col items-center gap-5 text-center">
             <div className="flex items-center gap-2">
               <div className="h-7 w-7 overflow-hidden rounded-lg shadow-sm">
                 <UstafixLogo className="h-full w-full" />
@@ -407,6 +408,12 @@ export default function LandingPage() {
                 Ustafix<span className="gradient-text">.app</span>
               </span>
             </div>
+
+            <p className="max-w-xl text-sm text-muted-foreground">
+              Digitale Mängeldokumentation für die Baustelle. Rechtliche Informationen finden Sie jederzeit transparent und direkt erreichbar am Seitenende.
+            </p>
+
+            <LegalLinks />
 
             <span className="text-xs text-muted-foreground/70">
               &copy; {new Date().getFullYear()} Ustafix. {t("landing.copyright")}

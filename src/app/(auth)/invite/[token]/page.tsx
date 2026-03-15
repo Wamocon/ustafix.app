@@ -19,6 +19,12 @@ import {
   getInvitationInfo,
   acceptInvitationByToken,
 } from "@/lib/actions/invitations";
+import {
+  LegalConsentFields,
+  hasAcceptedAllLegalConsents,
+  type LegalConsentState,
+} from "@/components/legal/legal-consent-fields";
+import { createLegalConsentMetadata } from "@/lib/legal/consent";
 
 const ROLE_LABELS: Record<string, string> = {
   admin: "Admin",
@@ -50,6 +56,11 @@ export default function InvitePage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
+  const [legalConsent, setLegalConsent] = useState<LegalConsentState>({
+    termsAccepted: false,
+    privacyAccepted: false,
+    dsgvoAccepted: false,
+  });
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
@@ -115,13 +126,22 @@ export default function InvitePage() {
       setFormError("Passwort muss mindestens 6 Zeichen lang sein.");
       return;
     }
+    if (!hasAcceptedAllLegalConsents(legalConsent)) {
+      setFormError("Bitte akzeptieren Sie AGB, Datenschutzerklärung und DSGVO-Einwilligung.");
+      return;
+    }
 
     startTransition(async () => {
       const supabase = createClient();
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { full_name: fullName } },
+        options: {
+          data: {
+            full_name: fullName,
+            ...createLegalConsentMetadata(legalConsent),
+          },
+        },
       });
 
       if (error) {
@@ -299,8 +319,10 @@ export default function InvitePage() {
               email={email}
               fullName={fullName}
               password={password}
+              legalConsent={legalConsent}
               onFullNameChange={setFullName}
               onPasswordChange={setPassword}
+              onLegalConsentChange={setLegalConsent}
               onRegister={handleRegister}
               onLogin={handleLogin}
               isPending={isPending}
@@ -316,8 +338,10 @@ function InviteAuthForm({
   email,
   fullName,
   password,
+  legalConsent,
   onFullNameChange,
   onPasswordChange,
+  onLegalConsentChange,
   onRegister,
   onLogin,
   isPending,
@@ -325,8 +349,10 @@ function InviteAuthForm({
   email: string;
   fullName: string;
   password: string;
+  legalConsent: LegalConsentState;
   onFullNameChange: (v: string) => void;
   onPasswordChange: (v: string) => void;
+  onLegalConsentChange: (v: LegalConsentState) => void;
   onRegister: () => void;
   onLogin: () => void;
   isPending: boolean;
@@ -406,10 +432,18 @@ function InviteAuthForm({
         />
       </div>
 
+      {tab === "register" && (
+        <LegalConsentFields
+          value={legalConsent}
+          onChange={onLegalConsentChange}
+          disabled={isPending}
+        />
+      )}
+
       <button
         type="button"
         onClick={tab === "register" ? onRegister : onLogin}
-        disabled={isPending}
+        disabled={isPending || (tab === "register" && !hasAcceptedAllLegalConsents(legalConsent))}
         className="flex h-13 w-full items-center justify-center gap-2 rounded-2xl gradient-primary font-bold text-white shadow-lg shadow-amber-500/25 transition-all hover:shadow-xl hover:shadow-amber-500/30 hover:brightness-110 active:scale-[0.98] disabled:opacity-50 disabled:shadow-none cursor-pointer"
       >
         {isPending ? (

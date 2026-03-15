@@ -7,6 +7,7 @@ import { Loader2, ArrowRight } from "lucide-react";
 import { UstafixLogo } from "@/components/ustafix-logo";
 import { motion } from "framer-motion";
 import { claimPendingInvitations } from "@/lib/actions/invitations";
+import { LegalLinks } from "@/components/legal/legal-links";
 import { useTranslation } from "@/hooks/use-translations";
 
 export default function LoginPage() {
@@ -152,6 +153,7 @@ export default function LoginPage() {
               {t("auth.registerLink")}
             </Link>
           </p>
+          <LegalLinks className="pt-3" />
         </div>
       </motion.div>
     </div>
