@@ -3,7 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import { SerwistProvider } from "./serwist";
 import { LanguageContextProvider } from "@/contexts/language-context";
-import { MadeInGermanyFooter } from "@/components/made-in-germany-footer";
+import { DevelopedInGermanyBadge } from "@/components/developed-in-germany-badge";
 import "./globals.css";
 
 const font = Plus_Jakarta_Sans({
@@ -48,7 +48,7 @@ export default function RootLayout({
         <LanguageContextProvider>
         <SerwistProvider swUrl="/serwist/sw.js">
           {children}
-          <MadeInGermanyFooter />
+          <DevelopedInGermanyBadge />
         </SerwistProvider>
         </LanguageContextProvider>
         <Toaster
