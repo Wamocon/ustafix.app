@@ -24,10 +24,21 @@ export interface InviteResult {
   emailSent?: boolean;
 }
 
+type ContactType = "email" | "phone";
+
+function normalizePhone(input: string): string {
+  const cleaned = input.replace(/[^\d+]/g, "");
+  if (cleaned.startsWith("+")) {
+    return `+${cleaned.slice(1).replace(/\D/g, "")}`;
+  }
+  return cleaned.replace(/\D/g, "");
+}
+
 export async function inviteProjectMember(
   projectId: string,
-  email: string,
-  role: InviteRole
+  contact: string,
+  role: InviteRole,
+  contactType: ContactType = "email"
 ): Promise<InviteResult> {
   const supabase = await createClient();
   const {
@@ -47,19 +58,51 @@ export async function inviteProjectMember(
     return { error: "Nur Admin oder Manager dürfen Nutzer einladen." };
   }
 
-  const normalizedEmail = email.trim().toLowerCase();
-  if (!normalizedEmail || !normalizedEmail.includes("@")) {
-    return { error: "Bitte eine gültige E-Mail-Adresse angeben." };
+  const normalizedEmail = contactType === "email" ? contact.trim().toLowerCase() : "";
+  const normalizedPhone = contactType === "phone" ? normalizePhone(contact) : "";
+
+  if (contactType === "email") {
+    if (!normalizedEmail || !normalizedEmail.includes("@")) {
+      return { error: "Bitte eine gültige E-Mail-Adresse angeben." };
+    }
+
+    if (normalizedEmail === user.email?.toLowerCase()) {
+      return { error: "Sie können sich nicht selbst einladen." };
+    }
   }
 
-  if (normalizedEmail === user.email?.toLowerCase()) {
-    return { error: "Sie können sich nicht selbst einladen." };
+  if (contactType === "phone") {
+    if (!normalizedPhone || normalizedPhone.length < 6) {
+      return { error: "Bitte eine gültige Handynummer angeben." };
+    }
+
+    const myPhoneNormalized = normalizePhone(user.phone ?? "");
+    if (myPhoneNormalized && myPhoneNormalized === normalizedPhone) {
+      return { error: "Sie können sich nicht selbst einladen." };
+    }
   }
 
   // Try direct add first (user already registered)
-  const { data: foundUserId } = await supabase.rpc("get_user_id_by_email", {
-    p_email: normalizedEmail,
-  });
+  const lookup =
+    contactType === "email"
+      ? await supabase.rpc("get_user_id_by_email", {
+          p_email: normalizedEmail,
+        })
+      : await supabase.rpc("get_user_id_by_phone", {
+          p_phone: normalizedPhone,
+        });
+
+  const foundUserId = lookup.data as string | null;
+
+  if (lookup.error) {
+    console.error("invite lookup error:", lookup.error);
+    return {
+      error:
+        contactType === "phone"
+          ? "Suche per Handynummer aktuell nicht verfügbar. Bitte alternativ per E-Mail einladen."
+          : "Nutzer-Suche fehlgeschlagen.",
+    };
+  }
 
   if (foundUserId) {
     const { data: existingMember } = await supabase
@@ -86,6 +129,13 @@ export async function inviteProjectMember(
 
     revalidatePath(`/project/${projectId}`);
     return { directlyAdded: true };
+  }
+
+  if (contactType === "phone") {
+    return {
+      error:
+        "Zu dieser Handynummer wurde kein registrierter Nutzer gefunden. Bitte per E-Mail einladen oder die Person zuerst registrieren lassen.",
+    };
   }
 
   // User not registered — create an invitation

@@ -37,6 +37,7 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<Mode>("idle");
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [unitId, setUnitId] = useState("");
   const [priority, setPriority] = useState<"niedrig" | "mittel" | "hoch">(
     "mittel"
@@ -69,6 +70,7 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
   function reset() {
     setMode("idle");
     setTitle("");
+    setDescription("");
     setUnitId("");
     setPriority("mittel");
     setFiles([]);
@@ -146,6 +148,9 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
       const summary = result.translations.de || result.transcript;
       setTitle(summary.slice(0, 100));
     }
+    if (!description) {
+      setDescription(result.translations.de || result.transcript);
+    }
     const audioFile = new File([result.audioBlob], "recording.webm", {
       type: result.audioBlob.type,
     });
@@ -160,6 +165,8 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
     }
 
     startTransition(async () => {
+      const descriptionValue = description.trim();
+
       try {
         if (!navigator.onLine) {
           if (!userId) {
@@ -169,8 +176,8 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
           const defectId = await saveDefectOffline({
             projectId,
             title: title.trim(),
-            descriptionOriginal: transcribedText || undefined,
-            descriptionDe: translations.de,
+            descriptionOriginal: transcribedText || descriptionValue || undefined,
+            descriptionDe: descriptionValue || translations.de || transcribedText || undefined,
             descriptionTr: translations.tr,
             descriptionRu: translations.ru,
             unitId: unitId || undefined,
@@ -206,8 +213,8 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
         const defect = await createDefect({
           projectId,
           title: title.trim(),
-          descriptionOriginal: transcribedText || undefined,
-          descriptionDe: translations.de,
+          descriptionOriginal: transcribedText || descriptionValue || undefined,
+          descriptionDe: descriptionValue || translations.de || transcribedText || undefined,
           descriptionTr: translations.tr,
           descriptionRu: translations.ru,
           unitId: unitId || undefined,
@@ -226,8 +233,8 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
             const defectId = await saveDefectOffline({
               projectId,
               title: title.trim(),
-              descriptionOriginal: transcribedText || undefined,
-              descriptionDe: translations.de,
+              descriptionOriginal: transcribedText || descriptionValue || undefined,
+              descriptionDe: descriptionValue || translations.de || transcribedText || undefined,
               descriptionTr: translations.tr,
               descriptionRu: translations.ru,
               unitId: unitId || undefined,
@@ -418,117 +425,132 @@ export function CaptureModal({ projectId, units, userId }: CaptureModalProps) {
                 )}
 
                 {/* Title & details */}
-                {(mode === "media" || title || transcribedText) && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="space-y-5"
-                  >
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="space-y-5"
+                >
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="defect-title"
+                      className="text-sm font-semibold"
+                    >
+                      Titel *
+                    </label>
+                    <input
+                      id="defect-title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      placeholder="z.B. Glasscheibe wackelt"
+                      className="flex h-13 w-full rounded-2xl border border-border bg-card px-4 text-base outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="defect-description"
+                      className="text-sm font-semibold"
+                    >
+                      Beschreibung
+                    </label>
+                    <textarea
+                      id="defect-description"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      rows={4}
+                      placeholder="Details zum Mangel eingeben..."
+                      className="flex w-full rounded-2xl border border-border bg-card px-4 py-3 text-sm outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground resize-y"
+                    />
+                  </div>
+
+                  {transcribedText && (
                     <div className="space-y-2">
-                      <label
-                        htmlFor="defect-title"
-                        className="text-sm font-semibold"
-                      >
-                        Titel *
-                      </label>
-                      <input
-                        id="defect-title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="z.B. Glasscheibe wackelt"
-                        className="flex h-13 w-full rounded-2xl border border-border bg-card px-4 text-base outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground"
-                      />
-                    </div>
-
-                    {transcribedText && (
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <label className="text-sm font-semibold">
-                            Transkription
-                          </label>
-                          <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-                        </div>
-                        <textarea
-                          value={transcribedText}
-                          onChange={(e) => setTranscribedText(e.target.value)}
-                          rows={3}
-                          className="flex w-full rounded-2xl border border-border bg-card px-4 py-3 text-sm outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground resize-none"
-                        />
-                        {translations.de && (
-                          <p className="text-xs text-muted-foreground rounded-xl bg-muted px-3 py-2">
-                            🇩🇪 {translations.de}
-                          </p>
-                        )}
-                      </div>
-                    )}
-
-                    {units.length > 0 && (
-                      <div className="space-y-2">
+                      <div className="flex items-center gap-2">
                         <label className="text-sm font-semibold">
-                          Einheit / Bereich
+                          Transkription
                         </label>
-                        <div className="flex flex-wrap gap-2">
+                        <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+                      </div>
+                      <textarea
+                        value={transcribedText}
+                        onChange={(e) => setTranscribedText(e.target.value)}
+                        rows={3}
+                        className="flex w-full rounded-2xl border border-border bg-card px-4 py-3 text-sm outline-none ring-2 ring-transparent transition-all focus:ring-amber-500/40 focus:border-amber-500/60 placeholder:text-muted-foreground resize-none"
+                      />
+                      {translations.de && (
+                        <p className="text-xs text-muted-foreground rounded-xl bg-muted px-3 py-2">
+                          🇩🇪 {translations.de}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {units.length > 0 && (
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold">
+                        Einheit / Bereich
+                      </label>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => setUnitId("")}
+                          className={cn(
+                            "rounded-full px-3.5 py-2 text-xs font-semibold transition-all cursor-pointer",
+                            !unitId
+                              ? "gradient-primary text-white shadow-md shadow-amber-500/20"
+                              : "bg-card border border-border text-muted-foreground"
+                          )}
+                        >
+                          Keine
+                        </button>
+                        {units.map((u) => (
                           <button
-                            onClick={() => setUnitId("")}
+                            key={u.id}
+                            onClick={() => setUnitId(u.id)}
                             className={cn(
                               "rounded-full px-3.5 py-2 text-xs font-semibold transition-all cursor-pointer",
-                              !unitId
+                              unitId === u.id
                                 ? "gradient-primary text-white shadow-md shadow-amber-500/20"
                                 : "bg-card border border-border text-muted-foreground"
                             )}
                           >
-                            Keine
-                          </button>
-                          {units.map((u) => (
-                            <button
-                              key={u.id}
-                              onClick={() => setUnitId(u.id)}
-                              className={cn(
-                                "rounded-full px-3.5 py-2 text-xs font-semibold transition-all cursor-pointer",
-                                unitId === u.id
-                                  ? "gradient-primary text-white shadow-md shadow-amber-500/20"
-                                  : "bg-card border border-border text-muted-foreground"
-                              )}
-                            >
-                              {u.name}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold">Priorität</label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {(
-                          [
-                            { value: "niedrig", label: "Niedrig", emoji: "🟢" },
-                            { value: "mittel", label: "Mittel", emoji: "🟡" },
-                            { value: "hoch", label: "Hoch", emoji: "🔴" },
-                          ] as const
-                        ).map((p) => (
-                          <button
-                            key={p.value}
-                            onClick={() => setPriority(p.value)}
-                            className={cn(
-                              "h-12 rounded-2xl text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5",
-                              priority === p.value
-                                ? "gradient-primary text-white shadow-md shadow-amber-500/20"
-                                : "bg-card border border-border text-muted-foreground hover:text-foreground"
-                            )}
-                          >
-                            <span className="text-xs">{p.emoji}</span>
-                            {p.label}
+                            {u.name}
                           </button>
                         ))}
                       </div>
                     </div>
-                  </motion.div>
-                )}
+                  )}
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold">Priorität</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {(
+                        [
+                          { value: "niedrig", label: "Niedrig", emoji: "🟢" },
+                          { value: "mittel", label: "Mittel", emoji: "🟡" },
+                          { value: "hoch", label: "Hoch", emoji: "🔴" },
+                        ] as const
+                      ).map((p) => (
+                        <button
+                          key={p.value}
+                          onClick={() => setPriority(p.value)}
+                          className={cn(
+                            "h-12 rounded-2xl text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5",
+                            priority === p.value
+                              ? "gradient-primary text-white shadow-md shadow-amber-500/20"
+                              : "bg-card border border-border text-muted-foreground hover:text-foreground"
+                          )}
+                        >
+                          <span className="text-xs">{p.emoji}</span>
+                          {p.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
               </div>
 
               {/* Bottom submit */}
-              {(mode === "media" || title) && (
+              {open && (
                 <div className="border-t border-border p-4 safe-area-bottom">
                   <button
                     onClick={handleSubmit}

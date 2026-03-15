@@ -25,6 +25,8 @@ interface MediaViewerProps {
   canDeleteAll: boolean;
 }
 
+const DELETE_CONFIRM_MESSAGE = "Bist du sicher, dass du das löschen willst?";
+
 export function MediaViewer({
   media,
   projectId,
@@ -63,6 +65,8 @@ export function MediaViewer({
   async function handleDelete(e: React.MouseEvent, item: MediaItem) {
     e.stopPropagation();
     if (!canDeleteItem(item)) return;
+    if (!window.confirm(DELETE_CONFIRM_MESSAGE)) return;
+
     try {
       await deleteMedia(item.id, item.storage_path, defectId, projectId);
       toast.success("Datei gelöscht");

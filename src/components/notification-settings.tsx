@@ -32,6 +32,8 @@ interface NotificationSettingsProps {
   };
 }
 
+const DELETE_CONFIRM_MESSAGE = "Bist du sicher, dass du das löschen willst?";
+
 export function NotificationSettings({
   preferences,
 }: NotificationSettingsProps) {
@@ -75,6 +77,8 @@ export function NotificationSettings({
     }
 
     if (pushEnabled) {
+      if (!window.confirm(DELETE_CONFIRM_MESSAGE)) return;
+
       try {
         const registration = await navigator.serviceWorker.ready;
         const subscription = await registration.pushManager.getSubscription();
