@@ -93,7 +93,7 @@ export function DefectDetailContent({
     defect.defect_media ?? [];
 
   return (
-    <div className="mx-auto max-w-lg px-4 pt-4 pb-28">
+    <div className="mx-auto max-w-lg lg:max-w-4xl px-4 lg:px-8 pt-4 pb-28 lg:pb-8">
       <Link
         href={`/project/${projectId}`}
         className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"

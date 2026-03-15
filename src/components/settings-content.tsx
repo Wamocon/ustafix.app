@@ -69,7 +69,7 @@ export function SettingsContent({
   }
 
   return (
-    <div className="mx-auto max-w-lg px-4 pt-6 pb-4">
+    <div className="mx-auto max-w-lg lg:max-w-2xl px-4 lg:px-8 pt-6 pb-4">
       <header className="mb-8">
         <h1 className="text-3xl font-extrabold tracking-tight">
           {t("settings.title")}

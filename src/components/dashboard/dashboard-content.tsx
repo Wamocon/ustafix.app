@@ -97,7 +97,7 @@ export function DashboardContent({
   const canCreate = role === "admin" || role === "manager";
 
   return (
-    <div className="mx-auto max-w-lg px-4 pt-6 pb-4 space-y-6">
+    <div className="mx-auto max-w-lg lg:max-w-6xl px-4 lg:px-8 pt-6 pb-4 space-y-6">
       {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -8 }}
@@ -190,7 +190,7 @@ function AdminDashboard({
   return (
     <>
       {/* KPI Grid */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
         <StatCard
           label={t("dashboard.projects")}
           value={stats.projects.length}
@@ -245,35 +245,38 @@ function AdminDashboard({
         />
       </div>
 
-      {/* Project Health */}
-      <Section title={t("dashboard.projectOverview")} icon={Building2} id="admin-projects">
-        <div className="space-y-3">
-          {stats.projects.map((p, i) => (
-            <ProjectHealthCard
-              key={p.id}
-              project={p}
-              index={i}
-              showTeamDetails
-            />
-          ))}
-        </div>
-      </Section>
-
-      {/* Activity */}
-      {allTransitions.length > 0 && (
-        <Section title={t("dashboard.recentActivity")} icon={Clock}>
-          {groupTransitionsByProject(allTransitions).map(
-            ([projectId, projectName, transitions]) => (
-              <ActivityFeed
-                key={projectId}
-                transitions={transitions}
-                projectId={projectId}
-                projectName={projectName}
+      {/* Desktop: Two-column layout for projects + activity */}
+      <div className="lg:grid lg:grid-cols-2 lg:gap-6 space-y-6 lg:space-y-0">
+        {/* Project Health */}
+        <Section title={t("dashboard.projectOverview")} icon={Building2} id="admin-projects">
+          <div className="space-y-3">
+            {stats.projects.map((p, i) => (
+              <ProjectHealthCard
+                key={p.id}
+                project={p}
+                index={i}
+                showTeamDetails
               />
-            )
-          )}
+            ))}
+          </div>
         </Section>
-      )}
+
+        {/* Activity */}
+        {allTransitions.length > 0 && (
+          <Section title={t("dashboard.recentActivity")} icon={Clock}>
+            {groupTransitionsByProject(allTransitions).map(
+              ([projectId, projectName, transitions]) => (
+                <ActivityFeed
+                  key={projectId}
+                  transitions={transitions}
+                  projectId={projectId}
+                  projectName={projectName}
+                />
+              )
+            )}
+          </Section>
+        )}
+      </div>
 
       <Section title={t("dashboard.legalConsentOverview")} icon={ShieldCheck}>
         <AdminLegalConsentPanel overview={adminLegalConsentOverview} />
@@ -307,7 +310,7 @@ function ManagerDashboard({
   return (
     <>
       {/* KPI Grid */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
           label={t("dashboard.myProjects")}
           value={stats.projects.length}
@@ -346,35 +349,38 @@ function ManagerDashboard({
         />
       </div>
 
-      {/* Projects */}
-      <Section title={t("dashboard.projectOverview")} icon={Building2} id="manager-projects">
-        <div className="space-y-3">
-          {stats.projects.map((p, i) => (
-            <ProjectHealthCard
-              key={p.id}
-              project={p}
-              index={i}
-              showTeamDetails
-            />
-          ))}
-        </div>
-      </Section>
-
-      {/* Activity */}
-      {allTransitions.length > 0 && (
-        <Section title={t("dashboard.recentActivity")} icon={Clock}>
-          {groupTransitionsByProject(allTransitions).map(
-            ([projectId, projectName, transitions]) => (
-              <ActivityFeed
-                key={projectId}
-                transitions={transitions}
-                projectId={projectId}
-                projectName={projectName}
+      {/* Desktop: Two-column layout for projects + activity */}
+      <div className="lg:grid lg:grid-cols-2 lg:gap-6 space-y-6 lg:space-y-0">
+        {/* Projects */}
+        <Section title={t("dashboard.projectOverview")} icon={Building2} id="manager-projects">
+          <div className="space-y-3">
+            {stats.projects.map((p, i) => (
+              <ProjectHealthCard
+                key={p.id}
+                project={p}
+                index={i}
+                showTeamDetails
               />
-            )
-          )}
+            ))}
+          </div>
         </Section>
-      )}
+
+        {/* Activity */}
+        {allTransitions.length > 0 && (
+          <Section title={t("dashboard.recentActivity")} icon={Clock}>
+            {groupTransitionsByProject(allTransitions).map(
+              ([projectId, projectName, transitions]) => (
+                <ActivityFeed
+                  key={projectId}
+                  transitions={transitions}
+                  projectId={projectId}
+                  projectName={projectName}
+                />
+              )
+            )}
+          </Section>
+        )}
+      </div>
 
       <LegalLinksSection t={t} />
     </>
@@ -406,7 +412,7 @@ function WorkerDashboard({
   return (
     <>
       {/* KPI Grid */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
           label={t("dashboard.myProjects")}
           value={stats.projects.length}
@@ -442,30 +448,33 @@ function WorkerDashboard({
         />
       </div>
 
-      {/* Projects */}
-      <Section title={t("dashboard.myProjects")} icon={Building2} id="worker-projects">
-        <div className="space-y-3">
-          {stats.projects.map((p, i) => (
-            <ProjectHealthCard key={p.id} project={p} index={i} />
-          ))}
-        </div>
-      </Section>
-
-      {/* Activity */}
-      {allTransitions.length > 0 && (
-        <Section title={t("dashboard.recentChanges")} icon={Clock}>
-          {groupTransitionsByProject(allTransitions).map(
-            ([projectId, projectName, transitions]) => (
-              <ActivityFeed
-                key={projectId}
-                transitions={transitions}
-                projectId={projectId}
-                projectName={projectName}
-              />
-            )
-          )}
+      {/* Desktop: Two-column layout for projects + activity */}
+      <div className="lg:grid lg:grid-cols-2 lg:gap-6 space-y-6 lg:space-y-0">
+        {/* Projects */}
+        <Section title={t("dashboard.myProjects")} icon={Building2} id="worker-projects">
+          <div className="space-y-3">
+            {stats.projects.map((p, i) => (
+              <ProjectHealthCard key={p.id} project={p} index={i} />
+            ))}
+          </div>
         </Section>
-      )}
+
+        {/* Activity */}
+        {allTransitions.length > 0 && (
+          <Section title={t("dashboard.recentChanges")} icon={Clock}>
+            {groupTransitionsByProject(allTransitions).map(
+              ([projectId, projectName, transitions]) => (
+                <ActivityFeed
+                  key={projectId}
+                  transitions={transitions}
+                  projectId={projectId}
+                  projectName={projectName}
+                />
+              )
+            )}
+          </Section>
+        )}
+      </div>
 
       <LegalLinksSection t={t} />
     </>
