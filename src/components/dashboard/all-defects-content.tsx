@@ -75,7 +75,7 @@ export function AllDefectsContent({ defects }: Props) {
   };
 
   return (
-    <div className="mx-auto max-w-lg px-4 pt-6 pb-4 space-y-4">
+    <div className="mx-auto max-w-lg lg:max-w-4xl px-4 lg:px-8 pt-6 pb-4 space-y-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}

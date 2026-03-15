@@ -33,8 +33,10 @@ export function DevelopedInGermanyBadge() {
   return (
     <div
       className={cn(
-        "pointer-events-none fixed left-1/2 z-40 -translate-x-1/2",
-        authLikePath ? "bottom-4" : "bottom-24"
+        "pointer-events-none fixed inset-x-0 z-40 flex justify-center",
+        authLikePath
+          ? "bottom-4"
+          : "bottom-24 lg:bottom-4 lg:pl-64"
       )}
       aria-hidden="true"
     >

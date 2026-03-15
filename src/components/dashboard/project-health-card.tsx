@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
 import {
   Building2,
@@ -17,14 +17,13 @@ import {
 import type { ProjectStats } from "@/lib/actions/dashboard";
 import { deleteProject } from "@/lib/actions/projects";
 import { toast } from "sonner";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 
 interface ProjectHealthCardProps {
   project: ProjectStats;
   index: number;
   showTeamDetails?: boolean;
 }
-
-const DELETE_CONFIRM_MESSAGE = "Bist du sicher, dass du das löschen willst?";
 
 export function ProjectHealthCard({
   project,
@@ -33,22 +32,23 @@ export function ProjectHealthCard({
 }: ProjectHealthCardProps) {
   const router = useRouter();
   const [isDeleting, startDelete] = useTransition();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const { defect_counts: dc, priority_counts: pc } = project;
   const completionRate =
     dc.total > 0 ? Math.round((dc.erledigt / dc.total) * 100) : 0;
 
-  function handleDeleteProject(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleDeleteClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     e.stopPropagation();
+    setShowDeleteConfirm(true);
+  }
 
-    if (!window.confirm(DELETE_CONFIRM_MESSAGE)) {
-      return;
-    }
-
+  function handleConfirmDelete() {
     startDelete(async () => {
       try {
         await deleteProject(project.id);
         toast.success("Projekt gelöscht");
+        setShowDeleteConfirm(false);
         router.refresh();
       } catch (error) {
         const message =
@@ -56,6 +56,7 @@ export function ProjectHealthCard({
             ? error.message
             : "Projekt konnte nicht gelöscht werden.";
         toast.error(message);
+        setShowDeleteConfirm(false);
       }
     });
   }
@@ -175,20 +176,32 @@ export function ProjectHealthCard({
       </Link>
 
       {project.my_role === "admin" && (
-        <button
-          type="button"
-          onClick={handleDeleteProject}
-          disabled={isDeleting}
-          className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full border border-destructive/30 bg-background/85 text-destructive transition-colors hover:bg-destructive/10 disabled:opacity-60 cursor-pointer"
-          aria-label="Projekt löschen"
-          title="Projekt löschen"
-        >
-          {isDeleting ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Trash2 className="h-4 w-4" />
-          )}
-        </button>
+        <>
+          <button
+            type="button"
+            onClick={handleDeleteClick}
+            disabled={isDeleting}
+            className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full border border-destructive/30 bg-background/85 text-destructive transition-colors hover:bg-destructive/10 disabled:opacity-60 cursor-pointer"
+            aria-label="Projekt löschen"
+            title="Projekt löschen"
+          >
+            {isDeleting ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Trash2 className="h-4 w-4" />
+            )}
+          </button>
+          <ConfirmDialog
+            open={showDeleteConfirm}
+            onClose={() => setShowDeleteConfirm(false)}
+            onConfirm={handleConfirmDelete}
+            title="Projekt löschen"
+            description={`Bist du sicher, dass du das Projekt „${project.name}" und alle zugehörigen Daten (Mängel, Medien, Protokolle) unwiderruflich löschen möchtest?`}
+            confirmLabel="Endgültig löschen"
+            cancelLabel="Abbrechen"
+            isPending={isDeleting}
+          />
+        </>
       )}
     </motion.div>
   );

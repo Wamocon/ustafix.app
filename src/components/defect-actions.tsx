@@ -1,12 +1,13 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteDefect } from "@/lib/actions/defects";
 import { Trash2, Loader2 } from "lucide-react";
 import { useTranslation } from "@/hooks/use-translations";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 
 interface DefectActionsProps {
   defectId: string;
@@ -15,27 +16,30 @@ interface DefectActionsProps {
   canDelete: boolean;
 }
 
-const DELETE_CONFIRM_MESSAGE = "Bist du sicher, dass du das löschen willst?";
-
 export function DefectActions({
   defectId,
   projectId,
   canDelete,
 }: DefectActionsProps) {
   const [isPending, startTransition] = useTransition();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const router = useRouter();
   const t = useTranslation();
 
   function handleDelete() {
-    if (!window.confirm(DELETE_CONFIRM_MESSAGE)) return;
+    setShowDeleteConfirm(true);
+  }
 
+  function handleConfirmDelete() {
     startTransition(async () => {
       try {
         await deleteDefect(defectId, projectId);
         toast.success(t("defect.deleteSuccess"));
+        setShowDeleteConfirm(false);
         router.push(`/project/${projectId}`);
       } catch {
         toast.error(t("defect.deleteError"));
+        setShowDeleteConfirm(false);
       }
     });
   }
@@ -59,6 +63,16 @@ export function DefectActions({
           </>
         )}
       </motion.button>
+      <ConfirmDialog
+        open={showDeleteConfirm}
+        onClose={() => setShowDeleteConfirm(false)}
+        onConfirm={handleConfirmDelete}
+        title="Mangel löschen"
+        description="Bist du sicher, dass du diesen Mangel und alle zugehörigen Dateien unwiderruflich löschen möchtest?"
+        confirmLabel="Endgültig löschen"
+        cancelLabel="Abbrechen"
+        isPending={isPending}
+      />
     </div>
   );
 }

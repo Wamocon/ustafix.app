@@ -66,7 +66,7 @@ export function ProjectPageContent({
   const t = useTranslation();
 
   return (
-    <div className="mx-auto max-w-lg px-4 pt-4">
+    <div className="mx-auto max-w-lg lg:max-w-6xl px-4 lg:px-8 pt-4">
       <header className="mb-6">
         <Link
           href="/dashboard"
@@ -87,7 +87,7 @@ export function ProjectPageContent({
         )}
 
         {total > 0 && (
-          <div className="mt-4 rounded-2xl border border-border bg-card p-4 card-elevated">
+          <div className="mt-4 rounded-2xl border border-border bg-card p-4 card-elevated lg:max-w-md">
             <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
               <span className="font-medium">{t("project.progress")}</span>
               <span className="font-bold text-foreground">{donePercent}%</span>
@@ -129,9 +129,11 @@ export function ProjectPageContent({
         </div>
       </header>
 
-      {isAdminOrManager && (
-        <>
-          <section className="mb-5">
+      {/* Desktop: two-column layout (sidebar admin sections + defect list) */}
+      <div className="lg:grid lg:grid-cols-[340px_1fr] lg:gap-8">
+        {/* Admin sidebar sections */}
+        {isAdminOrManager && (
+          <div className="space-y-5 mb-6 lg:mb-0">
             <div className="section-card">
               <h2 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
                 <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-500/10">
@@ -154,36 +156,35 @@ export function ProjectPageContent({
                 </ul>
               )}
             </div>
-          </section>
-          <section className="mb-5">
+
             <ProjectTeamSection
               projectId={projectId}
               members={members}
               currentUserId={currentUserId ?? ""}
             />
-          </section>
-        </>
-      )}
 
-      {isAdminOrManager && (
-        <section className="mb-6">
-          <ProtocolSection
-            projectId={projectId}
-            units={units}
-            defects={defects.map((d) => ({
-              id: d.id as string,
-              title: d.title as string,
-              status: d.status as string,
-              priority: d.priority as string,
-            }))}
-            protocols={protocols}
-            canCreate={isAdminOrManager}
-          />
-        </section>
-      )}
+            <ProtocolSection
+              projectId={projectId}
+              units={units}
+              defects={defects.map((d) => ({
+                id: d.id as string,
+                title: d.title as string,
+                status: d.status as string,
+                priority: d.priority as string,
+              }))}
+              protocols={protocols}
+              canCreate={isAdminOrManager}
+            />
+          </div>
+        )}
 
-      <RealtimeWrapper projectId={projectId} />
-      <DefectList defects={defects} projectId={projectId} />
+        {/* Main defect list */}
+        <div className="min-w-0">
+          <RealtimeWrapper projectId={projectId} />
+          <DefectList defects={defects} projectId={projectId} />
+        </div>
+      </div>
+
       <CaptureModal
         projectId={projectId}
         units={units}
